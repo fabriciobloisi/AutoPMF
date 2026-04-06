@@ -134,6 +134,7 @@ Edit `ControlNews.md` to implement the chosen improvements. Always:
 |------|------|-------|
 | `ControlNews.md` | Master prompt — governs ALL news content and behaviour | Yes, every iteration |
 | `Feedback.txt` | User feedback log + AutoLoop summaries | Append only |
+| `getFeedback.sh` | Fetches remote feedback and appends new entries to `Feedback.txt` | No |
 | `autoloop.md` | This file — AutoLoop instructions | Update iteration log |
 | `server.js` | Express backend, Claude API calls | Only for new features |
 | `public/app.js` | Frontend rendering logic | Only for new features |
