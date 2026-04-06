@@ -65,7 +65,7 @@ Each news item must follow this exact JSON schema:
   "keyFacts": ["Concise fact 1", "Concise fact 2", "Concise fact 3"],
   "quote": "A compelling paraphrased quote from an expert with attribution — e.g. 'This changes everything — Dr. Sarah Chen, MIT'",
   "category": "Technology | Business | World | Politics | Science | Sports | Health | Culture | Climate | AI",
-  "source": "Reputable international news source (vary widely: Reuters, AP, BBC, Bloomberg, FT, Guardian, Al Jazeera, DW, NHK, Le Monde, SCMP, Nature, Economist, etc.)",
+  "source": "Short source name, max 20 characters (use abbreviations: Reuters, AP, BBC, Bloomberg, FT, Guardian, Al Jazeera, DW, NHK, SCMP, Nature, Economist — never 'South China Morning Post', use 'SCMP')",
   "timeAgo": "Just now | X minutes ago | X hours ago | X days ago",
   "imageUrl": "https://source.unsplash.com/800x500/?keyword1,keyword2,keyword3,keyword4 — use 4-6 specific photojournalistic keywords",
   "imageAlt": "Brief descriptive caption (10-15 words)",
@@ -117,3 +117,4 @@ _Each cycle records what changed in this file and why._
 |-------|------|---------------|-----------|
 | 0 | 2026-04-06 | Initial product definition extracted from app code | Baseline — separated product spec from feedback mechanism |
 | 3 | 2026-04-06 | Removed all emoji from trending badges; replaced with clean uppercase "TRENDING" text. Removed imageEmoji from schema. Added professional badge styling rule. | User feedback (2/10): fire emoji felt unprofessional. Tags should be clean, typographic, no emoji. |
+| 4 | 2026-04-06 | Added max 20-char rule for source names (use abbreviations). All footer/source lines forced to single-line with CSS nowrap + ellipsis. | User feedback (3/10): long publisher names cause footer to wrap to two lines. |
