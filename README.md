@@ -89,3 +89,25 @@ The loop runs until 3 consecutive feedback batches average NPS 9+, indicating Pr
 ## Notes
 
 Additionally you can verify changes before pushing to prod using Claude's built-in browser and inspect tools.
+
+### Suggested Permission file
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(export PATH=\"/opt/homebrew/bin:$PATH\")",
+      "Bash(vercel env:*)",
+      "Bash(vercel --prod --yes)",
+      "Bash(ANTHROPIC_API_KEY=test-key node -e \":*)",
+      "Bash(bash:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(vercel --prod)",
+    ]
+  }
+}
+```
+
