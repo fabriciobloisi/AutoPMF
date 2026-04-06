@@ -2,7 +2,7 @@ node_modules/
 .DS_Store
 *.log
 .vercel
-.claude/launch.json
+.claude/
 .env
 !.env.example
 public/news.json

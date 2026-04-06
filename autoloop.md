@@ -1,141 +1,106 @@
-# AutoLoop — Instructions for Iterating AutoPMF
+# AutoLoop — Self-Learning Product Cycle
 
-AutoLoop is the feedback-driven improvement cycle for AutoPMF. Each iteration reads user feedback, summarises it, generates improvement ideas, updates `ControlNews.md`, and republishes — with the goal of continuously raising NPS until the product reaches Product Market Fit.
+AutoLoop is the engine that makes AutoPMF self-improving. Each cycle reads user feedback, evaluates the current product against its aspirations, evolves `mote.md` to get closer to the ideal app, and redeploys. The loop runs until feedback scores consistently prove Product Market Fit.
+
+**Core principle:** `mote.md` is the product. Evolving `mote.md` IS evolving the product. Every cycle should bring `mote.md` closer to defining — and delivering — a complete, winning news app.
 
 ---
 
-## How to Run an AutoLoop Iteration
+## How to Run a Cycle
 
-### Step 1 — Fetch & Sync Feedback
+### Step 1 — Gather Signal
 
-Run `./getFeedback.sh` to fetch the latest feedback from the deployed app (`GET /get/feedback`) and append any new entries to `Feedback.txt`. The script sources `.env` for `DEPLOY_URL` and `FEEDBACK_SECRET` automatically.
+Run `./getFeedback.sh` to fetch the latest feedback from the deployed app. Only process entries **after the most recent `AUTOLOOP ITERATION` marker** in `Feedback.txt`. If no marker exists, process all entries.
 
-Then open `Feedback.txt` and only process feedback entries that appear **after the most recent AutoLoop Summary block** (marked with `── AUTOLOOP SUMMARY`). If no summary block exists, process all entries.
+**If there is no new feedback:** still proceed to Step 2. The loop can self-improve even without fresh feedback by evaluating `mote.md` against the aspirations and feature gaps it already tracks.
 
-### Step 1b — No Feedback Case
+### Step 2 — Evaluate the Product
 
-If there are **no new feedback entries** after the most recent `AUTOLOOP SUMMARY` block, append the following line to `Feedback.txt` and stop:
+Read `mote.md` end-to-end. Score the current product definition on these axes:
 
-```
-── <ISO 8601 datetime> — No Feedback in last Loop
-```
+| Axis | Question | Score 1-10 |
+|------|----------|-----------|
+| **Completeness** | Does `mote.md` fully describe every feature the app has? Are there features in the code that `mote.md` doesn't govern? | |
+| **Content quality** | Will following these instructions produce genuinely compelling news? | |
+| **Personalization depth** | Are user preferences meaningfully reflected in generation? | |
+| **Visual richness** | Will the image/gradient rules produce beautiful results? | |
+| **Engagement** | Do the hook/detail rules create articles people want to read? | |
+| **Diversity** | Category mix, region coverage, source variety — is it balanced? | |
+| **Feature gaps** | What's missing from the product that users expect from a news app? | |
+| **Clarity** | Is `mote.md` unambiguous enough that Claude will follow it consistently? | |
 
-Do not update `ControlNews.md` or redeploy. Wait for new user feedback before the next iteration.
+Cross-reference these scores with user feedback. Where feedback complaints align with low scores, that's where to focus.
 
-### Step 2 — Summarise the Feedback
+### Step 3 — Evolve mote.md
 
-Compute:
-- **Number of feedback entries** processed in this batch
-- **Average NPS** (Grade field, scale 0–10)
-- **Common themes** — group comments and suggestions into recurring patterns
-- **Top complaints** — rank by frequency
-- **Top suggestions** — rank by frequency
+Make targeted improvements to `mote.md`. Each cycle should do **one or more** of:
 
-Append the following block to `Feedback.txt` immediately after the last processed entry:
+1. **Sharpen existing rules** — make instructions more specific where content quality is inconsistent
+2. **Add missing features** — move items from the "Feature Gaps & Aspirations" checklist into the "Current Feature Set" section (only when the app code supports them, or when the feature is purely content-driven and `mote.md` can express it)
+3. **Refine the schema** — add fields, tighten constraints, improve examples (never remove fields the app depends on)
+4. **Update aspirations** — add new feature gaps discovered from feedback, remove ones that have been addressed, reprioritize
+5. **Improve content standards** — raise the bar based on what's working and what isn't
 
-```
-── AUTOLOOP SUMMARY ─────────────────────────────────────
-Processed at: <ISO 8601 datetime>
-Entries processed: <N>
-Average NPS this batch: <X.X>/10
-Cumulative NPS trend: <up/down/flat> vs previous iteration
+**Always update the "AutoLoop Evolution Log"** at the bottom of `mote.md` with what changed and why.
 
-Themes:
-- <theme 1>: <brief description>
-- <theme 2>: <brief description>
-...
+### Step 4 — Verify & Deploy
 
-Top complaints:
-1. <complaint>
-2. <complaint>
-...
-
-Top suggestions:
-1. <suggestion>
-2. <suggestion>
-...
-
-Decision: <what will change in ControlNews.md and why>
-─────────────────────────────────────────────────────────
-```
-
-### Step 3 — Generate Improvement Ideas
-
-Before editing `ControlNews.md`, brainstorm at least **10 ideas** for improvement across these dimensions:
-
-| Dimension | Questions to ask |
-|-----------|-----------------|
-| Content quality | Are articles too shallow? Too long? Missing context? |
-| Personalisation | Are user preferences being respected? More granularity needed? |
-| Visual experience | Are images vivid and relevant? Gradients appealing? |
-| Article detail | Is the full-screen read experience immersive? |
-| Category mix | Is the default feed well-balanced? Boring? Repetitive? |
-| Freshness signals | Do timeAgo values feel realistic? Too many "Just now"? |
-| Source credibility | Are sources varied and trustworthy? |
-| Tags & filtering | Are tags useful for the category chips? |
-| Tone & style | Too formal? Too casual? Accessible to a global audience? |
-| Engagement hooks | Does each article make you want to read more? |
-
-Score each idea by: **Impact** (1–5) × **Effort** (1–5, lower = easier). Pick the highest-scoring ideas that address the top complaints.
-
-### Step 4 — Update ControlNews.md
-
-Edit `ControlNews.md` to implement the chosen improvements. Always:
-
-- Keep the **JSON schema** section intact (apps depend on it)
-- Update the **AutoLoop Feedback Integration** section at the bottom with:
-  - Previous feedback grade
-  - Key issues identified
-  - Changes made in this iteration
-  - Target grade for next iteration
-- Add a comment explaining *why* each change was made, not just what changed
-
-### Step 5 — Verify & Republish
-
-1. Restart the server (`node server.js`) and reload the app
-2. Visually confirm the news feed reflects the changes
-3. Commit and push to `main` — Vercel auto-deploys on every push via GitHub integration:
+1. Create a branch:
    ```bash
-   git add -A
-   git commit -m "AutoLoop iteration N: <one-line description of main change>
+   git checkout -b autoloop/cycle-N
+   ```
+2. Restart the server and visually confirm the news feed reflects improvements
+3. Commit, push, and deploy:
+   ```bash
+   git add mote.md autoloop.md Feedback.txt
+   git commit -m "AutoLoop cycle N: <one-line summary>
 
    NPS: X.X/10 → target Y.Y/10
-   Changes: <bullet list of key changes to ControlNews.md>"
-   git push origin main
+   mote.md changes: <bullet list>"
+   git push origin autoloop/cycle-N
+   export PATH="/opt/homebrew/bin:$PATH" && vercel --prod
    ```
+
+### Step 5 — Log & Continue
+
+Update the iteration log below, then mark the feedback boundary in `Feedback.txt`:
+```
+── AUTOLOOP ITERATION N ── YYYY-MM-DD ──────────────────────────────
+```
+
+Wait for new feedback, then start the next cycle.
 
 ---
 
 ## Iteration Log
 
-| # | Date | NPS | Key Change | Target NPS |
-|---|------|-----|------------|------------|
-| 0 | 2026-04-06 | — | Initial release | 7.0 |
-| 1 | 2026-04-06 | 3.0 | Real images, full-screen articles, richer detail, tags | 9.0 |
-| 2 | 2026-04-06 | 3.0 | hook, keyFacts, quote, geo diversity, inverted pyramid | 8.0 |
-| 3 | 2026-04-06 | 5.0 | Default count 8→15, server cap 20→100, wildcard category | 8.0 |
+| # | Date | NPS | Key Change to mote.md | Target NPS |
+|---|------|-----|-----------------------|------------|
+| 0 | 2026-04-06 | — | Baseline: extracted product definition, separated from feedback mechanism | 7.0 |
 
 ---
 
-## Rules for AutoLoop
+## Convergence Rules
 
-1. **Never process the same feedback twice.** Always look for the most recent `AUTOLOOP SUMMARY` timestamp to know where to start.
-2. **Be conservative with schema changes.** The app code depends on the JSON field names — never remove or rename fields without updating `app.js` too.
-3. **One iteration = one commit.** Keep the change surface small so you can attribute NPS changes to specific improvements.
-4. **Target NPS 9+** for Product Market Fit. Stop iterating when 3 consecutive batches average ≥ 9.0.
-5. **If NPS drops**, read the new feedback carefully — a change you made may have introduced a regression. Roll it back or adjust before adding new features.
-6. **ControlNews.md is the only lever for content changes.** Do not edit `app.js` or `server.js` unless the improvement requires new functionality that ControlNews.md cannot express.
+1. **`mote.md` is the only lever for content/behavior changes.** Do not edit `app.js`, `server.js`, or `styles.css` unless the improvement requires new functionality that `mote.md` cannot express.
+2. **Never process the same feedback twice.** Always look for the most recent `AUTOLOOP ITERATION` marker.
+3. **One cycle = one commit.** Keep changes small enough to attribute NPS movement to specific improvements.
+4. **Target NPS 9+.** Stop iterating when 3 consecutive batches average ≥ 9.0. That's PMF.
+5. **If NPS drops**, a recent change may have regressed something. Read feedback carefully and roll back or adjust before adding new features.
+6. **Be conservative with schema changes.** The app depends on the JSON field names — never remove or rename fields without updating app code.
+7. **Evolve even without feedback.** If no new feedback arrives, still evaluate `mote.md` against its own aspirations and tighten what you can.
+8. **The feature gap list in `mote.md` is a living roadmap.** Each cycle should either check off an item, add a new one, or reprioritize. The goal is for `mote.md` to converge on the complete feature definition of a winning news app.
 
 ---
 
-## Quick Reference — What Each File Does
+## File Reference
 
-| File | Role | Edit? |
-|------|------|-------|
-| `ControlNews.md` | Master prompt — governs ALL news content and behaviour | Yes, every iteration |
-| `Feedback.txt` | User feedback log + AutoLoop summaries | Append only |
-| `getFeedback.sh` | Fetches remote feedback and appends new entries to `Feedback.txt` | No |
-| `autoloop.md` | This file — AutoLoop instructions | Update iteration log |
-| `server.js` | Express backend, Claude API calls | Only for new features |
-| `public/app.js` | Frontend rendering logic | Only for new features |
-| `public/styles.css` | All styles | Only for new features |
+| File | Role | When to Edit |
+|------|------|-------------|
+| `mote.md` | Product definition — governs all content, features, and aspirations | Every cycle |
+| `Feedback.txt` | User feedback log (appended by `getFeedback.sh`) | Append only (+ iteration markers) |
+| `getFeedback.sh` | Fetches remote feedback | Never |
+| `autoloop.md` | This file — cycle instructions and iteration log | Update iteration log each cycle |
+| `server.js` | Express backend, Claude API calls | Only for new app-level features |
+| `public/app.js` | Frontend rendering logic | Only for new app-level features |
+| `public/styles.css` | All styles | Only for new app-level features |

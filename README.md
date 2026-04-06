@@ -14,8 +14,6 @@ The app runs at `http://localhost:3200`. For watch mode: `source .env && npm run
 
 ## Deploy to Vercel
 
-This project deploys automatically via Vercel's GitHub integration — every push to `main` triggers a production deploy.
-
 ### 1. Import in Vercel
 
 1. Go to [vercel.com/new](https://vercel.com/new)
@@ -33,13 +31,9 @@ In the Vercel dashboard under **Settings > Environment Variables**:
 
 ### 3. Deploy
 
-Push to `main` and Vercel deploys automatically:
-
 ```bash
-git push origin main
+vercel --prod
 ```
-
-You can also trigger a manual redeploy from the Vercel dashboard.
 
 ## Feedback API
 
@@ -67,20 +61,20 @@ graph LR
 
 ### How it works
 
-1. **Deploy** — Vercel auto-deploys on every push to `main`
+1. **Deploy** — Run `vercel --prod` to deploy
 2. **Use** — Users browse the news feed, read articles, ask Claude questions
 3. **Feedback** — Users rate the experience (0–10 NPS) and leave suggestions via the app's "End" button
-4. **Read** — Claude fetches new feedback from `GET /get/feedback` (entries after the last `AUTOLOOP SUMMARY`)
-5. **Improve** — Claude summarises themes, brainstorms fixes, and updates `ControlNews.md` (the master prompt that controls all content)
-6. **Ship** — Changes are committed and pushed, triggering a Vercel redeploy
+4. **Read** — Claude fetches new feedback from `GET /get/feedback`
+5. **Improve** — Claude brainstorms fixes and updates `mote.md` (the master prompt that controls all content)
+6. **Ship** — Changes are committed, pushed, and deployed with `vercel --prod`
 7. **Wait** — Sleep 10 minutes, then loop back to step 4
 
 ### Key files
 
 | File | Role |
 |------|------|
-| `ControlNews.md` | Master prompt — governs all news content and behaviour. Updated every iteration |
-| `Feedback.txt` | Append-only log of user feedback + AutoLoop summaries |
+| `mote.md` | Master prompt — governs all news content and behaviour. Updated every iteration |
+| `Feedback.txt` | Append-only log of user feedback |
 | `autoloop.md` | Detailed AutoLoop instructions and iteration log |
 
 ### Target
