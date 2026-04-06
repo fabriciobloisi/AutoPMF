@@ -30,7 +30,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 4. Article Detail View
 - Full-screen modal with hero image, category/trending badges
 - Rich content: headline, source + time + read-time, summary, long-form detail
-- **Ask Claude** — users can ask follow-up questions about any article and get an inline AI response
+- **Ask Claude** — sticky footer bar at the bottom of every article with a labeled "ASK CLAUDE" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses
 
 ### 5. Personalization & Customization
 - **Topics** — select preferred categories to bias the feed
@@ -50,6 +50,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - Navigation drawer with refresh, customize, about, settings, end
 - Gradient color fallbacks per category when images fail to load
 - Loading spinners, empty states, error handling
+- **Dark Mode** — toggle in Settings. Persisted in localStorage. Full dark theme across all views, modals, and display modes
 
 ---
 
@@ -66,12 +67,11 @@ Each news item must follow this exact JSON schema:
   "keyFacts": ["Concise fact 1", "Concise fact 2", "Concise fact 3"],
   "quote": "A compelling paraphrased quote from an expert with attribution — e.g. 'This changes everything — Dr. Sarah Chen, MIT'",
   "category": "Technology | Business | World | Politics | Science | Sports | Health | Culture | Climate | AI",
-  "source": "Reputable international news source (vary widely: Reuters, AP, BBC, Bloomberg, FT, Guardian, Al Jazeera, DW, NHK, Le Monde, SCMP, Nature, Economist, etc.)",
+  "source": "Short source name, max 20 characters (use abbreviations: Reuters, AP, BBC, Bloomberg, FT, Guardian, Al Jazeera, DW, NHK, SCMP, Nature, Economist — never 'South China Morning Post', use 'SCMP')",
   "timeAgo": "Just now | X minutes ago | X hours ago | X days ago",
   "imageUrl": "https://source.unsplash.com/800x500/?keyword1,keyword2,keyword3,keyword4 — use 4-6 specific photojournalistic keywords",
   "imageAlt": "Brief descriptive caption (10-15 words)",
   "imageGradient": ["#hexcolor1", "#hexcolor2"],
-  "imageEmoji": "single relevant emoji",
   "trending": true or false,
   "impact": "local | national | global",
   "readTime": "X min read",
@@ -101,6 +101,10 @@ Each news item must follow this exact JSON schema:
 - AI:         ["#7209B7", "#3A0CA3"]
 - Default:    ["#636e72", "#2d3436"]
 
+## UI Design Rules
+- **No emoji in badges or tags.** All badges (trending, category, impact) use clean uppercase text with letter-spacing. Professional, typographic style — never playful emoji.
+- Tags should be short, lowercase, no special characters — e.g. `["trade policy", "tariffs", "china"]`
+
 ## Display Mode Content Guidance
 - **Text**: thumbnail + headline + hook — image draws the eye first
 - **Instagram**: full-width hero image, headline overlaid with dark gradient
@@ -115,4 +119,8 @@ _Each cycle records what changed in this file and why._
 | Cycle | Date | Change Summary | Rationale |
 |-------|------|---------------|-----------|
 | 0 | 2026-04-06 | Initial product definition extracted from app code | Baseline — separated product spec from feedback mechanism |
+| 3 | 2026-04-06 | Removed all emoji from trending badges; replaced with clean uppercase "TRENDING" text. Removed imageEmoji from schema. Added professional badge styling rule. | User feedback (2/10): fire emoji felt unprofessional. Tags should be clean, typographic, no emoji. |
+| 4 | 2026-04-06 | Added max 20-char rule for source names (use abbreviations). All footer/source lines forced to single-line with CSS nowrap + ellipsis. | User feedback (3/10): long publisher names cause footer to wrap to two lines. |
+| 5 | 2026-04-06 | Moved Ask Claude to sticky footer bar with "ASK CLAUDE" label. Always visible at bottom of article view. | User feedback (4/10): Ask Claude was hidden, users couldn't find it. |
+| 6 | 2026-04-06 | Added dark mode toggle in Settings. Full dark theme across all views, cards, modals, nav, article detail. Persisted in localStorage. | User feedback (5/10): no dark mode option. |
 | 7 | 2026-04-06 | Fix getFeedback.sh casing bug; image resilience via picsum proxy; session_id tracking in feedback; implement dark mode with toggle in Settings | Feedback fetch was silently broken (wrong filename casing). Unsplash URLs unreliable at scale — picsum.photos is more resilient. Session IDs let AutoLoop distinguish repeat users from unique ones. Dark mode was claimed in iteration 6 but never implemented — now fully working with iOS-style toggle and comprehensive dark theme. |
