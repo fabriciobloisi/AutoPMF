@@ -546,24 +546,24 @@ async function askClaude() {
 }
 
 // ── Refresh button ────────────────────────────────────────────────────────────
-$('refresh-btn').addEventListener('click', loadNews);
-$('drawer-refresh-btn').addEventListener('click', () => { closeDrawer(); loadNews(); });
+$('refresh-btn')?.addEventListener('click', loadNews);
+$('drawer-refresh-btn')?.addEventListener('click', () => { closeDrawer(); loadNews(); });
 
 // ── Navigate to End → Feedback ────────────────────────────────────────────────
 function goToFeedback() { closeDrawer(); showScreen('feedback'); }
-$('end-btn').addEventListener('click', goToFeedback);
-$('feedback-fab').addEventListener('click', goToFeedback);
-$('feedback-back').addEventListener('click', () => showScreen(state.previousScreen || 'feed'));
+$('end-btn')?.addEventListener('click', goToFeedback);
+$('feedback-fab')?.addEventListener('click', goToFeedback);
+$('feedback-back')?.addEventListener('click', () => showScreen(state.previousScreen || 'feed'));
 
 // ── Feedback slider ───────────────────────────────────────────────────────────
 const gradeEl    = $('grade');
 const gradeValEl = $('grade-val');
-gradeEl.addEventListener('input', () => { gradeValEl.textContent = gradeEl.value; });
+gradeEl?.addEventListener('input', () => { gradeValEl.textContent = gradeEl.value; });
 
 // ── Submit feedback ───────────────────────────────────────────────────────────
 const submitFbBtn = $('submit-feedback');
 const feedbackMsg = $('feedback-msg');
-submitFbBtn.addEventListener('click', async () => {
+submitFbBtn?.addEventListener('click', async () => {
   submitFbBtn.disabled = true;
   feedbackMsg.className = 'feedback-msg';
   try {
