@@ -1347,5 +1347,152 @@ input:focus, textarea:focus, button:focus { outline: none; }
   font-size: 12px; color: #ff9500; font-weight: 600;
 }
 
+/* ── Settings row & toggle switch ── */
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 0.5px solid #e5e5e7;
+  margin-bottom: 12px;
+}
+.settings-label { font-size: 15px; font-weight: 500; color: #000; }
+.toggle-switch {
+  position: relative; display: inline-block;
+  width: 51px; height: 31px;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0;
+  background: #e5e5e7; border-radius: 31px;
+  cursor: pointer; transition: background 0.25s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute;
+  left: 2px; top: 2px;
+  width: 27px; height: 27px;
+  background: #fff; border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.25s;
+}
+.toggle-switch input:checked + .toggle-slider { background: #34c759; }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* ── Dark Mode ── */
+.app.dark-mode { background: #1c1c1e; }
+.app.dark-mode .status-bar { background: #1c1c1e; color: #fff; }
+.app.dark-mode .sb-right { color: #fff; }
+.app.dark-mode .sb-battery { border-color: #fff; }
+.app.dark-mode .sb-battery::after { background: #fff; }
+.app.dark-mode .sb-battery-fill { background: #fff; }
+.app.dark-mode .nav-bar { background: rgba(28,28,30,0.95); border-color: #38383a; }
+.app.dark-mode .nav-title { color: #fff; }
+.app.dark-mode .category-bar { background: #1c1c1e; border-color: #38383a; }
+.app.dark-mode .cat-btn { background: #2c2c2e; color: #ebebf5; }
+.app.dark-mode .cat-btn.active { background: #0a84ff; color: #fff; }
+.app.dark-mode .screen { background: #1c1c1e; }
+.app.dark-mode .feed { background: #1c1c1e; }
+.app.dark-mode .mode-bar { background: #1c1c1e; border-color: #38383a; }
+.app.dark-mode .mode-bar-btn { color: #8e8e93; }
+.app.dark-mode .mode-bar-btn.active { color: #0a84ff; background: rgba(10,132,255,0.12); }
+
+/* Dark mode — cards */
+.app.dark-mode .card-text { background: #2c2c2e; border-color: #38383a; }
+.app.dark-mode .card-text:active { background: #3a3a3c; }
+.app.dark-mode .card-headline { color: #fff; }
+.app.dark-mode .card-summary { color: #ababaf; }
+.app.dark-mode .cat-badge { background: #3a3a3c; color: #ababaf; }
+.app.dark-mode .card-footer { color: #636366; }
+.app.dark-mode .card-source { color: #ababaf; }
+.app.dark-mode .card-dot { color: #48484a; }
+
+/* Dark mode — CNN */
+.app.dark-mode .feed.mode-cnn { background: #1c1c1e; }
+.app.dark-mode .cnn-section-label { background: #1c1c1e; color: #636366; }
+.app.dark-mode .cnn-grid { background: #38383a; }
+.app.dark-mode .card-cnn-small { background: #2c2c2e; }
+.app.dark-mode .card-cnn-small:active { background: #3a3a3c; }
+.app.dark-mode .cnn-small-headline { color: #fff; }
+.app.dark-mode .cnn-small-footer { color: #636366; }
+.app.dark-mode .cnn-list-item { background: #2c2c2e; border-color: #38383a; }
+.app.dark-mode .cnn-list-item:active { background: #3a3a3c; }
+.app.dark-mode .cnn-list-headline { color: #fff; }
+.app.dark-mode .cnn-list-cat { color: #8e8e93; }
+.app.dark-mode .cnn-list-footer { color: #636366; }
+
+/* Dark mode — Video */
+.app.dark-mode .card-video { background: #2c2c2e; }
+.app.dark-mode .video-cat { color: #8e8e93; }
+.app.dark-mode .video-title { color: #fff; }
+.app.dark-mode .video-meta { color: rgba(255,255,255,0.5); }
+
+/* Dark mode — Article modal */
+.app.dark-mode .article-modal { background: #1c1c1e; }
+.app.dark-mode .article-body { background: #1c1c1e; }
+.app.dark-mode .article-headline { color: #fff; }
+.app.dark-mode .article-source-lbl { color: #636366; }
+.app.dark-mode .article-summary { color: #e5e5e7; }
+.app.dark-mode .article-divider { background: #38383a; }
+.app.dark-mode .article-detail { color: #ababaf; }
+.app.dark-mode .article-ask-row { background: #2c2c2e; }
+.app.dark-mode #ask-input { color: #fff; }
+.app.dark-mode .ask-response { background: #2c2c2e; color: #e5e5e7; }
+
+/* Dark mode — Drawer */
+.app.dark-mode .drawer { background: #2c2c2e; border-color: #48484a; }
+.app.dark-mode .drawer-header { border-color: #48484a; }
+.app.dark-mode .app-name { color: #fff; }
+.app.dark-mode .nav-item { color: #e5e5e7; }
+.app.dark-mode .nav-item:active { background: rgba(255,255,255,0.06); }
+.app.dark-mode .drawer-footer { border-color: #48484a; }
+
+/* Dark mode — Customize */
+.app.dark-mode .customize-body { background: #1c1c1e; }
+.app.dark-mode .cust-section { background: #2c2c2e; }
+.app.dark-mode .cust-label { color: #fff; }
+.app.dark-mode .cust-hint { color: #636366; }
+.app.dark-mode .mode-card { background: #3a3a3c; color: #ababaf; }
+.app.dark-mode .mode-card-icon { color: #ababaf; }
+.app.dark-mode .mode-card.active { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
+.app.dark-mode .mode-card.active .mode-card-icon { color: #0a84ff; }
+.app.dark-mode .topic-chip { background: #3a3a3c; color: #ebebf5; }
+.app.dark-mode .topic-chip.selected { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
+.app.dark-mode .region-btn { background: #3a3a3c; color: #ebebf5; }
+.app.dark-mode .region-btn.active { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
+.app.dark-mode .count-btn { background: #3a3a3c; color: #ebebf5; }
+.app.dark-mode .count-btn small { color: #636366; }
+.app.dark-mode .count-btn.active { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
+.app.dark-mode .count-btn.active small { color: #5ba4f5; }
+
+/* Dark mode — Feedback */
+.app.dark-mode .feedback-body { background: #1c1c1e; }
+.app.dark-mode .feedback-card { background: #2c2c2e; }
+.app.dark-mode .feedback-card h3 { color: #fff; }
+.app.dark-mode #grade { background: #48484a; }
+.app.dark-mode .slider-value { color: #0a84ff; }
+.app.dark-mode #comments, .app.dark-mode #suggestion { background: #3a3a3c; color: #fff; }
+
+/* Dark mode — Modals */
+.app.dark-mode .modal-sheet { background: #2c2c2e; }
+.app.dark-mode .modal-handle { background: #48484a; }
+.app.dark-mode .modal-sheet h3 { color: #fff; }
+.app.dark-mode .hint { color: #636366; }
+.app.dark-mode .settings-row { border-color: #48484a; }
+.app.dark-mode .settings-label { color: #fff; }
+.app.dark-mode .sub-bar { background: rgba(28,28,30,0.95); border-color: #38383a; }
+.app.dark-mode .sub-bar-title { color: #fff; }
+
+/* Dark mode — About */
+.app.dark-mode .about-title { color: #fff; }
+.app.dark-mode .about-body p { color: #ababaf; }
+.app.dark-mode .about-body strong { color: #fff; }
+.app.dark-mode .about-divider { background: #48484a; }
+.app.dark-mode .about-loop-diagram { background: #3a3a3c; }
+.app.dark-mode .loop-step { background: #2c2c2e; color: #fff; box-shadow: none; }
+
+/* Dark mode — Loading / empty */
+.app.dark-mode .feed-loading { color: #636366; }
+.app.dark-mode .spinner { border-color: #48484a; border-top-color: #0a84ff; }
+.app.dark-mode .feed-empty { color: #636366; }
+.app.dark-mode .feedback-fab { background: rgba(28,28,30,0.95); }
+
 /* ── Refresh animation ── */
 .spinning { animation: spin 0.8s linear infinite; }

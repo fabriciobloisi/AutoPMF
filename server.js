@@ -90,16 +90,18 @@ app.get('/get/feedback', getFeedbackLimiter, async (req, res) => {
 
 // ── POST /api/feedback ─ appends feedback to Feedback.txt ───────────────────
 app.post('/api/feedback', feedbackLimiter, async (req, res) => {
-  const { grade, comments, suggestion } = req.body || {};
+  const { grade, comments, suggestion, sessionId } = req.body || {};
   if (grade == null || typeof grade !== 'number' || grade < 0 || grade > 10) {
     return res.status(400).json({ error: 'Grade must be a number between 0 and 10' });
   }
 
   const safeComments   = typeof comments === 'string' ? comments.slice(0, 2000) : '';
   const safeSuggestion = typeof suggestion === 'string' ? suggestion.slice(0, 2000) : '';
+  const safeSessionId  = typeof sessionId === 'string' ? sessionId.slice(0, 64) : 'unknown';
 
   const entry =
     `── ${new Date().toISOString()} ──────────────────────────────\n` +
+    `Session: ${safeSessionId}\n` +
     `Grade: ${grade}/10\n` +
     `Comments: ${safeComments || '(none)'}\n` +
     `Suggestion: ${safeSuggestion || '(none)'}\n\n`;

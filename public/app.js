@@ -22,6 +22,17 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+// Session ID: persists per browser so we can detect repeat feedback from the same user
+const SESSION_KEY = 'autopmf_session_id';
+function getSessionId() {
+  let id = localStorage.getItem(SESSION_KEY);
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem(SESSION_KEY, id);
+  }
+  return id;
+}
+
 const HEX_COLOR = /^#[0-9a-fA-F]{3,8}$/;
 function safeColor(c, fallback) {
   return HEX_COLOR.test(c) ? c : fallback;
@@ -171,12 +182,23 @@ function gradStyle(item) {
 }
 
 // Returns HTML for a real photo with gradient fallback
+// Image proxy: prefer picsum.photos for reliability, fall back to original URL
+function proxyImgUrl(url) {
+  if (!url) return '';
+  // Convert Unsplash source URLs to picsum (reliable, no rate limits)
+  if (url.includes('source.unsplash.com')) {
+    const seed = url.split('?')[1] || 'default';
+    return `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/500`;
+  }
+  return url;
+}
+
 function imgHtml(item, extraClass = '') {
   const g = item.imageGradient && item.imageGradient.length === 2
     ? item.imageGradient : ['#636e72', '#2d3436'];
   const c0 = safeColor(g[0], '#636e72');
   const c1 = safeColor(g[1], '#2d3436');
-  const url = item.imageUrl || '';
+  const url = proxyImgUrl(item.imageUrl || '');
   if (url) {
     return `<img class="card-real-img ${extraClass}" src="${esc(url)}" alt="${esc(item.imageAlt || item.headline || '')}"
       onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
@@ -197,7 +219,7 @@ function setHeroImg(item) {
   if (item.imageUrl) {
     const img = document.createElement('img');
     img.className = 'card-real-img';
-    img.src = item.imageUrl;
+    img.src = proxyImgUrl(item.imageUrl);
     img.alt = item.imageAlt || item.headline || '';
     img.onerror = () => {
       img.style.display = 'none';
@@ -576,6 +598,7 @@ submitFbBtn?.addEventListener('click', async () => {
         comments: $('comments').value,
         suggestion: $('suggestion').value,
         page: state.previousScreen || 'feed',
+        sessionId: getSessionId(),
       }),
     });
     const data = await r.json();
@@ -680,7 +703,7 @@ $('cust-apply-btn').addEventListener('click', () => {
   loadNews();
 });
 
-// ── Settings Modal (kept for future use) ─────────────────────────────────────
+// ── Settings Modal ───────────────────────────────────────────────────────────
 function openSettings()  { settingsModal.classList.add('open'); }
 function closeSettings() { settingsModal.classList.remove('open'); }
 
@@ -688,6 +711,22 @@ $('settings-btn').addEventListener('click', () => { closeDrawer(); openSettings(
 settingsModal.querySelectorAll('[data-close-modal]').forEach(el =>
   el.addEventListener('click', closeSettings)
 );
+
+// ── Dark Mode Toggle ─────────────────────────────────────────────────────────
+const darkToggle = $('dark-mode-toggle');
+const appEl = document.querySelector('.app');
+
+function applyDarkMode(on) {
+  appEl.classList.toggle('dark-mode', on);
+  localStorage.setItem('autopmf_dark', on ? '1' : '0');
+  darkToggle.checked = on;
+}
+
+applyDarkMode(localStorage.getItem('autopmf_dark') === '1');
+
+darkToggle.addEventListener('change', () => {
+  applyDarkMode(darkToggle.checked);
+});
 
 // ── About Modal ──────────────────────────────────────────────────────────────
 const aboutModal = $('about-modal');

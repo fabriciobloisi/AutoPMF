@@ -41,6 +41,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 6. User Feedback Loop
 - NPS-style grading (0–10 slider)
 - Free-text comments and suggestions
+- Each submission includes a persistent `sessionId` (random UUID per browser) so AutoLoop can distinguish repeat users from unique testers
 - Feedback is stored and consumed by the AutoLoop to improve this file
 
 ### 7. UI & Polish
@@ -85,6 +86,7 @@ Each news item must follow this exact JSON schema:
 - Think like a photo editor at a major newspaper — vivid, concrete nouns and adjectives
 - Examples: `climate,summit,leaders,protest` / `robot,laboratory,research,scientist` / `stadium,crowd,champion,trophy`
 - `imageGradient` is the fallback — always provide it
+- **Resilience:** The frontend proxies Unsplash URLs through picsum.photos for reliability. If Unsplash is down or rate-limited, images still load via picsum seeded by the keywords.
 
 ## Gradient Colors by Category
 - Technology: ["#0066CC", "#7B2FBE"]
@@ -113,3 +115,4 @@ _Each cycle records what changed in this file and why._
 | Cycle | Date | Change Summary | Rationale |
 |-------|------|---------------|-----------|
 | 0 | 2026-04-06 | Initial product definition extracted from app code | Baseline — separated product spec from feedback mechanism |
+| 7 | 2026-04-06 | Fix getFeedback.sh casing bug; image resilience via picsum proxy; session_id tracking in feedback; implement dark mode with toggle in Settings | Feedback fetch was silently broken (wrong filename casing). Unsplash URLs unreliable at scale — picsum.photos is more resilient. Session IDs let AutoLoop distinguish repeat users from unique ones. Dark mode was claimed in iteration 6 but never implemented — now fully working with iOS-style toggle and comprehensive dark theme. |

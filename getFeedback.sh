@@ -11,4 +11,4 @@ fi
 
 response=$(curl -sf -H "Authorization: Bearer $FEEDBACK_SECRET" "${DEPLOY_URL}/get/feedback")
 
-echo "$response" | tee -a feedback.txt
+echo "$response" | tee -a Feedback.txt
