@@ -77,6 +77,7 @@ Wait for new feedback, then start the next cycle.
 | # | Date | NPS | Key Change to product.md | Target NPS |
 |---|------|-----|-----------------------|------------|
 | 0 | 2026-04-06 | — | Baseline: extracted product definition, separated from feedback mechanism | 7.0 |
+| 3 | 2026-04-06 | 2.0 | Removed fire emoji from all trending badges, replaced with professional uppercase text. Added UI design rules to product.md. | 7.0 |
 
 ---
 
