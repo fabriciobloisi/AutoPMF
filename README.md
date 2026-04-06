@@ -65,7 +65,7 @@ graph LR
 2. **Use** — Users browse the news feed, read articles, ask Claude questions
 3. **Feedback** — Users rate the experience (0–10 NPS) and leave suggestions via the app's "End" button
 4. **Read** — Claude fetches new feedback from `GET /get/feedback`
-5. **Improve** — Claude brainstorms fixes and updates `mote.md` (the master prompt that controls all content)
+5. **Improve** — Claude brainstorms fixes and updates `product.md` (the master prompt that controls all content)
 6. **Ship** — Changes are committed, pushed, and deployed with `vercel --prod`
 7. **Wait** — Sleep 10 minutes, then loop back to step 4
 
@@ -73,7 +73,7 @@ graph LR
 
 | File | Role |
 |------|------|
-| `mote.md` | Master prompt — governs all news content and behaviour. Updated every iteration |
+| `product.md` | Master prompt — governs all news content and behaviour. Updated every iteration |
 | `Feedback.txt` | Append-only log of user feedback |
 | `autoloop.md` | Detailed AutoLoop instructions and iteration log |
 
