@@ -1,7 +1,7 @@
 {
   "name": "autopmf",
   "version": "1.0.0",
-  "description": "AI-powered personalized news app, governed by mote.md, powered by Claude",
+  "description": "AI-powered personalized news app, governed by product.md, powered by Claude",
   "type": "module",
   "scripts": {
     "start": "node server.js",
