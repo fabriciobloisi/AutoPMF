@@ -8,6 +8,8 @@ const state = {
   loading: false,
   preferences: JSON.parse(localStorage.getItem('autopmf_prefs') || '{"topics":[],"region":"Global","count":8}'),
   activeArticle: null,  // article open in detail modal
+  currentScreen: 'feed',
+  previousScreen: 'feed',
 };
 
 // ── Utility ──────────────────────────────────────────────────────────────────
@@ -50,9 +52,14 @@ setInterval(updateClock, 30000);
 
 // ── Screen switching ──────────────────────────────────────────────────────────
 function showScreen(name) {
+  if (name === 'feedback') {
+    state.previousScreen = state.currentScreen;
+  }
+  state.currentScreen = name;
   feedScreen.classList.toggle('active', name === 'feed');
   customizeScreen.classList.toggle('active', name === 'customize');
   feedbackScreen.classList.toggle('active', name === 'feedback');
+  $('feedback-fab').style.display = name === 'feedback' ? 'none' : '';
   closeDrawer();
 }
 
@@ -120,8 +127,9 @@ function setMode(mode) {
   state.currentMode = mode;
   localStorage.setItem('autopmf_mode', mode);
 
-  // Update customize screen mode cards
+  // Update customize screen mode cards + feed mode bar
   document.querySelectorAll('.mode-card').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  document.querySelectorAll('.mode-bar-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
 
   renderFeed();
 }
@@ -544,8 +552,8 @@ $('drawer-refresh-btn').addEventListener('click', () => { closeDrawer(); loadNew
 // ── Navigate to End → Feedback ────────────────────────────────────────────────
 function goToFeedback() { closeDrawer(); showScreen('feedback'); }
 $('end-btn').addEventListener('click', goToFeedback);
-$('end-top-btn').addEventListener('click', goToFeedback);
-$('feedback-back').addEventListener('click', () => showScreen('feed'));
+$('feedback-fab').addEventListener('click', goToFeedback);
+$('feedback-back').addEventListener('click', () => showScreen(state.previousScreen || 'feed'));
 
 // ── Feedback slider ───────────────────────────────────────────────────────────
 const gradeEl    = $('grade');
@@ -566,6 +574,7 @@ submitFbBtn.addEventListener('click', async () => {
         grade: Number(gradeEl.value),
         comments: $('comments').value,
         suggestion: $('suggestion').value,
+        page: state.previousScreen || 'feed',
       }),
     });
     const data = await r.json();
@@ -576,6 +585,7 @@ submitFbBtn.addEventListener('click', async () => {
     $('suggestion').value = '';
     gradeEl.value = 7;
     gradeValEl.textContent = '7';
+    setTimeout(() => showScreen(state.previousScreen || 'feed'), 1200);
   } catch (err) {
     feedbackMsg.textContent = 'Could not save feedback: ' + err.message;
     feedbackMsg.className = 'feedback-msg show error';
@@ -691,6 +701,12 @@ aboutModal.querySelectorAll('[data-close-about]').forEach(el =>
 function initMode() {
   const mode = state.currentMode;
   document.querySelectorAll('.mode-card').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  document.querySelectorAll('.mode-bar-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+
+  // Wire up mode bar click handlers
+  document.querySelectorAll('.mode-bar-btn').forEach(b => {
+    b.addEventListener('click', () => setMode(b.dataset.mode));
+  });
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
