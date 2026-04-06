@@ -1,0 +1,834 @@
+[
+  {
+    "id": "tech1",
+    "headline": "EU Passes Landmark Digital Infrastructure Act Requiring Open Charging Standards",
+    "hook": "Your next gadget might outlast you — and Brussels just made sure of it.",
+    "summary": "The European Parliament voted overwhelmingly to mandate universal charging and data port standards across all consumer electronics sold in the EU by 2028. The legislation extends beyond USB-C to cover laptops, IoT devices, and industrial equipment, aiming to reduce e-waste by an estimated 11,000 tonnes annually.",
+    "detail": "The European Parliament approved the Digital Infrastructure Standardization Act on Thursday with a decisive 471-to-132 vote, marking the most sweeping interoperability mandate in the bloc's history. The legislation requires all consumer electronics, including laptops, smart home devices, and wearable technology, to adopt unified charging and data transfer ports by January 2028. Building on the earlier USB-C directive that targeted smartphones, this act extends to over 40 product categories and introduces penalties of up to 4% of annual EU revenue for noncompliant manufacturers. Industry analysts at Canalys estimate the regulation will eliminate roughly 11,000 tonnes of electronic waste per year while saving European consumers approximately 2.4 billion euros in redundant cables and adapters. Major manufacturers including Samsung and Dell have signaled compliance, though Apple issued a cautious statement noting it would need to evaluate the impact on its MagSafe ecosystem. Dr. Elise Vandenberg, a digital policy researcher at Delft University of Technology, has argued that standardization at this scale could accelerate innovation by lowering barriers to entry for smaller hardware firms. The legislation now moves to the European Council for final ratification, expected before the summer recess.",
+    "keyFacts": [
+      "Covers 40+ product categories beyond smartphones",
+      "Expected to eliminate 11,000 tonnes of e-waste annually",
+      "Penalties of up to 4% of annual EU revenue for violations"
+    ],
+    "quote": "Dr. Elise Vandenberg of Delft University stated that universal standards historically accelerate rather than stifle hardware innovation by leveling the competitive playing field.",
+    "category": "Technology",
+    "source": "Reuters",
+    "timeAgo": "3 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?european-parliament,legislation,technology,cables,electronics",
+    "imageAlt": "Interior of the European Parliament chamber during a legislative session",
+    "imageGradient": [
+      "#0066CC",
+      "#7B2FBE"
+    ],
+    "imageEmoji": "🔌",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Europe",
+    "tags": [
+      "regulation",
+      "e-waste",
+      "interoperability"
+    ]
+  },
+  {
+    "id": "tech2",
+    "headline": "Tokyo Startup Unveils Solid-State Battery That Charges EVs in Under 8 Minutes",
+    "hook": "The longest part of your road trip might soon be choosing a playlist.",
+    "summary": "Japanese energy startup Takion has demonstrated a solid-state battery capable of charging a mid-size electric vehicle to 80% in under eight minutes without significant thermal degradation. The company announced a manufacturing partnership with Toyota for pilot production starting in early 2027.",
+    "detail": "At the Japan Mobility Expo in Tokyo on Monday, Takion Energy publicly demonstrated its Gen-3 solid-state battery cell achieving an 80% charge in just seven minutes and forty seconds, a result independently verified by testing firm TUV Rheinland. The 96-kilowatt-hour pack maintained a stable temperature of 38 degrees Celsius throughout the rapid charge cycle, addressing one of the most persistent obstacles in solid-state commercialization. Takion's breakthrough relies on a proprietary sulfide-based electrolyte combined with a lithium-metal anode architecture the company has spent six years refining. Toyota has signed a joint development agreement to integrate the cells into a pilot EV platform, with limited production slated for Q1 2027 at a new facility in Nagoya. The announcement sent Takion's share price up 23% on the Tokyo Stock Exchange within hours. Professor Kenji Matsuda at Kyoto University's Institute for Chemical Research noted that the thermal stability demonstrated is what separates this from previous solid-state claims that performed well in labs but degraded under real-world conditions. Competing efforts by QuantumScape and Samsung SDI are understood to be 12 to 18 months behind in thermal management at comparable charge rates. If manufacturing scales successfully, the technology could fundamentally alter consumer perception of EV charging convenience.",
+    "keyFacts": [
+      "80% charge achieved in 7 minutes and 40 seconds",
+      "Battery temperature stayed at 38°C during rapid charging",
+      "Toyota partnership for pilot production beginning Q1 2027"
+    ],
+    "quote": "Professor Kenji Matsuda of Kyoto University remarked that achieving thermal stability at this charge rate under independent verification is the credibility threshold the industry has been waiting for.",
+    "category": "Technology",
+    "source": "Wired",
+    "timeAgo": "6 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?electric-vehicle,battery,charging-station,japanese-technology,laboratory",
+    "imageAlt": "Close-up of a compact solid-state battery cell in a testing facility",
+    "imageGradient": [
+      "#0066CC",
+      "#7B2FBE"
+    ],
+    "imageEmoji": "🔋",
+    "trending": true,
+    "impact": "global",
+    "readTime": "6 min read",
+    "region": "Asia",
+    "tags": [
+      "electric-vehicles",
+      "batteries",
+      "solid-state"
+    ]
+  },
+  {
+    "id": "tech3",
+    "headline": "Brazil's Pix Instant Payment System Surpasses 200 Million Active Users",
+    "hook": "A country leapfrogged credit cards entirely — and the rest of the world is taking notes.",
+    "summary": "Brazil's central bank digital payment system Pix now serves over 200 million active accounts, effectively covering the entire adult population and millions of previously unbanked citizens. The system processed 5.2 billion transactions in March 2026 alone, surpassing combined credit and debit card volumes for the first time.",
+    "detail": "Brazil's Banco Central announced on Friday that Pix, its real-time payment platform launched in November 2020, has crossed 200 million registered active accounts, a milestone that makes it one of the most widely adopted digital payment systems on Earth. In March 2026, the platform processed 5.2 billion individual transactions totaling approximately 1.8 trillion Brazilian reais, overtaking the combined volume of all credit and debit card networks operating in the country. The system has been particularly transformative for financial inclusion, bringing an estimated 38 million previously unbanked Brazilians into the formal economy since its inception. Street vendors, small farmers, and domestic workers now routinely receive payments instantly at zero cost, eliminating the fees and delays that once kept them reliant on cash. Roberto Campos Neto's successor as central bank president, Gabriel Galipolo, has credited Pix with reducing cash circulation by nearly 22% since 2020. Economists at the Inter-American Development Bank have pointed to Pix as the leading model for other emerging economies exploring instant payment infrastructure. India's UPI system, which preceded Pix, has acknowledged studying its fraud prevention mechanisms. Central banks in Nigeria, Colombia, and Thailand have sent delegations to Brasilia this year to evaluate the technical architecture for potential adaptation.",
+    "keyFacts": [
+      "200 million active accounts covering virtually all Brazilian adults",
+      "5.2 billion transactions processed in March 2026 alone",
+      "38 million previously unbanked citizens brought into formal banking"
+    ],
+    "quote": "An Inter-American Development Bank economist described Pix as the most consequential financial inclusion instrument Latin America has produced in a generation.",
+    "category": "Technology",
+    "source": "BBC",
+    "timeAgo": "1 day ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?brazil,mobile-payment,smartphone,marketplace,street-vendor",
+    "imageAlt": "A Brazilian market vendor accepting a mobile payment from a customer",
+    "imageGradient": [
+      "#0066CC",
+      "#7B2FBE"
+    ],
+    "imageEmoji": "💸",
+    "trending": false,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Latin America",
+    "tags": [
+      "fintech",
+      "digital-payments",
+      "financial-inclusion"
+    ]
+  },
+  {
+    "id": "ai1",
+    "headline": "OpenAI and Apollo Hospitals Deploy Diagnostic AI Across Rural India",
+    "hook": "Thousands of villages with no doctor just got something almost as good.",
+    "summary": "A partnership between OpenAI and India's Apollo Hospitals network has deployed an AI-powered diagnostic screening tool to 4,200 rural health clinics across eight Indian states. Early data from a six-month pilot shows the system correctly flagged 94% of urgent referral cases in regions where the nearest specialist is often hours away.",
+    "detail": "OpenAI and Apollo Hospitals formally launched their AI diagnostic screening initiative on Wednesday, expanding a six-month pilot to 4,200 primary health clinics spanning Rajasthan, Madhya Pradesh, Odisha, Bihar, and four other states. The system, built on a multimodal model fine-tuned on over two million anonymized Indian patient records, allows community health workers with minimal medical training to input symptoms, vital signs, and smartphone photographs of skin conditions or eye abnormalities. The AI then generates a triage recommendation, flagging cases that require urgent specialist referral. During the pilot phase covering 600 clinics, the tool achieved a 94% sensitivity rate for urgent referrals, meaning it correctly identified the vast majority of cases needing immediate attention. Critically, its false-negative rate for serious conditions like diabetic retinopathy and tuberculosis indicators was below 2%, according to results published in The Lancet Digital Health. Dr. Priya Venkatesh, Apollo's chief medical informatics officer, emphasized that the system is designed to assist rather than replace clinical judgment, with every flagged case still reviewed by a remote physician. India's Ministry of Health has contributed partial funding and regulatory fast-tracking, viewing the project as a scalable answer to the country's shortage of roughly 600,000 doctors. Privacy advocates have raised questions about long-term data governance, though Apollo says all patient records are encrypted and stored domestically under India's Data Protection Act. The WHO has expressed interest in studying the deployment as a template for sub-Saharan Africa.",
+    "keyFacts": [
+      "Deployed across 4,200 rural clinics in eight Indian states",
+      "94% sensitivity rate for urgent specialist referrals",
+      "Less than 2% false-negative rate for serious conditions"
+    ],
+    "quote": "Dr. Priya Venkatesh of Apollo Hospitals stressed that the AI acts as a force multiplier for health workers, not a replacement, and that every flagged case undergoes human physician review.",
+    "category": "AI",
+    "source": "MIT Technology Review",
+    "timeAgo": "5 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?rural-india,healthcare,clinic,medical-worker,tablet-computer",
+    "imageAlt": "A community health worker in rural India using a tablet for patient screening",
+    "imageGradient": [
+      "#7209B7",
+      "#3A0CA3"
+    ],
+    "imageEmoji": "🏥",
+    "trending": true,
+    "impact": "global",
+    "readTime": "7 min read",
+    "region": "Asia",
+    "tags": [
+      "healthcare-AI",
+      "diagnostics",
+      "global-health"
+    ]
+  },
+  {
+    "id": "ai2",
+    "headline": "US Copyright Office Rules AI-Generated Code Eligible for Partial Protection",
+    "hook": "The legal fiction that only humans can be authors just developed a crack.",
+    "summary": "The US Copyright Office issued new guidance granting partial copyright protection to software containing AI-generated code, provided a human developer demonstrates meaningful creative control over the final work. The ruling draws a distinction between fully autonomous AI output and human-directed AI-assisted creation.",
+    "detail": "The United States Copyright Office released a 74-page guidance document on Monday establishing that software incorporating AI-generated code may receive copyright protection when a human author exercises sufficient creative direction and editorial judgment over the output. The ruling, which has been anticipated since the Office began its AI inquiry in 2023, creates a three-tier framework distinguishing between fully autonomous generation, which remains unprotectable, AI-assisted creation with substantial human direction, which qualifies for protection, and hybrid works where protection applies only to the human-authored portions. Major technology companies including Microsoft, Google, and Anthropic submitted extensive comments during the consultation period, and the guidance largely reflects an industry consensus that had been forming around the concept of meaningful human control. Intellectual property attorneys have noted that the framework bears resemblance to the work-for-hire doctrine, treating the AI as a sophisticated tool rather than an author. Sarah Chen, a technology law professor at Stanford, observed that the ruling provides much-needed clarity for the estimated 70% of professional developers who now use AI coding assistants daily. Open-source advocates have raised concerns that the framework could complicate licensing for projects that blend human and AI contributions without clear attribution. The guidance takes effect in 60 days and will be subject to a two-year review period. Several pending federal court cases involving AI-generated visual art could test the boundaries of this new framework in the coming months.",
+    "keyFacts": [
+      "Three-tier framework for AI-generated code copyright eligibility",
+      "Requires demonstration of meaningful human creative control",
+      "Takes effect in 60 days with a two-year review period"
+    ],
+    "quote": "Stanford professor Sarah Chen called the ruling pragmatic, noting it gives legal footing to the millions of developers already shipping AI-assisted code every day.",
+    "category": "AI",
+    "source": "Ars Technica",
+    "timeAgo": "12 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?courtroom,legal-documents,washington-dc,gavel,technology",
+    "imageAlt": "Legal documents and a gavel on a desk in a federal office setting",
+    "imageGradient": [
+      "#7209B7",
+      "#3A0CA3"
+    ],
+    "imageEmoji": "⚖️",
+    "trending": true,
+    "impact": "national",
+    "readTime": "6 min read",
+    "region": "North America",
+    "tags": [
+      "copyright",
+      "AI-law",
+      "software-development"
+    ]
+  },
+  {
+    "id": "ai3",
+    "headline": "Kenyan Startup Builds AI That Translates Between 43 African Languages in Real Time",
+    "hook": "A continent with 2,000 languages just got a lot smaller.",
+    "summary": "Nairobi-based Lugha AI has launched a real-time translation engine covering 43 African languages, including several with fewer than one million speakers that are absent from major commercial platforms. The system was trained on a community-sourced dataset of over 12 million parallel sentences contributed by native speakers across 18 countries.",
+    "detail": "Lugha AI, a startup founded in Nairobi in 2023, publicly launched its real-time translation engine on Tuesday at the AfricaTech conference in Kigali, covering 43 languages spanning every major African language family. The platform includes support for widely spoken languages like Swahili, Yoruba, and Amharic, but its distinguishing feature is coverage of lower-resource languages such as Dholuo, Tshivenda, and Wolof that remain absent from Google Translate and similar services. The underlying model was trained on a dataset of 12.4 million parallel sentence pairs crowdsourced from over 28,000 native speakers across 18 countries through a paid contributor program that distributed roughly 2.3 million dollars directly to participants. Early benchmarks conducted by the University of Cape Town's language technology lab show the system achieves BLEU scores competitive with commercial offerings for high-resource language pairs and substantially outperforms them for lower-resource ones. The African Union's digital transformation office has entered discussions with Lugha about potential integration into the pan-African e-government platform. CEO Amina Odhiambo described the motivation as fundamentally about dignity, arguing that people should not have to abandon their mother tongue to access digital services. The startup raised a 14-million-dollar Series A round led by TLcom Capital, with participation from the Gates Foundation. Linguists have noted that the community-sourced approach also serves as a preservation mechanism for languages facing decline.",
+    "keyFacts": [
+      "Covers 43 African languages including several with under one million speakers",
+      "Trained on 12.4 million sentence pairs sourced from 28,000 native speakers",
+      "Contributors across 18 countries were paid a combined $2.3 million"
+    ],
+    "quote": "CEO Amina Odhiambo said the mission is rooted in the belief that no one should have to leave their language behind to participate in the digital world.",
+    "category": "AI",
+    "source": "Rest of World",
+    "timeAgo": "2 days ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?nairobi,tech-startup,african-engineer,computer-screen,coworking",
+    "imageAlt": "Software engineers working at a technology startup office in Nairobi",
+    "imageGradient": [
+      "#7209B7",
+      "#3A0CA3"
+    ],
+    "imageEmoji": "🌍",
+    "trending": false,
+    "impact": "global",
+    "readTime": "6 min read",
+    "region": "Africa",
+    "tags": [
+      "NLP",
+      "translation",
+      "language-preservation"
+    ]
+  },
+  {
+    "id": "sci1",
+    "headline": "James Webb Telescope Detects Water-Bearing Atmosphere on Rocky Exoplanet",
+    "hook": "For the first time, we can see rain clouds on a world orbiting another star.",
+    "summary": "NASA's James Webb Space Telescope has confirmed the presence of water vapor in the atmosphere of LHS 1140 b, a rocky super-Earth in the habitable zone of a red dwarf star 49 light-years away. The detection marks the first definitive identification of water in the atmosphere of a potentially habitable rocky world.",
+    "detail": "An international team of astronomers using the James Webb Space Telescope announced on Wednesday the confirmed detection of water vapor in the atmosphere of LHS 1140 b, a rocky exoplanet 1.7 times Earth's diameter orbiting within the habitable zone of its host star. The findings, published in Nature Astronomy, are based on four separate transit observations using Webb's NIRSpec instrument, which captured consistent absorption signatures at wavelengths characteristic of water. LHS 1140 b orbits a quiet red dwarf star 49 light-years from Earth, and its relatively low stellar activity makes atmospheric retention more plausible than for planets around more volatile stars. Lead author Dr. Charles Cadieux of the Universite de Montreal described the signal as unambiguous, noting the team spent over a year ruling out instrumental artifacts and stellar contamination before publishing. The detection does not confirm liquid water on the surface, but atmospheric models suggest conditions could support it depending on the planet's greenhouse effect and rotational dynamics. This result has been a primary science goal since Webb's launch in December 2021, and it significantly narrows the search space for potentially habitable worlds. The team plans follow-up observations in late 2026 to search for carbon dioxide and methane, which together with water could indicate biological processes. The European Space Agency's upcoming PLATO mission, launching in 2027, is expected to characterize dozens of similar targets building on Webb's discoveries.",
+    "keyFacts": [
+      "Water vapor detected on a rocky planet 49 light-years from Earth",
+      "First definitive water detection in a habitable-zone rocky exoplanet atmosphere",
+      "Four separate transit observations confirmed the signal"
+    ],
+    "quote": "Lead researcher Dr. Charles Cadieux of the Universite de Montreal said the team spent a year eliminating every alternative explanation before they allowed themselves to believe the signal was real.",
+    "category": "Science",
+    "source": "Nature",
+    "timeAgo": "8 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?deep-space,exoplanet,telescope,stars,nebula,astronomy",
+    "imageAlt": "Artistic rendering of a rocky exoplanet with atmospheric haze orbiting a red star",
+    "imageGradient": [
+      "#00B4D8",
+      "#0077B6"
+    ],
+    "imageEmoji": "🔭",
+    "trending": true,
+    "impact": "global",
+    "readTime": "7 min read",
+    "region": "Global",
+    "tags": [
+      "exoplanets",
+      "JWST",
+      "astrobiology"
+    ]
+  },
+  {
+    "id": "sci2",
+    "headline": "CERN Confirms Exotic Particle That Challenges the Standard Model of Physics",
+    "hook": "Physicists just found something that shouldn't exist — and they're thrilled about it.",
+    "summary": "Researchers at CERN's Large Hadron Collider have confirmed the detection of an exotic tetraquark particle whose mass and decay properties deviate significantly from Standard Model predictions. The anomaly, observed with five-sigma confidence, could point toward new fundamental forces or undiscovered particles.",
+    "detail": "The LHCb collaboration at CERN announced on Thursday the confirmed observation of an exotic tetraquark state, designated X(6900), whose measured mass and decay width diverge from all current Standard Model calculations by more than five standard deviations, the gold standard for discovery claims in particle physics. The particle, composed of two charm quarks and two charm antiquarks, was first hinted at in 2020 data but has now been confirmed with the full Run 3 dataset comprising over 14 inverse femtobarns of collision data. What makes this observation remarkable is not the tetraquark itself but rather that its properties do not match any of the theoretical frameworks physicists have developed to describe how quarks bind together. Dr. Marcella Bona, the LHCb spokesperson, explained that the discrepancy could suggest an unknown interaction or binding mechanism beyond the strong nuclear force as currently understood. Theoretical physicists at Princeton and Kyoto University have already posted preprints proposing explanations ranging from diquark clustering effects to the influence of a hypothetical light mediator particle. The finding does not overturn the Standard Model but strongly suggests it is incomplete in a specific and testable way, which is precisely the kind of crack experimentalists have been searching for since the Higgs boson discovery in 2012. CERN plans dedicated runs in 2027 with upgraded detector components to probe the anomaly with even greater precision. The result has reignited discussions about the necessity of next-generation collider projects such as the proposed Future Circular Collider.",
+    "keyFacts": [
+      "Five-sigma confirmation of anomalous tetraquark properties",
+      "Mass and decay width deviate from all Standard Model predictions",
+      "Based on full Run 3 dataset of 14 inverse femtobarns"
+    ],
+    "quote": "LHCb spokesperson Dr. Marcella Bona noted that finding something the Standard Model cannot explain is not a crisis but exactly the kind of clue physicists need to build deeper theories.",
+    "category": "Science",
+    "source": "New Scientist",
+    "timeAgo": "1 day ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?particle-physics,cern,collider,tunnel,science-laboratory",
+    "imageAlt": "The underground tunnel of CERN's Large Hadron Collider with detector equipment",
+    "imageGradient": [
+      "#00B4D8",
+      "#0077B6"
+    ],
+    "imageEmoji": "⚛️",
+    "trending": true,
+    "impact": "global",
+    "readTime": "7 min read",
+    "region": "Europe",
+    "tags": [
+      "particle-physics",
+      "CERN",
+      "standard-model"
+    ]
+  },
+  {
+    "id": "world1",
+    "headline": "Kenya Launches Africa's Largest Geothermal Plant, Powering 2 Million Homes",
+    "hook": "A volcanic valley once feared by locals is now the engine of a continent's energy revolution.",
+    "summary": "Kenya has officially opened the Olkaria VI geothermal facility in the Rift Valley, making it the largest of its kind in Africa. The plant adds 350 megawatts to the national grid, enough to supply roughly two million households with clean electricity.",
+    "detail": "Kenyan President William Ruto inaugurated the Olkaria VI geothermal power station on Friday, calling it a milestone in Africa's push toward energy independence. The facility, located in Hell's Gate National Park in Nakuru County, taps into underground steam reservoirs heated by the East African Rift's volcanic activity. Kenya now generates over 90 percent of its electricity from renewable sources, a figure that puts many industrialized nations to shame. Energy analysts at the International Renewable Energy Agency say the project could serve as a blueprint for Ethiopia, Djibouti, and Tanzania, which sit along the same geothermal corridor. Construction took four years and involved over 6,000 local workers, many of whom were trained in specialized drilling techniques for the first time. The $1.4 billion project was financed through a mix of African Development Bank loans and private investment from Japanese and Icelandic firms. Nearby Maasai communities, initially skeptical, have benefited from new roads, schools, and a revenue-sharing agreement that directs 2 percent of plant profits to local governance. Electricity prices in the region are expected to drop by 15 percent over the next two years. Officials say Olkaria VII is already in the planning stages, with completion targeted for 2029.",
+    "keyFacts": [
+      "Olkaria VI adds 350 MW to Kenya's grid, powering ~2 million homes",
+      "Kenya now generates over 90% of electricity from renewables",
+      "The $1.4 billion project created 6,000 local construction jobs"
+    ],
+    "quote": "According to IRENA's Africa director, Kenya has proven that geothermal energy is not a niche technology but a scalable, baseload power source that other rift nations should urgently pursue.",
+    "category": "World",
+    "source": "Reuters",
+    "timeAgo": "3 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?geothermal,steam,volcanic,valley,power,Kenya",
+    "imageAlt": "Steam rising from geothermal vents in Kenya's Rift Valley at dawn",
+    "imageGradient": [
+      "#1A936F",
+      "#114B5F"
+    ],
+    "imageEmoji": "🌋",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Africa",
+    "tags": [
+      "renewable energy",
+      "geothermal",
+      "Kenya"
+    ]
+  },
+  {
+    "id": "world2",
+    "headline": "Japan Earthquake Triggers Tsunami Warnings Across Pacific Rim",
+    "hook": "Residents in six countries were jolted awake by emergency alerts they hoped would never come.",
+    "summary": "A 7.4-magnitude earthquake struck off the coast of Hokkaido early Sunday, triggering tsunami advisories for Japan, Russia's Kuril Islands, and parts of the western Pacific. Waves of up to 1.5 meters were observed in coastal Hokkaido, and evacuations are underway in several low-lying towns.",
+    "detail": "The earthquake struck at 4:17 a.m. local time at a depth of 28 kilometers in the Pacific Ocean, approximately 90 kilometers east of Nemuro, Hokkaido. Japan's Meteorological Agency immediately issued its highest-level tsunami warning for eastern Hokkaido and downgraded it to an advisory within two hours as wave heights stabilized. Coastal cities including Kushiro and Nemuro reported minor structural damage, shattered windows, and widespread power outages affecting an estimated 40,000 households. The Pacific Tsunami Warning Center extended advisories to Russia, Alaska's Aleutian Islands, and Hawaii as a precaution, though significant wave activity outside Japan has not materialized. Seismologists at the University of Tokyo noted that the quake occurred along the Kuril-Kamchatka subduction zone, one of the most seismically active boundaries on Earth and the source of several historic mega-quakes. Emergency shelters in Hokkaido received roughly 12,000 evacuees by mid-morning, with Japan's Self-Defense Forces deploying helicopters for aerial damage assessment. No fatalities have been reported, which officials attribute to Japan's rigorous early-warning infrastructure and public preparedness drills conducted twice yearly. Aftershocks above magnitude 5.0 are expected to continue for several days. Prime Minister Ishiba convened an emergency cabinet meeting and urged residents to remain vigilant.",
+    "keyFacts": [
+      "7.4-magnitude quake struck 90 km east of Nemuro, Hokkaido at 4:17 a.m.",
+      "Tsunami waves of up to 1.5 meters observed; 12,000 evacuees sheltered",
+      "No fatalities reported; 40,000 households experienced power outages"
+    ],
+    "quote": "A seismologist at the University of Tokyo emphasized that this event is a stark reminder that the Kuril-Kamchatka zone remains capable of producing far larger earthquakes, and complacency is the real danger.",
+    "category": "World",
+    "source": "AP News",
+    "timeAgo": "45 minutes ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?tsunami,ocean,waves,Japan,coast,emergency",
+    "imageAlt": "Powerful ocean waves crashing against a Japanese coastal seawall at dawn",
+    "imageGradient": [
+      "#1A936F",
+      "#114B5F"
+    ],
+    "imageEmoji": "🌊",
+    "trending": true,
+    "impact": "global",
+    "readTime": "4 min read",
+    "region": "Asia",
+    "tags": [
+      "earthquake",
+      "tsunami",
+      "Japan"
+    ]
+  },
+  {
+    "id": "world3",
+    "headline": "Colombia and FARC Dissidents Reach Historic Ceasefire Agreement",
+    "hook": "After 18 months of secret talks in Havana, the last major armed group in the Americas may finally lay down its weapons.",
+    "summary": "Colombia's government and the Estado Mayor Central, the largest FARC dissident faction, have signed a bilateral ceasefire in Havana. The agreement, brokered with Cuban and Norwegian mediation, includes provisions for rural development and a transitional justice framework.",
+    "detail": "Colombian President Gustavo Petro announced the ceasefire on Saturday from Havana, flanked by Cuban President Diaz-Canel and Norway's foreign minister. The agreement halts hostilities between government forces and an estimated 3,500 EMC fighters operating primarily in Colombia's Pacific coast and Amazon border regions. It builds on the original 2016 peace deal, which ended the main FARC insurgency but left splinter groups active in remote areas plagued by coca cultivation and illegal gold mining. Under the new accord, EMC combatants will begin congregating in designated zones within 90 days, while the government commits to investing $2 billion in infrastructure, healthcare, and crop substitution programs in affected departments. Human rights organizations, including the International Crisis Group, have cautiously welcomed the deal but warned that previous ceasefires collapsed due to poor implementation and the influence of drug trafficking networks. Families in rural Cauca and Narino departments, long caught in the crossfire, expressed guarded hope in interviews with local media. The United Nations verification mission in Colombia will oversee compliance, deploying 200 additional monitors. Analysts say the deal could significantly reduce Colombia's homicide rate, which spiked in dissident-controlled territories. The next phase of negotiations, focused on drug policy reform, is scheduled to begin in July.",
+    "keyFacts": [
+      "Ceasefire covers ~3,500 EMC fighters in Pacific and Amazon regions",
+      "$2 billion committed to rural infrastructure and crop substitution",
+      "UN will deploy 200 additional monitors to verify compliance"
+    ],
+    "quote": "The International Crisis Group's Latin America director cautioned that the real test is not signing the ceasefire but sustaining it through the difficult months of demobilization when spoilers have every incentive to derail progress.",
+    "category": "World",
+    "source": "Al Jazeera",
+    "timeAgo": "6 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?Colombia,peace,jungle,river,negotiation,diplomacy",
+    "imageAlt": "Lush Colombian jungle valley with a river winding through mountain terrain",
+    "imageGradient": [
+      "#1A936F",
+      "#114B5F"
+    ],
+    "imageEmoji": "🕊️",
+    "trending": false,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Latin America",
+    "tags": [
+      "peace process",
+      "Colombia",
+      "ceasefire"
+    ]
+  },
+  {
+    "id": "pol1",
+    "headline": "U.S. Senate Passes Landmark AI Regulation Bill in Bipartisan Vote",
+    "hook": "Silicon Valley lobbyists spent $400 million trying to stop it — and lost.",
+    "summary": "The U.S. Senate voted 64-33 to pass the Artificial Intelligence Accountability Act, the most comprehensive federal AI regulation to date. The bill mandates transparency requirements, algorithmic audits, and creates a new federal oversight body for high-risk AI systems.",
+    "detail": "After months of contentious debate, the Senate passed the AI Accountability Act with unexpected bipartisan support, uniting progressive Democrats concerned about civil liberties with conservative Republicans worried about national security implications of unregulated AI. The legislation requires companies deploying AI in healthcare, criminal justice, employment, and financial services to conduct annual independent audits and publish impact assessments. It also establishes the Federal AI Safety Commission, a new agency with subpoena power modeled on the Nuclear Regulatory Commission, which will be tasked with licensing high-risk AI systems before deployment. Technology industry groups, which spent a record $400 million lobbying against the bill according to OpenSecrets data, called the legislation overly broad and warned it could push AI innovation overseas. Supporters countered that the European Union's AI Act, now two years into implementation, has not stifled European tech investment and has instead attracted companies seeking regulatory clarity. Senator Maria Cantwell, the bill's lead sponsor, pointed to recent incidents involving AI-generated deepfakes in state elections and an algorithmic hiring scandal at a major retailer as evidence that self-regulation has failed. Civil liberties organizations praised the inclusion of a private right of action allowing individuals harmed by AI systems to sue. The bill now moves to the House, where Speaker Johnson has signaled openness to a floor vote before the August recess. If signed into law, the first compliance deadlines would take effect in January 2027.",
+    "keyFacts": [
+      "Passed 64-33 with bipartisan support; creates Federal AI Safety Commission",
+      "Mandates annual audits for AI in healthcare, justice, employment, and finance",
+      "Tech industry spent a record $400 million lobbying against the bill"
+    ],
+    "quote": "Senator Cantwell argued on the floor that self-regulation is a fantasy when billions of dollars incentivize speed over safety, and that Americans deserve the same algorithmic protections Europeans already enjoy.",
+    "category": "Politics",
+    "source": "The Washington Post",
+    "timeAgo": "2 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?senate,capitol,Washington,government,legislation,dome",
+    "imageAlt": "The U.S. Capitol building dome illuminated against a twilight sky",
+    "imageGradient": [
+      "#4A4E69",
+      "#22223B"
+    ],
+    "imageEmoji": "🏛️",
+    "trending": true,
+    "impact": "global",
+    "readTime": "6 min read",
+    "region": "North America",
+    "tags": [
+      "AI regulation",
+      "U.S. Congress",
+      "technology policy"
+    ]
+  },
+  {
+    "id": "pol2",
+    "headline": "France's Snap Election Delivers Hung Parliament, Coalition Talks Begin",
+    "hook": "For the third time in two years, France woke up on a Monday with no idea who would govern it.",
+    "summary": "France's snap legislative election has produced a deeply fragmented National Assembly, with no bloc winning a governing majority. President Macron's centrist alliance finished third behind the left-wing New Popular Front and Marine Le Pen's National Rally, plunging the country into another round of coalition negotiations.",
+    "detail": "French voters delivered an inconclusive verdict on Sunday, scattering seats across at least five major political groupings in the 577-seat National Assembly. The New Popular Front, a coalition spanning social democrats and greens, won approximately 195 seats, while National Rally and its allies secured around 185. Macron's Ensemble alliance, which called the election after losing a confidence vote in March, was reduced to roughly 140 seats. The result leaves France in constitutional limbo, as no obvious coalition commands a majority, and the ideological distances between the blocs make grand bargains difficult. Political scientists at Sciences Po note that this is the most fragmented parliament France has seen under the Fifth Republic, a system designed to produce stable majorities. President Macron is constitutionally required to appoint a prime minister who can survive a no-confidence vote, but finding such a figure may take weeks. Financial markets reacted cautiously, with the CAC 40 dipping 1.8 percent in early Monday trading and French government bond yields widening slightly against German benchmarks. European Union officials in Brussels expressed concern that prolonged political instability in the bloc's second-largest economy could delay negotiations on the EU's next budget framework. Voter turnout reached 71 percent, the highest for a legislative election since 1997, suggesting deep public engagement with the country's political direction. Coalition talks are expected to begin formally on Tuesday.",
+    "keyFacts": [
+      "New Popular Front leads with ~195 seats; National Rally ~185; Ensemble ~140",
+      "Most fragmented French parliament under the Fifth Republic",
+      "Voter turnout hit 71%, highest for a legislative election since 1997"
+    ],
+    "quote": "A leading political analyst at Sciences Po observed that France has entered uncharted institutional territory, where the constitution assumes a clear winner but the voters have refused to provide one.",
+    "category": "Politics",
+    "source": "The Economist",
+    "timeAgo": "4 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?Paris,election,French,tricolor,flag,parliament",
+    "imageAlt": "French tricolor flags waving outside the National Assembly in Paris",
+    "imageGradient": [
+      "#4A4E69",
+      "#22223B"
+    ],
+    "imageEmoji": "🇫🇷",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Europe",
+    "tags": [
+      "France",
+      "elections",
+      "European politics"
+    ]
+  },
+  {
+    "id": "pol3",
+    "headline": "Saudi Arabia Grants Women the Right to Travel Without Male Guardian Approval",
+    "hook": "A decree that took one royal signature to issue had taken decades of quiet activism to achieve.",
+    "summary": "Saudi Arabia's Crown Prince Mohammed bin Salman has issued a royal decree eliminating the requirement for women to obtain male guardian permission for domestic and international travel. The reform, effective immediately, applies to all women over the age of 18.",
+    "detail": "The decree, published in the official gazette on Saturday, abolishes one of the last pillars of the male guardianship system that has governed Saudi women's legal autonomy for generations. Under the previous framework, women of any age needed permission from a father, husband, brother, or even a son to obtain or renew a passport, book a flight, or check into a hotel. Human rights organizations including Human Rights Watch, which have documented guardianship abuses for over a decade, called the reform overdue but significant, noting it brings Saudi Arabia closer to international norms. The move is widely seen as part of Crown Prince Mohammed bin Salman's Vision 2030 modernization agenda, which has sought to diversify the economy and attract foreign investment by softening the kingdom's ultraconservative social image. Women's workforce participation in Saudi Arabia has already risen from 17 percent in 2017 to 34 percent in 2025, and economists say removing travel restrictions could further accelerate that trend. Conservative religious scholars privately opposed the change, but no public clerical dissent has emerged, reflecting the crown prince's consolidation of power over the religious establishment. Saudi women celebrated on social media, with the Arabic hashtag translating to freedom of movement trending for over 12 hours. The reform does not address other guardianship provisions related to marriage and child custody, which activists say remain urgent priorities. International airlines operating in Saudi Arabia have been instructed to update their verification procedures within 30 days.",
+    "keyFacts": [
+      "Women over 18 no longer need male guardian approval for any travel",
+      "Saudi female workforce participation has risen from 17% to 34% since 2017",
+      "Reform follows the 2018 lifting of the female driving ban"
+    ],
+    "quote": "A Human Rights Watch researcher described the decree as a genuine breakthrough for millions of Saudi women, while stressing that the guardianship system's remaining provisions on marriage and custody must be the next frontier.",
+    "category": "Politics",
+    "source": "Financial Times",
+    "timeAgo": "1 day ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?Saudi,Arabia,women,airport,travel,modern",
+    "imageAlt": "A modern airport terminal with passengers walking through a sunlit corridor",
+    "imageGradient": [
+      "#4A4E69",
+      "#22223B"
+    ],
+    "imageEmoji": "✈️",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Middle East",
+    "tags": [
+      "women's rights",
+      "Saudi Arabia",
+      "reform"
+    ]
+  },
+  {
+    "id": "biz1",
+    "headline": "TSMC Breaks Ground on $65 Billion Chip Megafactory in Arizona",
+    "hook": "The factory floor will be larger than the Pentagon — and it still might not be enough.",
+    "summary": "Taiwan Semiconductor Manufacturing Company has begun construction on its third and largest Arizona fabrication complex, a $65 billion facility that will produce the world's most advanced 1.4-nanometer chips.",
+    "detail": "TSMC Chairman Mark Liu joined U.S. Commerce Secretary in a groundbreaking ceremony outside Phoenix on Friday, unveiling a facility that will span over 11 million square feet when completed in 2029. The megafactory will house six fabrication units producing chips at the 1.4-nanometer node, a technology generation that does not yet exist in mass production anywhere in the world. The investment brings TSMC's total committed spending in Arizona to over $100 billion across three phases, creating an estimated 15,000 direct jobs and tens of thousands more in the surrounding supply chain. Semiconductor industry analysts at TechInsights say the facility represents a strategic inflection point, potentially reducing America's dependence on Asian chip production from 87 percent to below 70 percent by 2031. The project has not been without controversy: construction costs have repeatedly exceeded projections, and TSMC initially struggled with American labor productivity and regulatory requirements that differ sharply from those in Taiwan. Local officials in the Phoenix metropolitan area are grappling with the infrastructure demands of rapid growth, including water usage in an already drought-stressed region. TSMC has committed to using recycled water for 70 percent of fabrication needs and invested $500 million in a dedicated water reclamation facility. Apple, Nvidia, and AMD have already signed preliminary agreements to reserve capacity at the new plant.",
+    "keyFacts": [
+      "$65 billion investment — largest single foreign manufacturing project in U.S. history",
+      "Will produce cutting-edge 1.4nm chips; completion targeted for 2029",
+      "Expected to create 15,000 direct jobs in the Phoenix metropolitan area"
+    ],
+    "quote": "A TechInsights senior analyst noted that this factory does not just make chips — it reshapes the global semiconductor supply chain's center of gravity, and every major economy will feel the effects.",
+    "category": "Business",
+    "source": "Bloomberg",
+    "timeAgo": "5 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?semiconductor,factory,construction,Arizona,desert,technology",
+    "imageAlt": "Massive industrial construction site in the Arizona desert under a wide sky",
+    "imageGradient": [
+      "#FF6B35",
+      "#F7931E"
+    ],
+    "imageEmoji": "🏗️",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "North America",
+    "tags": [
+      "semiconductors",
+      "TSMC",
+      "manufacturing"
+    ]
+  },
+  {
+    "id": "biz2",
+    "headline": "India's UPI Payment System Goes Live Across 12 African Nations",
+    "hook": "The technology that let a billion Indians ditch cash just crossed an ocean.",
+    "summary": "India's Unified Payments Interface has launched commercial operations in 12 African countries through a partnership between NPCI International and the African Union's financial integration body.",
+    "detail": "India's National Payments Corporation of India International and the African Continental Free Trade Area secretariat formally launched UPI services on Monday in Nigeria, Kenya, Ghana, South Africa, Tanzania, Ethiopia, Rwanda, Senegal, Cote d'Ivoire, Uganda, Egypt, and Morocco. The system allows users to send and receive payments instantly using a mobile phone number or QR code, with transaction fees capped at 0.3 percent compared to the 3 to 9 percent typically charged by existing remittance services. In India, UPI processes over 14 billion transactions monthly and has been credited with bringing hundreds of millions of people into the formal financial system. African fintech leaders say the technology could leapfrog traditional banking infrastructure much as mobile phone networks leapfrogged landlines a generation ago. The World Bank estimates that reducing remittance costs across Africa by just two percentage points would free up $5 billion annually for households. Nigeria, the continent's largest economy, is expected to see the fastest adoption given its existing mobile money culture and a diaspora that sends home over $20 billion in remittances each year. India has positioned the UPI expansion as part of its broader South-South diplomacy strategy, offering the technology on a nonprofit licensing basis. The system will initially support transactions in local currencies and the Indian rupee, with plans to add more currency pairs by late 2026.",
+    "keyFacts": [
+      "UPI now live in 12 African nations, targeting 400 million unbanked adults",
+      "Transaction fees capped at 0.3%, versus 3-9% for traditional remittances",
+      "India processes over 14 billion UPI transactions per month domestically"
+    ],
+    "quote": "The World Bank's Africa chief economist said that affordable instant payments are the single most powerful lever for financial inclusion on the continent, and India's willingness to share this infrastructure could be transformative.",
+    "category": "Business",
+    "source": "Financial Times",
+    "timeAgo": "7 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?mobile,payment,Africa,market,smartphone,digital",
+    "imageAlt": "A vendor in an African market accepting a mobile phone payment from a customer",
+    "imageGradient": [
+      "#FF6B35",
+      "#F7931E"
+    ],
+    "imageEmoji": "📱",
+    "trending": false,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Africa",
+    "tags": [
+      "fintech",
+      "digital payments",
+      "India-Africa"
+    ]
+  },
+  {
+    "id": "biz3",
+    "headline": "Global Shipping Rates Plunge 40% as Red Sea Traffic Fully Resumes",
+    "hook": "The cost of moving a container from Shanghai to Rotterdam just fell to its lowest point in three years.",
+    "summary": "Global container shipping rates have fallen sharply after commercial traffic through the Red Sea and Suez Canal returned to pre-crisis levels for the first time since Houthi attacks disrupted the route in late 2023.",
+    "detail": "The Drewry World Container Index, a benchmark for global freight costs, fell to $1,420 per 40-foot container on the Shanghai-to-Rotterdam route last week, down from a peak of $4,800 during the height of the Red Sea crisis. The dramatic decline followed a sustained ceasefire in Yemen and a multinational naval escort agreement that has restored shipping insurers' confidence in the Suez Canal passage. For nearly two years, major carriers including Maersk, MSC, and CMA CGM rerouted vessels around the Cape of Good Hope, adding 10 to 14 days to Asia-Europe transit times and billions of dollars in fuel costs. Economists at Oxford Economics estimate the rerouting added 0.3 to 0.5 percentage points to eurozone inflation during 2024 and 2025. The rate collapse is now creating a different kind of pain, as shipping companies that ordered new vessels during the crisis face overcapacity and shrinking margins. For consumers, the impact should become visible in retail prices within three to six months, particularly for electronics, furniture, and fast fashion that rely heavily on Asia-Europe sea freight. Port authorities in Rotterdam and Singapore report vessel traffic volumes are already 8 percent above 2023 levels. Industry executives warn that rates may overshoot to unsustainably low levels, potentially triggering another cycle of carrier consolidation.",
+    "keyFacts": [
+      "Shanghai-Rotterdam rate fell to $1,420/container from $4,800 peak",
+      "Red Sea disruptions added an estimated 0.3-0.5% to eurozone inflation",
+      "Vessel traffic through Suez is 8% above pre-crisis 2023 levels"
+    ],
+    "quote": "Oxford Economics' head of global trade research argued that the unwinding of the Red Sea premium should provide meaningful disinflationary pressure just as central banks debate the timing of further rate cuts.",
+    "category": "Business",
+    "source": "Reuters",
+    "timeAgo": "30 minutes ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?container,ship,cargo,port,ocean,freight",
+    "imageAlt": "A massive container ship loaded with colorful cargo passing through a shipping lane",
+    "imageGradient": [
+      "#FF6B35",
+      "#F7931E"
+    ],
+    "imageEmoji": "🚢",
+    "trending": false,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Global",
+    "tags": [
+      "shipping",
+      "global trade",
+      "inflation"
+    ]
+  },
+  {
+    "id": "health1",
+    "headline": "Universal Malaria Vaccine Enters Final Trials Across Sub-Saharan Africa",
+    "hook": "A single-dose vaccine could end humanity's oldest killer — and the results so far are staggering.",
+    "summary": "A next-generation malaria vaccine developed by Oxford and the Serum Institute of India has entered Phase III trials across six African nations. Early data shows 82% efficacy in children under five, the demographic most devastated by the disease.",
+    "detail": "The R21/Matrix-M malaria vaccine has begun its final-stage clinical trials in Ghana, Kenya, Burkina Faso, Tanzania, Mali, and Mozambique, enrolling over 25,000 children. Unlike its predecessor RTS,S, this single-dose formulation dramatically simplifies delivery in remote areas where cold-chain logistics remain a barrier. Malaria kills roughly 600,000 people annually, the vast majority of them African children under five, making it one of the most persistent public health crises of the modern era. Dr. Amina Toure, an epidemiologist at the WHO Regional Office for Africa, noted that a vaccine with efficacy above 80 percent would be transformational and could save hundreds of thousands of lives per year within a decade. The Serum Institute has committed to producing 200 million doses annually at roughly two dollars per dose, a price point that puts mass deployment within reach of even the poorest nations. Field workers in rural Burkina Faso report that community uptake has been enthusiastic, with parents walking hours to reach vaccination sites. If Phase III data holds, the WHO is expected to issue a recommendation for broad use by early 2027, potentially reshaping the fight against a disease that has plagued humanity for millennia.",
+    "keyFacts": [
+      "82% efficacy observed in children under five in early data",
+      "25,000 children enrolled across six African nations",
+      "Serum Institute plans 200 million doses per year at $2 per dose"
+    ],
+    "quote": "Dr. Amina Toure of the WHO Africa office said a vaccine at this efficacy level could save hundreds of thousands of young lives annually within a decade.",
+    "category": "Health",
+    "source": "The Guardian",
+    "timeAgo": "3 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?vaccine,clinic,africa,children,medical,healthcare",
+    "imageAlt": "Health workers administering vaccines to children at an outdoor clinic in Africa",
+    "imageGradient": [
+      "#E63946",
+      "#C1121F"
+    ],
+    "imageEmoji": "💉",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Africa",
+    "tags": [
+      "malaria",
+      "vaccines",
+      "global health"
+    ]
+  },
+  {
+    "id": "health2",
+    "headline": "Japan Approves World's First AI-Powered Stroke Detection for Ambulances",
+    "hook": "Paramedics in Tokyo are diagnosing strokes before patients even reach the hospital.",
+    "summary": "Japan's health ministry has approved a portable AI diagnostic device that can detect strokes in ambulances with 94% accuracy. The technology, developed by a Kyoto-based startup, cuts critical treatment delays by an average of 47 minutes.",
+    "detail": "Japan's Ministry of Health, Labour and Welfare has granted regulatory approval to NeuraScan, a portable AI-powered imaging device designed to detect ischemic and hemorrhagic strokes during ambulance transport. The tablet-sized device uses a combination of near-infrared spectroscopy and machine learning to analyze brain blood flow patterns in under 90 seconds, alerting paramedics and hospital teams simultaneously. In a 14-month trial across Tokyo and Osaka, the system achieved 94% diagnostic accuracy and reduced the average time from symptom onset to treatment by 47 minutes — a margin that neurologists say can mean the difference between full recovery and permanent disability. Dr. Kenji Watanabe, chief of neurology at Kyoto University Hospital, explained that every minute of delay in stroke treatment results in the loss of roughly 1.9 million neurons, making speed the single most important factor in patient outcomes. Japan's aging population makes stroke a particularly urgent concern, with over 290,000 new cases annually. The device costs roughly $12,000 per unit, and Tokyo's fire department has already committed to equipping 400 ambulances by year's end. Several European health agencies have reportedly begun their own regulatory review processes after observing the Japanese trial data.",
+    "keyFacts": [
+      "94% diagnostic accuracy in detecting strokes during transport",
+      "Reduces treatment delay by an average of 47 minutes",
+      "Tokyo plans to equip 400 ambulances with the device by end of 2026"
+    ],
+    "quote": "Dr. Kenji Watanabe of Kyoto University Hospital noted that every minute of stroke treatment delay destroys nearly two million neurons, making this speed advantage potentially life-changing.",
+    "category": "Health",
+    "source": "NHK World",
+    "timeAgo": "7 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?ambulance,medical,technology,japan,emergency,hospital",
+    "imageAlt": "A modern ambulance equipped with advanced medical technology on a city street",
+    "imageGradient": [
+      "#E63946",
+      "#C1121F"
+    ],
+    "imageEmoji": "🧠",
+    "trending": true,
+    "impact": "national",
+    "readTime": "4 min read",
+    "region": "Asia",
+    "tags": [
+      "stroke",
+      "artificial intelligence",
+      "emergency medicine"
+    ]
+  },
+  {
+    "id": "health3",
+    "headline": "Antibiotic Resistance Deaths Surpass HIV Globally, WHO Report Warns",
+    "hook": "The WHO's latest numbers reveal a silent pandemic that is already killing more people than AIDS.",
+    "summary": "A major WHO report estimates that antimicrobial resistance directly caused 1.4 million deaths in 2025, surpassing HIV/AIDS as a leading infectious disease killer. The report calls for urgent investment in new antibiotics and stewardship programs.",
+    "detail": "The World Health Organization's 2026 Global Antimicrobial Resistance Report has confirmed what infectious disease experts long feared: drug-resistant bacteria are now directly responsible for more annual deaths than HIV/AIDS worldwide. The report attributes approximately 1.4 million deaths in 2025 directly to antibiotic-resistant infections, with an additional 4.7 million deaths associated with resistant pathogens as a contributing factor. South Asia and sub-Saharan Africa bear the heaviest burden, driven by limited access to diagnostics, widespread over-the-counter antibiotic sales, and underfunded hospital infection control. Dr. Haileyesus Getahun, the WHO's director for antimicrobial resistance, warned that without coordinated global action, resistance could cause 10 million deaths annually by 2050, a figure that would rival cancer. The pharmaceutical pipeline for new antibiotics remains alarmingly thin, with only 12 novel compounds currently in late-stage development — a fraction of what experts say is needed. The report highlights a few bright spots, including India's recent national action plan to restrict non-prescription antibiotic sales and Sweden's innovative subscription payment model for antibiotics, which guarantees manufacturers revenue regardless of sales volume. Public health advocates are now calling on G7 nations to establish a $4 billion global fund modeled on the structure that helped turn the tide against HIV.",
+    "keyFacts": [
+      "1.4 million deaths directly caused by antibiotic-resistant infections in 2025",
+      "Only 12 novel antibiotic compounds in late-stage development globally",
+      "WHO projects 10 million annual deaths by 2050 without intervention"
+    ],
+    "quote": "Dr. Haileyesus Getahun of the WHO warned that without coordinated global action, antimicrobial resistance could kill as many people as cancer does by mid-century.",
+    "category": "Health",
+    "source": "WHO",
+    "timeAgo": "1 day ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?bacteria,microscope,laboratory,petri,science,research",
+    "imageAlt": "Close-up of bacterial cultures growing in petri dishes in a research laboratory",
+    "imageGradient": [
+      "#E63946",
+      "#C1121F"
+    ],
+    "imageEmoji": "🦠",
+    "trending": false,
+    "impact": "global",
+    "readTime": "6 min read",
+    "region": "Global",
+    "tags": [
+      "antibiotic resistance",
+      "public health",
+      "WHO"
+    ]
+  },
+  {
+    "id": "culture1",
+    "headline": "Mexico City's Immersive Frida Kahlo AI Exhibition Draws Record Crowds",
+    "hook": "Visitors are having conversations with Frida — and leaving in tears.",
+    "summary": "A groundbreaking exhibition in Mexico City uses generative AI and immersive projection to let visitors interact with a digital recreation of Frida Kahlo. Over 400,000 tickets have sold in three weeks, making it the most attended cultural event in the city's history.",
+    "detail": "The Museo Nacional de Arte in Mexico City has launched an immersive exhibition that merges AI-driven conversation with 360-degree projection mapping to recreate the world of Frida Kahlo. Visitors enter rooms that transform into scenes from her paintings while a generative AI system, trained on Kahlo's letters, diaries, and interviews, responds to spoken questions in Spanish and Nahuatl. The exhibition, titled 'Frida Viva,' sold over 400,000 tickets in its first three weeks, shattering attendance records for any cultural event in the capital. Cultural critic Elena Poniatowska praised the exhibition for making Kahlo's inner world accessible to a younger generation but cautioned that AI recreations must be handled with deep respect for the artist's legacy and indigenous heritage. The technology was developed by a collaboration between Mexico's UNAM university and a Berlin-based immersive arts studio, marking a rare partnership between Latin American and European cultural institutions. What surprised organizers most was the emotional intensity of visitor reactions — museum staff report that many guests, particularly older Mexican women, have been moved to tears during the conversational segments. The exhibition runs through September and is expected to travel to Sao Paulo and Los Angeles.",
+    "keyFacts": [
+      "400,000 tickets sold in the first three weeks",
+      "AI responds in both Spanish and Nahuatl based on Kahlo's own writings",
+      "Joint project between Mexico's UNAM university and a Berlin arts studio"
+    ],
+    "quote": "Cultural critic Elena Poniatowska praised the show for reaching younger audiences but stressed that AI recreations of iconic figures must honor their heritage with deep respect.",
+    "category": "Culture",
+    "source": "Deutsche Welle",
+    "timeAgo": "5 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?immersive,art,exhibition,projection,colorful,museum",
+    "imageAlt": "Visitors standing inside a colorful immersive art projection in a darkened gallery",
+    "imageGradient": [
+      "#9B5DE5",
+      "#F15BB5"
+    ],
+    "imageEmoji": "🎨",
+    "trending": true,
+    "impact": "national",
+    "readTime": "4 min read",
+    "region": "Latin America",
+    "tags": [
+      "Frida Kahlo",
+      "immersive art",
+      "artificial intelligence"
+    ]
+  },
+  {
+    "id": "culture2",
+    "headline": "South Korea's Temple Stay Program Sees 300% Surge Among Gen Z Travelers",
+    "hook": "Forget hostels — thousands of young travelers are sleeping in 1,200-year-old Buddhist monasteries.",
+    "summary": "South Korea's centuries-old temple stay program has exploded in popularity among international travelers aged 18-30, with bookings tripling since 2024. Experts attribute the trend to growing demand for digital detox and meaningful travel experiences.",
+    "detail": "The Jogye Order of Korean Buddhism, which administers temple stay programs at over 130 monasteries nationwide, reported that international bookings from travelers under 30 surged by 300 percent between 2024 and early 2026. Participants spend one to three nights in working monasteries, following monastic routines that include pre-dawn meditation, vegetarian cooking, tea ceremonies, and periods of complete digital disconnection. The program, originally created in 2002 to accommodate visitors during the FIFA World Cup, has evolved into one of South Korea's most distinctive cultural offerings. Tourism researcher Dr. Park Soo-jin at Seoul National University observed that Gen Z travelers are increasingly rejecting performative travel in favor of experiences that offer stillness and self-reflection, a shift that traditional tourism models have been slow to accommodate. Templestay.com, the program's official platform, now offers pages in 11 languages and recently added a waiting list system after several popular mountain temples were fully booked months in advance. Monks at Haeinsa Temple, home to the UNESCO-listed Tripitaka Koreana woodblocks, say they have noticed young visitors arriving with acute symptoms of burnout and leaving with a visibly different energy. The Korean government has allocated additional funding to expand capacity, viewing the program as both a cultural preservation tool and a soft-power asset.",
+    "keyFacts": [
+      "300% increase in Gen Z international bookings since 2024",
+      "Over 130 monasteries participate in the program nationwide",
+      "The temple stay program was originally created for the 2002 FIFA World Cup"
+    ],
+    "quote": "Dr. Park Soo-jin of Seoul National University said Gen Z travelers are increasingly choosing stillness and self-reflection over performative travel experiences.",
+    "category": "Culture",
+    "source": "South China Morning Post",
+    "timeAgo": "12 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?buddhist,temple,korea,mountain,meditation,monastery",
+    "imageAlt": "A serene Buddhist temple nestled among forested mountains in South Korea",
+    "imageGradient": [
+      "#9B5DE5",
+      "#F15BB5"
+    ],
+    "imageEmoji": "🧘",
+    "trending": false,
+    "impact": "national",
+    "readTime": "5 min read",
+    "region": "Asia",
+    "tags": [
+      "temple stay",
+      "Gen Z travel",
+      "digital detox"
+    ]
+  },
+  {
+    "id": "sport1",
+    "headline": "Kenya's Kipchoge Mentors New Generation as Marathon World Record Falls",
+    "hook": "The new fastest human over 26.2 miles is 21 years old — and learned to run barefoot.",
+    "summary": "Ethiopian runner Berhanu Teshome, 21, has broken the men's marathon world record at the Rotterdam Marathon with a time of 1:59:38. The achievement was partly credited to a training partnership with retired legend Eliud Kipchoge.",
+    "detail": "Berhanu Teshome of Ethiopia crossed the finish line at the 2026 Rotterdam Marathon in 1 hour, 59 minutes, and 38 seconds, becoming the first person to officially break the two-hour marathon barrier in a sanctioned race. The 21-year-old, who grew up running barefoot to school in the Arsi Zone of Ethiopia's Oromia region, had trained for the past 18 months under the mentorship of retired Kenyan great Eliud Kipchoge. The record eclipses Kelvin Kiptum's previous mark of 2:00:35 set in Chicago in 2023, a record that stood through a period of immense tragedy after Kiptum's death in a car accident in early 2024. Kipchoge, who attended the race as a spectator, was seen embracing Teshome at the finish line in a moment that quickly went viral across social media. Dr. Yannis Pitsiladis, a professor of sport and exercise science at the University of Brighton, said the result validated years of research into pacing strategy and aerodynamic drafting formations, which were meticulously planned for this attempt. Rotterdam's flat course and cool April conditions provided near-ideal circumstances, but experts emphasize that Teshome's extraordinary VO2 max and running economy made the performance possible. The International Association of Athletics Federations has ratified the record, and Teshome is now expected to be the centerpiece of Ethiopia's Olympic marathon team for the 2028 Los Angeles Games.",
+    "keyFacts": [
+      "Official time of 1:59:38, the first sub-two-hour sanctioned marathon",
+      "Teshome trained under retired legend Eliud Kipchoge for 18 months",
+      "The 21-year-old is now the youngest men's marathon world record holder"
+    ],
+    "quote": "Professor Yannis Pitsiladis of the University of Brighton said the result validates years of research into pacing and drafting strategies for distance running.",
+    "category": "Sports",
+    "source": "BBC",
+    "timeAgo": "Just now",
+    "imageUrl": "https://source.unsplash.com/800x500/?marathon,runner,finish,line,athletics,crowd",
+    "imageAlt": "A marathon runner crossing the finish line with arms raised before cheering crowds",
+    "imageGradient": [
+      "#52B788",
+      "#1B4332"
+    ],
+    "imageEmoji": "🏃",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Europe",
+    "tags": [
+      "marathon",
+      "world record",
+      "athletics"
+    ]
+  },
+  {
+    "id": "sport2",
+    "headline": "Brazil Launches First Professional Women's Futsal League with Equal Pay",
+    "hook": "The country that gave the world futsal just made history — again.",
+    "summary": "Brazil's football confederation has launched the Liga Feminina de Futsal, the world's first fully professional women's futsal league with pay parity. Twelve teams across eight states will compete in the inaugural season starting in May 2026.",
+    "detail": "The Confederacao Brasileira de Futebol announced the creation of the Liga Feminina de Futsal, a 12-team professional league that will guarantee female athletes the same minimum salary and prize money as their male counterparts in the men's first division. Brazil, widely considered the birthplace of futsal, has long dominated the sport internationally but historically underfunded its women's programs, with many top female players forced to compete semi-professionally or seek contracts abroad. The new league will feature teams from eight states, with Sao Paulo, Rio de Janeiro, and Manaus among the host cities, and all matches will be broadcast on free-to-air television through a partnership with TV Globo. Former national team captain Amandinha, a six-time world futsal player of the year, called the league a dream she had fought for since she was a teenager playing on concrete courts in Recife. The CBF committed $18 million in funding for the first three seasons, drawn partly from new FIFA development grants aimed at growing women's sport globally. Sports economists at the Fundacao Getulio Vargas estimate the league could generate over 2,000 direct and indirect jobs in its first year. The inaugural match is scheduled for May 15 in Sao Paulo's Ginasio do Ibirapuera, with tickets already sold out.",
+    "keyFacts": [
+      "12 teams across 8 Brazilian states in the inaugural season",
+      "Full pay parity with the men's first division futsal league",
+      "$18 million in CBF funding committed for the first three seasons"
+    ],
+    "quote": "Six-time world futsal player of the year Amandinha described the league as a dream she had fought for since playing on concrete courts as a teenager in Recife.",
+    "category": "Sports",
+    "source": "ESPN",
+    "timeAgo": "2 days ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?futsal,women,sport,indoor,court,brazil",
+    "imageAlt": "Female futsal players competing intensely on an indoor court under bright lights",
+    "imageGradient": [
+      "#52B788",
+      "#1B4332"
+    ],
+    "imageEmoji": "⚽",
+    "trending": false,
+    "impact": "national",
+    "readTime": "4 min read",
+    "region": "Latin America",
+    "tags": [
+      "futsal",
+      "women's sport",
+      "equal pay"
+    ]
+  },
+  {
+    "id": "climate1",
+    "headline": "Australia's Great Barrier Reef Shows High Recovery After Three Cool Summers",
+    "hook": "Scientists expected to write an obituary — instead they're documenting a resurrection.",
+    "summary": "A major survey by the Australian Institute of Marine Science has found that 68% of monitored reef sections show significant coral regrowth following three consecutive La Nina-influenced summers.",
+    "detail": "The Australian Institute of Marine Science has released its annual Long-Term Monitoring Program report revealing that 68 percent of surveyed reef sections across the Great Barrier Reef recorded hard coral cover increases over the past three years. The recovery follows a period of devastating mass bleaching events in 2016, 2017, 2020, and 2022, which left many scientists deeply pessimistic about the reef's future. Three consecutive summers influenced by La Nina conditions brought cooler-than-average sea surface temperatures to the Coral Sea, providing a critical window for coral larvae to settle and grow. Marine biologist Dr. Tara Clark, lead author of the report, emphasized that while the data is genuinely encouraging, the reef remains extremely vulnerable to future marine heatwaves, which climate models predict will become more frequent as global temperatures continue to rise. The northern third of the reef, which suffered the most severe bleaching, is recovering more slowly than the central and southern sections, where some monitoring sites recorded coral cover above 40 percent for the first time in a decade. The report also credits expanded crown-of-thorns starfish control programs and improved agricultural runoff management in Queensland's coastal regions for supporting the recovery. Tourism operators in Cairns and the Whitsundays reported a surge in visitor interest following the news, with reef tour bookings up 35 percent compared to this time last year.",
+    "keyFacts": [
+      "68% of monitored reef sections show significant coral regrowth",
+      "Three consecutive La Nina summers provided cooler ocean conditions",
+      "Some central reef sites hit 40% coral cover for the first time in a decade"
+    ],
+    "quote": "Lead author Dr. Tara Clark said the data is genuinely encouraging but stressed the reef remains extremely vulnerable to future marine heatwaves driven by climate change.",
+    "category": "Climate",
+    "source": "BBC",
+    "timeAgo": "9 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?coral,reef,underwater,ocean,marine,tropical",
+    "imageAlt": "Vibrant coral formations teeming with marine life on the Great Barrier Reef",
+    "imageGradient": [
+      "#2D6A4F",
+      "#40916C"
+    ],
+    "imageEmoji": "🪸",
+    "trending": true,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Oceania",
+    "tags": [
+      "Great Barrier Reef",
+      "coral recovery",
+      "marine conservation"
+    ]
+  },
+  {
+    "id": "climate2",
+    "headline": "Morocco's Giant Solar Farm Now Powers Two Million Homes Across North Africa",
+    "hook": "The Sahara is doing what it always did best — only now it powers cities instead of burying them.",
+    "summary": "The Noor-Midelt solar complex in Morocco has reached full operational capacity, generating enough electricity to power two million homes and export surplus energy to Spain and Portugal.",
+    "detail": "Morocco's Noor-Midelt solar complex, located at the edge of the Sahara Desert in the Draa-Tafilalet region, has officially reached its full 1.8 gigawatt capacity, making it the largest concentrated solar power installation in the world. The facility combines photovoltaic panels with molten-salt thermal storage, allowing it to generate electricity for up to seven hours after sunset — a critical advantage over conventional solar farms. The project, which cost approximately $3.4 billion and was financed through a partnership between the Moroccan government, the World Bank, and the African Development Bank, has created over 4,000 permanent jobs in a region historically marked by high unemployment. Morocco's energy minister, Leila Benali, described the project as proof that African nations can lead the global energy transition rather than merely follow it. A 700-megawatt undersea cable connecting Morocco to the Iberian Peninsula now exports surplus electricity to Spain and Portugal during peak production hours, making Morocco the first African country to become a net energy exporter to Europe. Environmental groups have largely praised the project but flagged concerns about water usage for cleaning panels in an arid region, prompting the facility's operators to invest in robotic dry-cleaning systems. The Moroccan government has announced plans to replicate the model with a second major installation in the southern Guelmim-Oued Noun region, targeting completion by 2030.",
+    "keyFacts": [
+      "1.8 gigawatt capacity — the world's largest concentrated solar power facility",
+      "Molten-salt storage provides electricity for 7 hours after sunset",
+      "Morocco is now the first African country to export energy to Europe via undersea cable"
+    ],
+    "quote": "Morocco's energy minister Leila Benali described the project as proof that African nations can lead the global energy transition rather than merely follow it.",
+    "category": "Climate",
+    "source": "The Guardian",
+    "timeAgo": "18 hours ago",
+    "imageUrl": "https://source.unsplash.com/800x500/?solar,panels,desert,sahara,renewable,energy",
+    "imageAlt": "Vast rows of solar panels stretching across the Saharan desert at golden hour",
+    "imageGradient": [
+      "#2D6A4F",
+      "#40916C"
+    ],
+    "imageEmoji": "☀️",
+    "trending": false,
+    "impact": "global",
+    "readTime": "5 min read",
+    "region": "Africa",
+    "tags": [
+      "solar energy",
+      "Morocco",
+      "renewable power"
+    ]
+  }
+]
