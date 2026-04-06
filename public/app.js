@@ -60,6 +60,7 @@ function showScreen(name) {
   customizeScreen.classList.toggle('active', name === 'customize');
   feedbackScreen.classList.toggle('active', name === 'feedback');
   $('feedback-fab').style.display = name === 'feedback' ? 'none' : '';
+  $('refresh-btn').style.display = name === 'feed' ? '' : 'none';
   closeDrawer();
 }
 
@@ -550,7 +551,7 @@ $('refresh-btn')?.addEventListener('click', loadNews);
 $('drawer-refresh-btn')?.addEventListener('click', () => { closeDrawer(); loadNews(); });
 
 // ── Navigate to End → Feedback ────────────────────────────────────────────────
-function goToFeedback() { closeDrawer(); showScreen('feedback'); }
+function goToFeedback() { closeDrawer(); closeArticle(); showScreen('feedback'); }
 $('end-btn')?.addEventListener('click', goToFeedback);
 $('feedback-fab')?.addEventListener('click', goToFeedback);
 $('feedback-back')?.addEventListener('click', () => showScreen(state.previousScreen || 'feed'));

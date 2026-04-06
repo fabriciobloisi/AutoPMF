@@ -73,19 +73,21 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
     </button>
 
+    <!-- ── Persistent Global Nav Bar ── -->
+    <header class="nav-bar" id="global-nav">
+      <button class="icon-btn" id="menu-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="nav-title">AutoPMF</h1>
+      <div class="nav-right">
+        <button class="icon-btn" id="refresh-btn" aria-label="Refresh">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+      </div>
+    </header>
+
     <!-- ── Feed Screen ── -->
     <section class="screen feed-screen active" id="feed-screen">
-      <header class="nav-bar">
-        <button class="icon-btn" id="menu-btn" aria-label="Menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <h1 class="nav-title">AutoPMF</h1>
-        <div class="nav-right">
-          <button class="icon-btn" id="refresh-btn" aria-label="Refresh">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          </button>
-        </div>
-      </header>
 
       <!-- Category filter bar -->
       <div class="category-bar" id="category-bar">
@@ -153,13 +155,13 @@
 
     <!-- ── Customize Screen ── -->
     <section class="screen customize-screen" id="customize-screen">
-      <header class="nav-bar">
+      <div class="sub-bar">
         <button class="icon-btn back-btn" id="customize-back" aria-label="Back">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <h1 class="nav-title">Customize</h1>
+        <span class="sub-bar-title">Customize</span>
         <button class="icon-btn text-btn" id="customize-save">Done</button>
-      </header>
+      </div>
 
       <div class="customize-body">
 
@@ -245,13 +247,13 @@
 
     <!-- ── Feedback Screen ── -->
     <section class="screen feedback-screen" id="feedback-screen">
-      <header class="nav-bar">
+      <div class="sub-bar">
         <button class="icon-btn back-btn" id="feedback-back" aria-label="Back">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <h1 class="nav-title">Feedback</h1>
+        <span class="sub-bar-title">Feedback</span>
         <div style="width:40px"></div>
-      </header>
+      </div>
 
       <div class="feedback-body">
         <div class="feedback-card">

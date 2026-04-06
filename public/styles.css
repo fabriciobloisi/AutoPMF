@@ -57,6 +57,10 @@ input:focus, textarea:focus, button:focus { outline: none; }
     height: calc(52px + env(safe-area-inset-top));
     padding-top: env(safe-area-inset-top);
   }
+  #global-nav ~ .screen,
+  .article-modal {
+    top: calc(52px + env(safe-area-inset-top));
+  }
   .drawer { padding-top: env(safe-area-inset-top); }
 }
 
@@ -102,14 +106,16 @@ input:focus, textarea:focus, button:focus { outline: none; }
   overflow: hidden;
   background: #fff;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Persistent Feedback FAB ── */
 .feedback-fab {
   position: absolute;
   top: 6px;
-  right: 8px;
-  z-index: 6;
+  right: 56px;
+  z-index: 11;
   width: 40px;
   height: 40px;
   display: flex;
@@ -127,12 +133,29 @@ input:focus, textarea:focus, button:focus { outline: none; }
 
 /* ── Screens ── */
 .screen {
-  position: absolute; inset: 0;
+  position: absolute; left: 0; right: 0; bottom: 0;
+  top: 0;
   display: none;
   flex-direction: column;
   background: #f2f2f7;
 }
 .screen.active { display: flex; }
+.feedback-screen { z-index: 9; }
+
+/* ── Sub Bar (secondary navigation inside sub-screens) ── */
+.sub-bar {
+  height: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid #e5e5e7;
+  flex-shrink: 0;
+}
+.sub-bar-title {
+  font-size: 15px; font-weight: 600; color: #000; letter-spacing: -0.2px;
+}
 
 /* ── Nav Bar ── */
 .nav-bar {
@@ -144,7 +167,12 @@ input:focus, textarea:focus, button:focus { outline: none; }
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   flex-shrink: 0;
-  z-index: 5;
+  z-index: 10;
+  position: relative;
+}
+/* Screens sit below the persistent global nav */
+#global-nav ~ .screen {
+  top: 52px;
 }
 .nav-center {
   display: flex; align-items: center; gap: 6px;
@@ -1075,8 +1103,8 @@ input:focus, textarea:focus, button:focus { outline: none; }
 
 /* ── Article Modal — Full Screen ── */
 .article-modal {
-  position: absolute; inset: 0;
-  z-index: 30;
+  position: absolute; top: 52px; left: 0; right: 0; bottom: 0;
+  z-index: 8;
   display: none;
   flex-direction: column;
   background: #fff;
