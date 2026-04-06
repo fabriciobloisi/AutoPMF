@@ -1101,6 +1101,7 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .img-fallback {
   position: absolute; inset: 0;
   border-radius: inherit;
+  display: none;
 }
 /* Instagram full-cover */
 .card-instagram .card-real-img,
