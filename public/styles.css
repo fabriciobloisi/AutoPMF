@@ -554,9 +554,16 @@ input:focus, textarea:focus, button:focus { outline: none; }
   animation: fade-in 0.3s ease-out;
 }
 .card-cnn-small:active { background: #f2f2f7; }
-.cnn-small-emoji {
-  font-size: 28px;
-  margin-bottom: 6px;
+.cnn-small-thumb {
+  width: 100%; height: 90px;
+  position: relative; overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.cnn-small-thumb .card-real-img,
+.cnn-small-thumb .img-fallback {
+  border-radius: 8px;
+  width: 100%; height: 100%; object-fit: cover;
 }
 .cnn-small-cat {
   font-size: 9px; font-weight: 700;
@@ -588,9 +595,16 @@ input:focus, textarea:focus, button:focus { outline: none; }
   animation: fade-in 0.3s ease-out;
 }
 .cnn-list-item:active { background: #f2f2f7; }
-.cnn-list-emoji {
-  font-size: 28px;
+.cnn-list-thumb {
+  width: 72px; height: 72px;
+  position: relative; overflow: hidden;
+  border-radius: 10px;
   flex-shrink: 0;
+}
+.cnn-list-thumb .card-real-img,
+.cnn-list-thumb .img-fallback {
+  border-radius: 10px;
+  width: 100%; height: 100%; object-fit: cover;
 }
 .cnn-list-content { flex: 1; min-width: 0; }
 .cnn-list-cat {
@@ -987,81 +1001,140 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .feedback-msg.success { background: #d4f4dd; color: #006a2e; }
 .feedback-msg.error   { background: #ffe0e0; color: #c41e1e; }
 
-/* ── Article Modal ── */
+/* ── Real image helpers ── */
+.card-real-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.img-fallback {
+  position: absolute; inset: 0;
+  border-radius: inherit;
+}
+/* Instagram full-cover */
+.card-instagram .card-real-img,
+.card-instagram .img-fallback { border-radius: 0; }
+/* TikTok full-cover */
+.card-tiktok .card-real-img,
+.card-tiktok .img-fallback { border-radius: 0; }
+/* CNN featured full-cover */
+.cnn-featured .card-real-img,
+.cnn-featured .img-fallback { border-radius: 0; }
+/* Video thumb */
+.video-thumb .card-real-img,
+.video-thumb .img-fallback { border-radius: 0; }
+
+/* ── Article Modal — Full Screen ── */
 .article-modal {
   position: absolute; inset: 0;
   z-index: 30;
   display: none;
-  align-items: flex-end;
-  justify-content: center;
-}
-.article-modal.open { display: flex; animation: modal-in 0.2s ease-out; }
-@keyframes modal-in { from { opacity: 0; } to { opacity: 1; } }
-.article-modal .modal-backdrop {
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,0.5);
-}
-.article-sheet {
-  position: relative;
-  width: 100%;
-  max-height: 82%;
+  flex-direction: column;
   background: #fff;
-  border-radius: 20px 20px 0 0;
-  padding: 14px 18px 24px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  animation: sheet-up 0.3s cubic-bezier(0.32, 0.72, 0, 1);
 }
-@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.article-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 14px;
+.article-modal.open {
+  display: flex;
+  animation: slide-up-full 0.32s cubic-bezier(0.32, 0.72, 0, 1);
 }
-.article-thumb {
-  width: 64px; height: 64px;
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
+@keyframes slide-up-full {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* Hero image */
+.article-hero {
+  height: 260px;
   flex-shrink: 0;
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  background: #1c1c1e;
 }
-.article-meta {
-  display: flex; flex-direction: column; gap: 5px;
+.article-hero .card-real-img {
+  border-radius: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.article-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+}
+.article-close-btn {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+  transition: background 0.15s;
+}
+.article-close-btn:active { background: rgba(0,0,0,0.65); }
+.article-hero-badge {
+  position: absolute;
+  bottom: 14px; left: 16px;
+  display: flex; align-items: center; gap: 8px;
+  z-index: 2;
 }
 .article-cat-badge {
   font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px;
-  color: #636366;
-  background: #f2f2f7;
-  padding: 3px 9px;
-  border-radius: 5px;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  padding: 4px 10px;
+  border-radius: 6px;
   display: inline-block;
 }
-.article-source {
-  font-size: 12px; color: #8e8e93;
+.article-trending-badge {
+  font-size: 10px; font-weight: 700;
+  color: #fff;
+  background: #ff3b30;
+  padding: 4px 9px;
+  border-radius: 6px;
 }
+
+/* Scrollable article body */
+.article-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 18px 40px;
+  background: #fff;
+}
+.article-body::-webkit-scrollbar { display: none; }
 .article-headline {
-  font-size: 18px; font-weight: 800;
+  font-size: 20px; font-weight: 800;
   color: #000;
-  line-height: 1.3;
+  line-height: 1.28;
   margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+.article-meta-row {
+  margin-bottom: 14px;
+}
+.article-source-lbl {
+  font-size: 12px; color: #8e8e93; font-weight: 500;
 }
 .article-summary {
-  font-size: 15px;
-  color: #3c3c43;
-  line-height: 1.5;
-  margin-bottom: 12px;
+  font-size: 16px;
+  color: #1c1c1e;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  font-weight: 500;
 }
 .article-divider {
   height: 0.5px;
   background: #e5e5e7;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .article-detail {
-  font-size: 14px;
-  color: #636366;
-  line-height: 1.6;
-  margin-bottom: 18px;
+  font-size: 15px;
+  color: #3c3c43;
+  line-height: 1.7;
+  margin-bottom: 24px;
 }
 .article-ask-row {
   display: flex; align-items: center; gap: 8px;

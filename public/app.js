@@ -172,11 +172,52 @@ function renderFeed() {
   }
 }
 
-// ── Helper: gradient style ────────────────────────────────────────────────────
+// ── Helpers: image & gradient ─────────────────────────────────────────────────
 function gradStyle(item) {
   const g = item.imageGradient && item.imageGradient.length === 2
     ? item.imageGradient : ['#636e72', '#2d3436'];
   return `background: linear-gradient(135deg, ${g[0]}, ${g[1]});`;
+}
+
+// Returns HTML for a real photo with gradient fallback
+function imgHtml(item, extraClass = '') {
+  const g = item.imageGradient && item.imageGradient.length === 2
+    ? item.imageGradient : ['#636e72', '#2d3436'];
+  const url = item.imageUrl || '';
+  if (url) {
+    return `<img class="card-real-img ${extraClass}" src="${esc(url)}" alt="${esc(item.imageAlt || item.headline || '')}"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-fallback" style="background:linear-gradient(135deg,${g[0]},${g[1]})"></div>`;
+  }
+  return `<div class="img-fallback" style="background:linear-gradient(135deg,${g[0]},${g[1]})"></div>`;
+}
+
+// Sets the hero image of the article modal
+function setHeroImg(item) {
+  const heroEl = $('article-hero');
+  // Remove old img/fallback (keep close btn, overlay, badge)
+  heroEl.querySelectorAll('.card-real-img, .img-fallback').forEach(el => el.remove());
+  const g = item.imageGradient && item.imageGradient.length === 2
+    ? item.imageGradient : ['#636e72', '#2d3436'];
+  if (item.imageUrl) {
+    const img = document.createElement('img');
+    img.className = 'card-real-img';
+    img.src = item.imageUrl;
+    img.alt = item.imageAlt || item.headline || '';
+    img.onerror = () => {
+      img.style.display = 'none';
+      const fb = document.createElement('div');
+      fb.className = 'img-fallback';
+      fb.style.cssText = `background:linear-gradient(135deg,${g[0]},${g[1]})`;
+      heroEl.insertBefore(fb, heroEl.firstChild);
+    };
+    heroEl.insertBefore(img, heroEl.firstChild);
+  } else {
+    const fb = document.createElement('div');
+    fb.className = 'img-fallback';
+    fb.style.cssText = `background:linear-gradient(135deg,${g[0]},${g[1]})`;
+    heroEl.insertBefore(fb, heroEl.firstChild);
+  }
 }
 
 // ── TEXT MODE ─────────────────────────────────────────────────────────────────
@@ -188,8 +229,7 @@ function renderTextMode() {
     card.className = 'card-text';
     card.innerHTML = `
       <div class="card-thumb">
-        <div class="card-thumb-gradient" style="${gradStyle(item)}"></div>
-        <span style="position:relative;z-index:1;font-size:30px">${esc(item.imageEmoji)}</span>
+        ${imgHtml(item)}
       </div>
       <div class="card-content">
         <div class="card-cat-row">
@@ -220,9 +260,8 @@ function renderInstagramMode() {
     const card = document.createElement('div');
     card.className = 'card-instagram';
     card.innerHTML = `
-      <div class="insta-gradient" style="${gradStyle(item)}"></div>
+      ${imgHtml(item, 'insta-bg-img')}
       <div class="insta-overlay"></div>
-      <div class="insta-emoji">${esc(item.imageEmoji)}</div>
       <div class="insta-content">
         <div class="insta-cat">${esc(item.category)}</div>
         <div class="insta-headline">${esc(item.headline)}</div>
@@ -254,11 +293,8 @@ function renderTikTokMode() {
   const card = document.createElement('div');
   card.className = 'card-tiktok';
   card.innerHTML = `
-    <div class="tiktok-bg" style="${gradStyle(item)}"></div>
+    ${imgHtml(item, 'tiktok-bg-img')}
     <div class="tiktok-overlay"></div>
-    <div class="tiktok-emoji-wrap">
-      <div class="tiktok-emoji">${esc(item.imageEmoji)}</div>
-    </div>
     <div class="tiktok-content">
       <div class="tiktok-cat">${esc(item.category)}</div>
       <div class="tiktok-headline">${esc(item.headline)}</div>
@@ -350,9 +386,8 @@ function renderCnnMode() {
   const featEl = document.createElement('div');
   featEl.className = 'cnn-featured';
   featEl.innerHTML = `
-    <div class="cnn-feat-gradient" style="${gradStyle(featured)}"></div>
+    ${imgHtml(featured)}
     <div class="cnn-feat-overlay"></div>
-    <div class="cnn-feat-emoji">${esc(featured.imageEmoji)}</div>
     <div class="cnn-feat-content">
       <div class="cnn-feat-badge">${featured.trending ? '🔥 Top Story' : esc(featured.category)}</div>
       <div class="cnn-feat-headline">${esc(featured.headline)}</div>
@@ -374,7 +409,7 @@ function renderCnnMode() {
       const cell = document.createElement('div');
       cell.className = 'card-cnn-small';
       cell.innerHTML = `
-        <div class="cnn-small-emoji">${esc(item.imageEmoji)}</div>
+        <div class="cnn-small-thumb">${imgHtml(item)}</div>
         <div class="cnn-small-cat">${esc(item.category)}</div>
         <div class="cnn-small-headline">${esc(item.headline)}</div>
         <div class="cnn-small-footer">${esc(item.source)} · ${esc(item.timeAgo)}</div>
@@ -396,7 +431,7 @@ function renderCnnMode() {
       const listItem = document.createElement('div');
       listItem.className = 'cnn-list-item';
       listItem.innerHTML = `
-        <div class="cnn-list-emoji">${esc(item.imageEmoji)}</div>
+        <div class="cnn-list-thumb">${imgHtml(item)}</div>
         <div class="cnn-list-content">
           <div class="cnn-list-cat">${esc(item.category)} · ${esc(item.region || '')}</div>
           <div class="cnn-list-headline">${esc(item.headline)}</div>
@@ -421,8 +456,7 @@ function renderVideoMode() {
     const duration = `${mins}:${String(Math.floor(Math.random()*59)).padStart(2,'0')}`;
     card.innerHTML = `
       <div class="video-thumb">
-        <div class="video-thumb-gradient" style="${gradStyle(item)}"></div>
-        <div class="video-emoji">${esc(item.imageEmoji)}</div>
+        ${imgHtml(item)}
         <div class="video-play-btn">
           <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
         </div>
@@ -442,17 +476,19 @@ function renderVideoMode() {
   });
 }
 
-// ── Article Detail Modal ──────────────────────────────────────────────────────
+// ── Article Detail (Full Screen) ──────────────────────────────────────────────
 function openArticle(item) {
   state.activeArticle = item;
 
-  // Populate header thumb
-  const thumbEl = $('article-thumb');
-  thumbEl.innerHTML = `
-    <div style="position:absolute;inset:0;border-radius:14px;${gradStyle(item)}"></div>
-    <span style="position:relative;z-index:1;font-size:28px">${esc(item.imageEmoji)}</span>
-  `;
+  // Hero image
+  setHeroImg(item);
+
+  // Category + trending badges
   $('article-cat').textContent = item.category || '';
+  const trendBadge = $('article-trending');
+  trendBadge.style.display = item.trending ? '' : 'none';
+
+  // Text content
   $('article-source-time').textContent = `${item.source || ''} · ${item.timeAgo || ''} · ${item.readTime || ''}`;
   $('article-headline').textContent = item.headline || '';
   $('article-summary').textContent = item.summary || '';
@@ -465,7 +501,7 @@ function openArticle(item) {
   $('ask-response').textContent = '';
 
   articleModal.classList.add('open');
-  articleSheet.scrollTop = 0;
+  $('article-body').scrollTop = 0;
 }
 
 function closeArticle() {
@@ -473,7 +509,7 @@ function closeArticle() {
   state.activeArticle = null;
 }
 
-$('article-backdrop').addEventListener('click', closeArticle);
+$('article-close-btn').addEventListener('click', closeArticle);
 
 // Ask Claude about the article
 $('ask-send-btn').addEventListener('click', askClaude);
