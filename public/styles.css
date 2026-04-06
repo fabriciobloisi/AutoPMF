@@ -1193,7 +1193,7 @@ input:focus, textarea:focus, button:focus { outline: none; }
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 20px 18px 40px;
+  padding: 20px 18px 20px;
   background: #fff;
 }
 .article-body::-webkit-scrollbar { display: none; }
@@ -1232,12 +1232,26 @@ input:focus, textarea:focus, button:focus { outline: none; }
   line-height: 1.7;
   margin-bottom: 24px;
 }
+.article-ask-footer {
+  flex-shrink: 0;
+  padding: 10px 18px 14px;
+  background: #fff;
+  border-top: 1px solid #e5e5ea;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+.ask-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #007aff;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
 .article-ask-row {
   display: flex; align-items: center; gap: 8px;
   background: #f2f2f7;
   border-radius: 22px;
   padding: 6px 6px 6px 14px;
-  margin-bottom: 10px;
 }
 #ask-input {
   flex: 1;

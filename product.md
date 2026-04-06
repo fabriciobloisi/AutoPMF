@@ -30,7 +30,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 4. Article Detail View
 - Full-screen modal with hero image, category/trending badges
 - Rich content: headline, source + time + read-time, summary, long-form detail
-- **Ask Claude** — users can ask follow-up questions about any article and get an inline AI response
+- **Ask Claude** — sticky footer bar at the bottom of every article with a labeled "ASK CLAUDE" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses
 
 ### 5. Personalization & Customization
 - **Topics** — select preferred categories to bias the feed
@@ -120,3 +120,4 @@ _Each cycle records what changed in this file and why._
 | 0 | 2026-04-06 | Initial product definition extracted from app code | Baseline — separated product spec from feedback mechanism |
 | 3 | 2026-04-06 | Removed all emoji from trending badges; replaced with clean uppercase "TRENDING" text. Removed imageEmoji from schema. Added professional badge styling rule. | User feedback (2/10): fire emoji felt unprofessional. Tags should be clean, typographic, no emoji. |
 | 4 | 2026-04-06 | Added max 20-char rule for source names (use abbreviations). All footer/source lines forced to single-line with CSS nowrap + ellipsis. | User feedback (3/10): long publisher names cause footer to wrap to two lines. |
+| 5 | 2026-04-06 | Moved Ask Claude to sticky footer bar with "ASK CLAUDE" label. Always visible at bottom of article view. | User feedback (4/10): Ask Claude was hidden, users couldn't find it. |

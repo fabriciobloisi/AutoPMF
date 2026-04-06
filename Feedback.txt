@@ -272,3 +272,283 @@ Comments: The name of the publisher is sometimes causing the final line to be tw
 Suggestion: Make sure the last line in the article is always one line
 
 ── AUTOLOOP ITERATION 4 ── 2026-04-06 ──────────────────────────────
+── 2026-04-06T12:20:03.773Z ──────────────────────────────
+Grade: 3/10
+Comments: I did not liked it very much
+Suggestion: EVery news should have images. Godo images make the news better to read
+When you click in a news, it should show full screen, with nice images
+We should have more customization features
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T14:45:00Z
+Entries processed: 1
+Average NPS this batch: 3.0/10
+Cumulative NPS trend: baseline (first iteration)
+
+Themes:
+- Visual quality: Absence of real images made the app feel unfinished
+- Reading experience: No full-screen article view felt like a missing core feature
+- Personalisation: Users want more control over what news they see
+
+Top complaints:
+1. No images on news cards (or broken/missing images)
+2. Clicking a news item didn't open a proper full-screen view
+3. Limited ability to customise topics, depth, and style
+
+Top suggestions:
+1. Every news item must have a good, relevant image
+2. Full-screen article view with hero image when tapping a card
+3. More customisation options (topics, region, style, depth)
+
+Decision: Iteration 1 already addressed the surface issues (images, full-screen, basic customisation).
+Iteration 2 goes deeper: added hook field to drive card click-through, keyFacts for quick scanning,
+quote for expert credibility, impact classification, inverted-pyramid detail structure,
+geographic diversity mandate, positivity balance, international source variety,
+stricter Unsplash keyword rules, and a truncation-prevention rule for large batches.
+─────────────────────────────────────────────────────────
+
+── 2026-04-06T13:22:03Z — No Feedback in last Loop
+
+── 2026-04-06T13:34:10Z — No Feedback in last Loop
+── 2026-04-06T14:01:27.042Z ──────────────────────────────
+Grade: 5/10
+Comments: (none)
+Suggestion: Tem muito poucos noticias. Algo como 15. Para mim deveria ter 100 quando vc começa
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T16:10:00Z
+Entries processed: 1
+Average NPS this batch: 5.0/10
+Cumulative NPS trend: UP (+2.0 vs previous batch of 3.0/10)
+
+Themes:
+- Volume: User felt 8 articles was too sparse; wants a much larger feed
+
+Top complaints:
+1. Too few news articles — wants 100 on initial load
+
+Top suggestions:
+1. Start with at least 15-100 articles
+
+Decision: Raised default article count from 8 to 15. Raised server max cap from 20 to 100
+(users can now set count up to 100 in Customize). Expanded default category distribution
+to accommodate 15 articles with a wildcard category for surprise/delight.
+─────────────────────────────────────────────────────────
+── 2026-04-06T12:20:03.773Z ──────────────────────────────
+Grade: 3/10
+Comments: I did not liked it very much
+Suggestion: EVery news should have images. Godo images make the news better to read
+When you click in a news, it should show full screen, with nice images
+We should have more customization features
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T14:45:00Z
+Entries processed: 1
+Average NPS this batch: 3.0/10
+Cumulative NPS trend: baseline (first iteration)
+
+Themes:
+- Visual quality: Absence of real images made the app feel unfinished
+- Reading experience: No full-screen article view felt like a missing core feature
+- Personalisation: Users want more control over what news they see
+
+Top complaints:
+1. No images on news cards (or broken/missing images)
+2. Clicking a news item didn't open a proper full-screen view
+3. Limited ability to customise topics, depth, and style
+
+Top suggestions:
+1. Every news item must have a good, relevant image
+2. Full-screen article view with hero image when tapping a card
+3. More customisation options (topics, region, style, depth)
+
+Decision: Iteration 1 already addressed the surface issues (images, full-screen, basic customisation).
+Iteration 2 goes deeper: added hook field to drive card click-through, keyFacts for quick scanning,
+quote for expert credibility, impact classification, inverted-pyramid detail structure,
+geographic diversity mandate, positivity balance, international source variety,
+stricter Unsplash keyword rules, and a truncation-prevention rule for large batches.
+─────────────────────────────────────────────────────────
+
+── 2026-04-06T13:22:03Z — No Feedback in last Loop
+
+── 2026-04-06T13:34:10Z — No Feedback in last Loop
+── 2026-04-06T14:01:27.042Z ──────────────────────────────
+Grade: 5/10
+Comments: (none)
+Suggestion: Tem muito poucos noticias. Algo como 15. Para mim deveria ter 100 quando vc começa
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T16:10:00Z
+Entries processed: 1
+Average NPS this batch: 5.0/10
+Cumulative NPS trend: UP (+2.0 vs previous batch of 3.0/10)
+
+Themes:
+- Volume: User felt 8 articles was too sparse; wants a much larger feed
+
+Top complaints:
+1. Too few news articles — wants 100 on initial load
+
+Top suggestions:
+1. Start with at least 15-100 articles
+
+Decision: Raised default article count from 8 to 15. Raised server max cap from 20 to 100
+(users can now set count up to 100 in Customize). Expanded default category distribution
+to accommodate 15 articles with a wildcard category for surprise/delight.
+─────────────────────────────────────────────────────────
+── 2026-04-06T17:33:33.394Z ──────────────────────────────
+Grade: 2/10
+Comments: I don't like the fire emoji
+Suggestion: make the tags more professional
+
+── AUTOLOOP ITERATION 3 ── 2026-04-06 ──────────────────────────────
+── 2026-04-06T12:20:03.773Z ──────────────────────────────
+Grade: 3/10
+Comments: I did not liked it very much
+Suggestion: EVery news should have images. Godo images make the news better to read
+When you click in a news, it should show full screen, with nice images
+We should have more customization features
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T14:45:00Z
+Entries processed: 1
+Average NPS this batch: 3.0/10
+Cumulative NPS trend: baseline (first iteration)
+
+Themes:
+- Visual quality: Absence of real images made the app feel unfinished
+- Reading experience: No full-screen article view felt like a missing core feature
+- Personalisation: Users want more control over what news they see
+
+Top complaints:
+1. No images on news cards (or broken/missing images)
+2. Clicking a news item didn't open a proper full-screen view
+3. Limited ability to customise topics, depth, and style
+
+Top suggestions:
+1. Every news item must have a good, relevant image
+2. Full-screen article view with hero image when tapping a card
+3. More customisation options (topics, region, style, depth)
+
+Decision: Iteration 1 already addressed the surface issues (images, full-screen, basic customisation).
+Iteration 2 goes deeper: added hook field to drive card click-through, keyFacts for quick scanning,
+quote for expert credibility, impact classification, inverted-pyramid detail structure,
+geographic diversity mandate, positivity balance, international source variety,
+stricter Unsplash keyword rules, and a truncation-prevention rule for large batches.
+─────────────────────────────────────────────────────────
+
+── 2026-04-06T13:22:03Z — No Feedback in last Loop
+
+── 2026-04-06T13:34:10Z — No Feedback in last Loop
+── 2026-04-06T14:01:27.042Z ──────────────────────────────
+Grade: 5/10
+Comments: (none)
+Suggestion: Tem muito poucos noticias. Algo como 15. Para mim deveria ter 100 quando vc começa
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T16:10:00Z
+Entries processed: 1
+Average NPS this batch: 5.0/10
+Cumulative NPS trend: UP (+2.0 vs previous batch of 3.0/10)
+
+Themes:
+- Volume: User felt 8 articles was too sparse; wants a much larger feed
+
+Top complaints:
+1. Too few news articles — wants 100 on initial load
+
+Top suggestions:
+1. Start with at least 15-100 articles
+
+Decision: Raised default article count from 8 to 15. Raised server max cap from 20 to 100
+(users can now set count up to 100 in Customize). Expanded default category distribution
+to accommodate 15 articles with a wildcard category for surprise/delight.
+─────────────────────────────────────────────────────────
+── 2026-04-06T12:20:03.773Z ──────────────────────────────
+Grade: 3/10
+Comments: I did not liked it very much
+Suggestion: EVery news should have images. Godo images make the news better to read
+When you click in a news, it should show full screen, with nice images
+We should have more customization features
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T14:45:00Z
+Entries processed: 1
+Average NPS this batch: 3.0/10
+Cumulative NPS trend: baseline (first iteration)
+
+Themes:
+- Visual quality: Absence of real images made the app feel unfinished
+- Reading experience: No full-screen article view felt like a missing core feature
+- Personalisation: Users want more control over what news they see
+
+Top complaints:
+1. No images on news cards (or broken/missing images)
+2. Clicking a news item didn't open a proper full-screen view
+3. Limited ability to customise topics, depth, and style
+
+Top suggestions:
+1. Every news item must have a good, relevant image
+2. Full-screen article view with hero image when tapping a card
+3. More customisation options (topics, region, style, depth)
+
+Decision: Iteration 1 already addressed the surface issues (images, full-screen, basic customisation).
+Iteration 2 goes deeper: added hook field to drive card click-through, keyFacts for quick scanning,
+quote for expert credibility, impact classification, inverted-pyramid detail structure,
+geographic diversity mandate, positivity balance, international source variety,
+stricter Unsplash keyword rules, and a truncation-prevention rule for large batches.
+─────────────────────────────────────────────────────────
+
+── 2026-04-06T13:22:03Z — No Feedback in last Loop
+
+── 2026-04-06T13:34:10Z — No Feedback in last Loop
+── 2026-04-06T14:01:27.042Z ──────────────────────────────
+Grade: 5/10
+Comments: (none)
+Suggestion: Tem muito poucos noticias. Algo como 15. Para mim deveria ter 100 quando vc começa
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T16:10:00Z
+Entries processed: 1
+Average NPS this batch: 5.0/10
+Cumulative NPS trend: UP (+2.0 vs previous batch of 3.0/10)
+
+Themes:
+- Volume: User felt 8 articles was too sparse; wants a much larger feed
+
+Top complaints:
+1. Too few news articles — wants 100 on initial load
+
+Top suggestions:
+1. Start with at least 15-100 articles
+
+Decision: Raised default article count from 8 to 15. Raised server max cap from 20 to 100
+(users can now set count up to 100 in Customize). Expanded default category distribution
+to accommodate 15 articles with a wildcard category for surprise/delight.
+─────────────────────────────────────────────────────────
+── 2026-04-06T17:33:33.394Z ──────────────────────────────
+Grade: 2/10
+Comments: I don't like the fire emoji
+Suggestion: make the tags more professional
+
+── AUTOLOOP ITERATION 3 ── 2026-04-06 ──────────────────────────────
+── 2026-04-06T17:46:44.191Z ──────────────────────────────
+Grade: 3/10
+Comments: The name of the publisher is sometimes causing the final line to be two lines.
+Suggestion: Make sure the last line in the article is always one line
+
+── AUTOLOOP ITERATION 4 ── 2026-04-06 ──────────────────────────────
+── 2026-04-06T17:52:13.448Z ──────────────────────────────
+Grade: 4/10
+Comments: Ask claude is hidden
+Suggestion: Make the ask claude more visible
+
+── AUTOLOOP ITERATION 5 ── 2026-04-06 ──────────────────────────────
