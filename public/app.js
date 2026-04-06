@@ -206,7 +206,7 @@ function imgHtml(item, extraClass = '') {
       onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
       <div class="img-fallback" style="background:linear-gradient(135deg,${c0},${c1})"></div>`;
   }
-  return `<div class="img-fallback" style="background:linear-gradient(135deg,${c0},${c1})"></div>`;
+  return `<div class="img-fallback" style="display:block;background:linear-gradient(135deg,${c0},${c1})"></div>`;
 }
 
 // Sets the hero image of the article modal
@@ -227,14 +227,14 @@ function setHeroImg(item) {
       img.style.display = 'none';
       const fb = document.createElement('div');
       fb.className = 'img-fallback';
-      fb.style.cssText = `background:linear-gradient(135deg,${c0},${c1})`;
+      fb.style.cssText = `display:block;background:linear-gradient(135deg,${c0},${c1})`;
       heroEl.insertBefore(fb, heroEl.firstChild);
     };
     heroEl.insertBefore(img, heroEl.firstChild);
   } else {
     const fb = document.createElement('div');
     fb.className = 'img-fallback';
-    fb.style.cssText = `background:linear-gradient(135deg,${c0},${c1})`;
+    fb.style.cssText = `display:block;background:linear-gradient(135deg,${c0},${c1})`;
     heroEl.insertBefore(fb, heroEl.firstChild);
   }
 }
