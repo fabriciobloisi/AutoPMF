@@ -118,6 +118,7 @@ Then go back to **Step 1**. This is an infinite loop.
 | 6 | 2026-04-06 | 5.0 | Dark mode with toggle in Settings | 9.0 |
 | 7 | 2026-04-06 | — | Fix getFeedback.sh casing bug, image resilience via picsum proxy, session_id in feedback, implement dark mode toggle in Settings | 9.0 |
 | 8 | 2026-04-06 | 5.0 | Fix card images hidden by gradient fallback overlay | 9.0 |
+| 9 | 2026-04-06 | 6.0 | Ken Burns slow zoom on images in Instagram, TikTok, Video modes | 9.0 |
 
 ---
 

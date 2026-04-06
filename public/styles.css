@@ -1116,6 +1116,17 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .video-thumb .card-real-img,
 .video-thumb .img-fallback { border-radius: 0; }
 
+/* Ken Burns slow zoom on visual card modes */
+@keyframes ken-burns {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+.card-instagram .card-real-img,
+.card-tiktok .card-real-img,
+.video-thumb .card-real-img {
+  animation: ken-burns 12s ease-in-out infinite alternate;
+}
+
 /* ── Article Modal — Full Screen ── */
 .article-modal {
   position: absolute; top: 52px; left: 0; right: 0; bottom: 0;
