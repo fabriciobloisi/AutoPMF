@@ -10,6 +10,16 @@ AutoLoop is the feedback-driven improvement cycle for AutoPMF. Each iteration re
 
 Open `Feedback.txt`. Only process feedback entries that appear **after the most recent AutoLoop Summary block** (marked with `── AUTOLOOP SUMMARY`). If no summary block exists, process all entries.
 
+### Step 1b — No Feedback Case
+
+If there are **no new feedback entries** after the most recent `AUTOLOOP SUMMARY` block, append the following line to `Feedback.txt` and stop:
+
+```
+── <ISO 8601 datetime> — No Feedback in last Loop
+```
+
+Do not update `ControlNews.md` or redeploy. Wait for new user feedback before the next iteration.
+
 ### Step 2 — Summarise the Feedback
 
 Compute:
