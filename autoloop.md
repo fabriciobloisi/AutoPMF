@@ -6,9 +6,11 @@ AutoLoop is the feedback-driven improvement cycle for AutoPMF. Each iteration re
 
 ## How to Run an AutoLoop Iteration
 
-### Step 1 — Read Feedback.txt
+### Step 1 — Fetch & Sync Feedback
 
-Open `Feedback.txt`. Only process feedback entries that appear **after the most recent AutoLoop Summary block** (marked with `── AUTOLOOP SUMMARY`). If no summary block exists, process all entries.
+Run `./getFeedback.sh` to fetch the latest feedback from the deployed app (`GET /get/feedback`) and append any new entries to `Feedback.txt`. The script sources `.env` for `DEPLOY_URL` and `FEEDBACK_SECRET` automatically.
+
+Then open `Feedback.txt` and only process feedback entries that appear **after the most recent AutoLoop Summary block** (marked with `── AUTOLOOP SUMMARY`). If no summary block exists, process all entries.
 
 ### Step 1b — No Feedback Case
 
@@ -92,13 +94,14 @@ Edit `ControlNews.md` to implement the chosen improvements. Always:
 
 1. Restart the server (`node server.js`) and reload the app
 2. Visually confirm the news feed reflects the changes
-3. If deploying to Vercel: `vercel --prod`
-4. Commit changes to GitHub with a message following this format:
-   ```
-   AutoLoop iteration N: <one-line description of main change>
+3. Commit and push to `main` — Vercel auto-deploys on every push via GitHub integration:
+   ```bash
+   git add -A
+   git commit -m "AutoLoop iteration N: <one-line description of main change>
 
    NPS: X.X/10 → target Y.Y/10
-   Changes: <bullet list of key changes to ControlNews.md>
+   Changes: <bullet list of key changes to ControlNews.md>"
+   git push origin main
    ```
 
 ---
@@ -131,6 +134,7 @@ Edit `ControlNews.md` to implement the chosen improvements. Always:
 |------|------|-------|
 | `ControlNews.md` | Master prompt — governs ALL news content and behaviour | Yes, every iteration |
 | `Feedback.txt` | User feedback log + AutoLoop summaries | Append only |
+| `getFeedback.sh` | Fetches remote feedback and appends new entries to `Feedback.txt` | No |
 | `autoloop.md` | This file — AutoLoop instructions | Update iteration log |
 | `server.js` | Express backend, Claude API calls | Only for new features |
 | `public/app.js` | Frontend rendering logic | Only for new features |
