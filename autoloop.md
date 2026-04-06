@@ -1,103 +1,147 @@
-# AutoLoop — Self-Learning Product Cycle
+# AutoLoop — Autonomous Product Evolution
 
-AutoLoop is the engine that makes AutoPMF self-improving. Each cycle reads user feedback, evaluates the current product against its aspirations, evolves `product.md` to get closer to the ideal app, and redeploys. The loop runs until feedback scores consistently prove Product Market Fit.
+AutoLoop is a fully autonomous improvement engine. Once started, it runs in a continuous loop: fetch feedback → decide → evolve → deploy → sleep → repeat. **No human intervention required between cycles.**
 
-**Core principle:** `product.md` is the product. Evolving `product.md` IS evolving the product. Every cycle should bring `product.md` closer to defining — and delivering — a complete, winning news app.
+**Core principle:** `product.md` is the product. Evolving `product.md` IS evolving the product.
 
 ---
 
-## How to Run a Cycle
+## Start Command
 
-### Step 1 — Gather Signal
+When the user says **"Start @autoloop.md"**, begin the loop below. Do not stop until PMF is reached or the user interrupts.
 
-Run `./getFeedback.sh` to fetch the latest feedback from the deployed app. Only process entries **after the most recent `AUTOLOOP ITERATION` marker** in `Feedback.txt`. If no marker exists, process all entries.
+---
 
-**If there is no new feedback:** still proceed to Step 2. The loop can self-improve even without fresh feedback by evaluating `product.md` against the aspirations and feature gaps it already tracks.
+## The Loop
 
-### Step 2 — Evaluate the Product
-
-Read `product.md` end-to-end. Score the current product definition on these axes:
-
-| Axis | Question | Score 1-10 |
-|------|----------|-----------|
-| **Completeness** | Does `product.md` fully describe every feature the app has? Are there features in the code that `product.md` doesn't govern? | |
-| **Content quality** | Will following these instructions produce genuinely compelling news? | |
-| **Personalization depth** | Are user preferences meaningfully reflected in generation? | |
-| **Visual richness** | Will the image/gradient rules produce beautiful results? | |
-| **Engagement** | Do the hook/detail rules create articles people want to read? | |
-| **Diversity** | Category mix, region coverage, source variety — is it balanced? | |
-| **Feature gaps** | What's missing from the product that users expect from a news app? | |
-| **Clarity** | Is `mote.md` unambiguous enough that Claude will follow it consistently? | |
-
-Cross-reference these scores with user feedback. Where feedback complaints align with low scores, that's where to focus.
-
-### Step 3 — Evolve product.md
-
-Make targeted improvements to `product.md`. Each cycle should do **one or more** of:
-
-1. **Sharpen existing rules** — make instructions more specific where content quality is inconsistent
-2. **Add missing features** — move items from the "Feature Gaps & Aspirations" checklist into the "Current Feature Set" section (only when the app code supports them, or when the feature is purely content-driven and `product.md` can express it)
-3. **Refine the schema** — add fields, tighten constraints, improve examples (never remove fields the app depends on)
-4. **Update aspirations** — add new feature gaps discovered from feedback, remove ones that have been addressed, reprioritize
-5. **Improve content standards** — raise the bar based on what's working and what isn't
-
-**Always update the "AutoLoop Evolution Log"** at the bottom of `product.md` with what changed and why.
-
-### Step 4 — Verify & Deploy
-
-1. Create a branch:
-   ```bash
-   git checkout -b autoloop/cycle-N
-   ```
-2. Restart the server and visually confirm the news feed reflects improvements
-3. Commit, push, and deploy:
-   ```bash
-   git add product.md autoloop.md Feedback.txt
-   git commit -m "AutoLoop cycle N: <one-line summary>
-
-   NPS: X.X/10 → target Y.Y/10
-   product.md changes: <bullet list>"
-   git push origin autoloop/cycle-N
-   export PATH="/opt/homebrew/bin:$PATH" && vercel --prod
-   ```
-
-### Step 5 — Log & Continue
-
-Update the iteration log below, then mark the feedback boundary in `Feedback.txt`:
 ```
-── AUTOLOOP ITERATION N ── YYYY-MM-DD ──────────────────────────────
+┌─────────────────────────────────────────┐
+│              CYCLE START                │
+│                                         │
+│  1. FETCH  → ./getFeedback.sh           │
+│  2. PARSE  → new feedback after marker? │
+│       ├─ NO  → sleep 600, restart       │
+│       └─ YES → continue                 │
+│  3. PLAN   → what does feedback say?    │
+│  4. BUILD  → change code + product.md   │
+│  5. SHIP   → commit, push, deploy       │
+│  6. LOG    → update logs + marker       │
+│  7. SLEEP  → sleep 600                  │
+│  8. GOTO 1                              │
+└─────────────────────────────────────────┘
 ```
 
-Wait for new feedback, then start the next cycle.
+### Step 1 — FETCH
+
+```bash
+bash ./getFeedback.sh
+```
+
+This appends new feedback to `Feedback.txt`.
+
+### Step 2 — PARSE
+
+Read `Feedback.txt`. Find the **most recent `AUTOLOOP ITERATION` marker**. Only consider entries **after** that marker. If no marker exists, process all entries.
+
+**If there is no new feedback after the marker:**
+- Log: `── YYYY-MM-DDTHH:MM:SSZ — No Feedback in last Loop` (append to Feedback.txt)
+- Run `sleep 600`
+- Go back to Step 1
+
+**If there is new feedback:** extract the grade, comments, and suggestion. Continue to Step 3.
+
+### Step 3 — PLAN
+
+Read `product.md` end-to-end. Answer these three questions (internally, do not output a table):
+
+1. **What is the user asking for?** — Translate feedback into a concrete change.
+2. **Is this a product.md change, a code change, or both?**
+3. **Can I ship this in one small commit?** — If not, pick the smallest slice that addresses the core complaint.
+
+If NPS dropped from the previous cycle, check whether the last change caused a regression before adding anything new.
+
+### Step 4 — BUILD
+
+Make the changes. Rules:
+
+- **One concern per cycle.** Don't bundle unrelated improvements.
+- **Always update `product.md`** — even if the fix is code-only, document the change in the Evolution Log at the bottom of `product.md`.
+- **Never remove schema fields** the app depends on.
+- **Never edit `getFeedback.sh`.**
+- Code changes go in `public/app.js`, `public/styles.css`, `public/index.html`, or `server.js` as needed.
+
+### Step 5 — SHIP
+
+Determine the next cycle number N by reading the Iteration Log below (N = last cycle number + 1).
+
+```bash
+git checkout -b autoloop/cycle-N
+git add product.md autoloop.md Feedback.txt <any changed app files>
+git commit -m "AutoLoop cycle N: <one-line summary>
+
+NPS: X.X/10 → target 9.0/10
+Changes: <bullet list>"
+git push origin autoloop/cycle-N
+export PATH="/opt/homebrew/bin:$PATH" && vercel --prod
+```
+
+### Step 6 — LOG
+
+1. Add a row to the **Iteration Log** table below.
+2. Append the feedback boundary marker to `Feedback.txt`:
+   ```
+   ── AUTOLOOP ITERATION N ── YYYY-MM-DD ──────────────────────────────
+   ```
+
+### Step 7 — SLEEP
+
+```bash
+sleep 600
+```
+
+Then go back to **Step 1**. This is an infinite loop.
 
 ---
 
 ## Iteration Log
 
-| # | Date | NPS | Key Change to product.md | Target NPS |
-|---|------|-----|-----------------------|------------|
-| 0 | 2026-04-06 | — | Baseline: extracted product definition, separated from feedback mechanism | 7.0 |
+| # | Date | NPS | Key Change | Target |
+|---|------|-----|-----------|--------|
+| 0 | 2026-04-06 | — | Baseline: extracted product definition | 9.0 |
+| 3 | 2026-04-06 | 2.0 | Removed fire emoji, professional trending badges | 9.0 |
+| 4 | 2026-04-06 | 3.0 | Source names capped 20 chars, single-line footers | 9.0 |
+| 5 | 2026-04-06 | 4.0 | Ask Claude sticky footer bar | 9.0 |
+| 6 | 2026-04-06 | 5.0 | Dark mode with toggle in Settings | 9.0 |
 
 ---
 
-## Convergence Rules
+## Stop Conditions
 
-1. Sleep 600 sec in between each cycle
-2. **Never process the same feedback twice.** Always look for the most recent `AUTOLOOP ITERATION` marker.
-3. **One cycle = one commit.** Keep changes small enough to attribute NPS movement to specific improvements.
-4. **Target NPS 9+.** Stop iterating when 3 consecutive batches average ≥ 9.0. That's PMF.
-5. **If NPS drops**, a recent change may have regressed something. Read feedback carefully and roll back or adjust before adding new features.
-6. Only evolve when we have feedback
+1. **PMF reached:** 3 consecutive cycles with NPS ≥ 9.0. Log "PMF ACHIEVED" and stop.
+2. **User interrupt:** The user says stop, pause, or cancel.
+3. **Deploy failure:** If `vercel --prod` fails twice in a row, stop and alert the user.
 
+---
+
+## Rules
+
+1. **Never process the same feedback twice.** The `AUTOLOOP ITERATION` marker is the boundary.
+2. **One cycle = one commit.** Small, attributable changes only.
+3. **No feedback = no changes.** Sleep and poll again. Don't invent improvements without user signal.
+4. **If NPS drops**, diagnose before adding features. The last change may have regressed something.
+5. **Sleep 600 seconds between every cycle**, including no-feedback cycles.
+
+---
 
 ## File Reference
 
 | File | Role | When to Edit |
 |------|------|-------------|
-| `mote.md` | Product definition — governs all content, features, and aspirations | Every cycle |
-| `Feedback.txt` | User feedback log (appended by `getFeedback.sh`) | No edits needed |
+| `product.md` | Product definition — governs all content and features | Every cycle with feedback |
+| `Feedback.txt` | User feedback log (appended by `getFeedback.sh`) | Only to add iteration markers |
 | `getFeedback.sh` | Fetches remote feedback | Never |
-| `autoloop.md` | This file — cycle instructions and iteration log | Update iteration log each cycle |
-| `server.js` | Express backend, Claude API calls | Only for new app-level features |
-| `public/app.js` | Frontend rendering logic | Only for new app-level features |
-| `public/styles.css` | All styles | Only for new app-level features |
+| `autoloop.md` | This file — loop instructions and iteration log | Update iteration log each cycle |
+| `server.js` | Express backend, Claude API calls | When feedback requires backend changes |
+| `public/app.js` | Frontend logic | When feedback requires frontend changes |
+| `public/index.html` | HTML structure | When feedback requires structural changes |
+| `public/styles.css` | All styles | When feedback requires visual changes |
