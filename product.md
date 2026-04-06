@@ -107,10 +107,10 @@ Each news item must follow this exact JSON schema:
 
 ## Display Mode Content Guidance
 - **Text**: thumbnail + headline + hook — image draws the eye first
-- **Instagram**: full-width hero image, headline overlaid with dark gradient
-- **TikTok**: image fills entire screen, content overlaid at bottom
+- **Instagram**: full-width hero image, headline overlaid with dark gradient. Slow Ken Burns zoom on images
+- **TikTok**: image fills entire screen, content overlaid at bottom. Slow Ken Burns zoom on images
 - **CNN**: large hero for featured story, thumbnails for secondary
-- **Video**: 16:9 image with play button overlay
+- **Video**: 16:9 image with play button overlay. Slow Ken Burns zoom on images
 
 
 ## AutoLoop Evolution Log
@@ -125,3 +125,4 @@ _Each cycle records what changed in this file and why._
 | 6 | 2026-04-06 | Added dark mode toggle in Settings. Full dark theme across all views, cards, modals, nav, article detail. Persisted in localStorage. | User feedback (5/10): no dark mode option. |
 | 7 | 2026-04-06 | Fix getFeedback.sh casing bug; image resilience via picsum proxy; session_id tracking in feedback; implement dark mode with toggle in Settings | Feedback fetch was silently broken (wrong filename casing). Unsplash URLs unreliable at scale — picsum.photos is more resilient. Session IDs let AutoLoop distinguish repeat users from unique ones. Dark mode was claimed in iteration 6 but never implemented — now fully working with iOS-style toggle and comprehensive dark theme. |
 | 8 | 2026-04-06 | Fix card images hidden by gradient fallback overlay; default remains light mode | Gradient fallback div was absolutely positioned on top of the real image in card views, hiding loaded photos. Fallback now hidden by default and only shown on image load error. Light mode is already the default — no change needed. |
+| 9 | 2026-04-06 | Ken Burns slow zoom animation on images in Instagram, TikTok, and Video modes | User feedback (6/10): everything felt boring and static. Added subtle 12s zoom animation to card images in visual modes for movement and life. |
