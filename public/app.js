@@ -1,13 +1,11 @@
 // ── State ────────────────────────────────────────────────────────────────────
 const state = {
-  systemPrompt: '',
-  newsItems: [],        // all loaded articles from Claude
+  newsItems: [],        // all loaded articles
   filteredItems: [],    // after category filter
   currentMode: localStorage.getItem('autopmf_mode') || 'text',
   currentCategory: 'all',
   currentTikTokIndex: 0,
   loading: false,
-  apiKey: localStorage.getItem('autopmf_apikey') || '',
   preferences: JSON.parse(localStorage.getItem('autopmf_prefs') || '{"topics":[],"region":"Global","count":8}'),
   activeArticle: null,  // article open in detail modal
 };
@@ -20,6 +18,11 @@ function esc(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+const HEX_COLOR = /^#[0-9a-fA-F]{3,8}$/;
+function safeColor(c, fallback) {
+  return HEX_COLOR.test(c) ? c : fallback;
 }
 
 // ── Elements ─────────────────────────────────────────────────────────────────
@@ -59,21 +62,9 @@ function closeDrawer() { drawer.classList.remove('open'); drawerBackdrop.classLi
 $('menu-btn').addEventListener('click', openDrawer);
 drawerBackdrop.addEventListener('click', closeDrawer);
 
-// ── Load ControlNews.md ───────────────────────────────────────────────────────
-async function loadControl() {
-  try {
-    const r = await fetch('/api/control');
-    const data = await r.json();
-    state.systemPrompt = data.content || '';
-  } catch (err) {
-    console.error('Failed to load ControlNews.md:', err);
-  }
-}
-
-// ── Fetch news from Claude ────────────────────────────────────────────────────
+// ── Fetch static news from news.json ──────────────────────────────────────────
 async function loadNews() {
   if (state.loading) return;
-  if (!state.apiKey) { openSettings(); return; }
 
   state.loading = true;
   showLoading(true);
@@ -83,23 +74,14 @@ async function loadNews() {
   refreshBtn.querySelector('svg').classList.add('spinning');
 
   try {
-    const r = await fetch('/api/news', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        apiKey: state.apiKey,
-        systemPrompt: state.systemPrompt,
-        preferences: state.preferences,
-      }),
-    });
-    const data = await r.json();
-    if (!r.ok) throw new Error(data.error || 'Failed to load news');
-    state.newsItems = data.news || [];
+    const r = await fetch('/news.json');
+    if (!r.ok) throw new Error('Failed to load news');
+    state.newsItems = await r.json();
     applyFilter();
   } catch (err) {
     console.error('loadNews error:', err);
     showLoading(false);
-    feedEl.innerHTML = `<div class="feed-loading"><p style="color:#ff3b30">⚠️ ${esc(err.message)}</p><p style="font-size:13px;color:#8e8e93;margin-top:8px">Check your API key in Settings</p></div>`;
+    feedEl.innerHTML = `<div class="feed-loading"><p style="color:#ff3b30">⚠️ ${esc(err.message)}</p></div>`;
   } finally {
     state.loading = false;
     refreshBtn.querySelector('svg').classList.remove('spinning');
@@ -176,20 +158,22 @@ function renderFeed() {
 function gradStyle(item) {
   const g = item.imageGradient && item.imageGradient.length === 2
     ? item.imageGradient : ['#636e72', '#2d3436'];
-  return `background: linear-gradient(135deg, ${g[0]}, ${g[1]});`;
+  return `background: linear-gradient(135deg, ${safeColor(g[0], '#636e72')}, ${safeColor(g[1], '#2d3436')});`;
 }
 
 // Returns HTML for a real photo with gradient fallback
 function imgHtml(item, extraClass = '') {
   const g = item.imageGradient && item.imageGradient.length === 2
     ? item.imageGradient : ['#636e72', '#2d3436'];
+  const c0 = safeColor(g[0], '#636e72');
+  const c1 = safeColor(g[1], '#2d3436');
   const url = item.imageUrl || '';
   if (url) {
     return `<img class="card-real-img ${extraClass}" src="${esc(url)}" alt="${esc(item.imageAlt || item.headline || '')}"
       onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <div class="img-fallback" style="background:linear-gradient(135deg,${g[0]},${g[1]})"></div>`;
+      <div class="img-fallback" style="background:linear-gradient(135deg,${c0},${c1})"></div>`;
   }
-  return `<div class="img-fallback" style="background:linear-gradient(135deg,${g[0]},${g[1]})"></div>`;
+  return `<div class="img-fallback" style="background:linear-gradient(135deg,${c0},${c1})"></div>`;
 }
 
 // Sets the hero image of the article modal
@@ -199,6 +183,8 @@ function setHeroImg(item) {
   heroEl.querySelectorAll('.card-real-img, .img-fallback').forEach(el => el.remove());
   const g = item.imageGradient && item.imageGradient.length === 2
     ? item.imageGradient : ['#636e72', '#2d3436'];
+  const c0 = safeColor(g[0], '#636e72');
+  const c1 = safeColor(g[1], '#2d3436');
   if (item.imageUrl) {
     const img = document.createElement('img');
     img.className = 'card-real-img';
@@ -208,14 +194,14 @@ function setHeroImg(item) {
       img.style.display = 'none';
       const fb = document.createElement('div');
       fb.className = 'img-fallback';
-      fb.style.cssText = `background:linear-gradient(135deg,${g[0]},${g[1]})`;
+      fb.style.cssText = `background:linear-gradient(135deg,${c0},${c1})`;
       heroEl.insertBefore(fb, heroEl.firstChild);
     };
     heroEl.insertBefore(img, heroEl.firstChild);
   } else {
     const fb = document.createElement('div');
     fb.className = 'img-fallback';
-    fb.style.cssText = `background:linear-gradient(135deg,${g[0]},${g[1]})`;
+    fb.style.cssText = `background:linear-gradient(135deg,${c0},${c1})`;
     heroEl.insertBefore(fb, heroEl.firstChild);
   }
 }
@@ -520,7 +506,6 @@ $('ask-input').addEventListener('keydown', e => {
 async function askClaude() {
   const question = $('ask-input').value.trim();
   if (!question || !state.activeArticle) return;
-  if (!state.apiKey) { closeArticle(); openSettings(); return; }
 
   const responseEl = $('ask-response');
   responseEl.className = 'ask-response loading';
@@ -533,8 +518,6 @@ async function askClaude() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        apiKey: state.apiKey,
-        systemPrompt: state.systemPrompt,
         question,
         article: state.activeArticle,
       }),
@@ -686,24 +669,14 @@ $('cust-apply-btn').addEventListener('click', () => {
   loadNews();
 });
 
-// ── Settings Modal ────────────────────────────────────────────────────────────
-const apiKeyInput = $('api-key-input');
-function openSettings() {
-  apiKeyInput.value = state.apiKey;
-  settingsModal.classList.add('open');
-}
+// ── Settings Modal (kept for future use) ─────────────────────────────────────
+function openSettings()  { settingsModal.classList.add('open'); }
 function closeSettings() { settingsModal.classList.remove('open'); }
 
 $('settings-btn').addEventListener('click', () => { closeDrawer(); openSettings(); });
 settingsModal.querySelectorAll('[data-close-modal]').forEach(el =>
   el.addEventListener('click', closeSettings)
 );
-$('save-settings').addEventListener('click', () => {
-  state.apiKey = apiKeyInput.value.trim();
-  localStorage.setItem('autopmf_apikey', state.apiKey);
-  closeSettings();
-  if (state.apiKey && state.newsItems.length === 0) loadNews();
-});
 
 // ── About Modal ──────────────────────────────────────────────────────────────
 const aboutModal = $('about-modal');
@@ -723,12 +696,7 @@ function initMode() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
   initMode();
-  await loadControl();
-  if (!state.apiKey) {
-    setTimeout(openSettings, 400);
-  } else {
-    loadNews();
-  }
+  loadNews();
 }
 
 init();
