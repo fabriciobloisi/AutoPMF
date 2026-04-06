@@ -55,8 +55,10 @@ const articleSheet   = $('article-sheet');
 
 // ── Clock ─────────────────────────────────────────────────────────────────────
 function updateClock() {
+  const el = $('sb-time');
+  if (!el) return;
   const d = new Date();
-  $('sb-time').textContent = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+  el.textContent = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 updateClock();
 setInterval(updateClock, 30000);

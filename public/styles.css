@@ -21,6 +21,7 @@ input:focus, textarea:focus, button:focus { outline: none; }
   position: relative;
   width: 390px;
   height: 844px;
+  max-height: calc(100vh - 40px);
   background: #fff;
   border-radius: 48px;
   overflow: hidden;
