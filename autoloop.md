@@ -83,7 +83,11 @@ NPS: X.X/10 → target 9.0/10
 Changes: <bullet list>"
 git push origin autoloop/cycle-N
 export PATH="/opt/homebrew/bin:$PATH" && vercel --prod
+sleep 20
+export PATH="/opt/homebrew/bin:$PATH" && vercel ls --prod
 ```
+
+After the 20-second wait, check `vercel ls --prod` output. The most recent deployment must show **● Ready** status. If it does not, retry `vercel --prod` once. If the second attempt also fails, stop and alert the user (see Stop Conditions).
 
 ### Step 6 — LOG
 
