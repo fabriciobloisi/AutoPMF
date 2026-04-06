@@ -1,0 +1,37 @@
+── 2026-04-06T12:20:03.773Z ──────────────────────────────
+Grade: 3/10
+Comments: I did not liked it very much
+Suggestion: EVery news should have images. Godo images make the news better to read
+When you click in a news, it should show full screen, with nice images
+We should have more customization features
+
+
+── AUTOLOOP SUMMARY ─────────────────────────────────────
+Processed at: 2026-04-06T14:45:00Z
+Entries processed: 1
+Average NPS this batch: 3.0/10
+Cumulative NPS trend: baseline (first iteration)
+
+Themes:
+- Visual quality: Absence of real images made the app feel unfinished
+- Reading experience: No full-screen article view felt like a missing core feature
+- Personalisation: Users want more control over what news they see
+
+Top complaints:
+1. No images on news cards (or broken/missing images)
+2. Clicking a news item didn't open a proper full-screen view
+3. Limited ability to customise topics, depth, and style
+
+Top suggestions:
+1. Every news item must have a good, relevant image
+2. Full-screen article view with hero image when tapping a card
+3. More customisation options (topics, region, style, depth)
+
+Decision: Iteration 1 already addressed the surface issues (images, full-screen, basic customisation).
+Iteration 2 goes deeper: added hook field to drive card click-through, keyFacts for quick scanning,
+quote for expert credibility, impact classification, inverted-pyramid detail structure,
+geographic diversity mandate, positivity balance, international source variety,
+stricter Unsplash keyword rules, and a truncation-prevention rule for large batches.
+─────────────────────────────────────────────────────────
+
+── 2026-04-06T13:22:03Z — No Feedback in last Loop
