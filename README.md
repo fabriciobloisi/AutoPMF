@@ -45,6 +45,11 @@ curl -H "Authorization: Bearer $FEEDBACK_SECRET" https://your-domain.com/get/fee
 
 ## The AutoLoop — Self-Improving Cycle
 
+### Run it
+Prompt Claude code or similair agents with `Start the @autoloop.md`
+
+### Inner working
+
 AutoPMF continuously improves itself through a feedback-driven loop. Every 10 minutes, Claude reads user feedback, updates the app, and redeploys — no human in the loop.
 
 ```mermaid
