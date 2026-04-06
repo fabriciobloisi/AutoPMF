@@ -100,6 +100,23 @@ app.post('/api/ask', async (req, res) => {
   }
 });
 
+// ── GET /get/feedback ─ returns Feedback.txt (requires Authorization header) ─
+app.get('/get/feedback', async (req, res) => {
+  const secret = process.env.FEEDBACK_SECRET;
+  const auth   = req.headers['authorization'] || '';
+  const token  = auth.startsWith('Bearer ') ? auth.slice(7) : auth;
+
+  if (!secret) return res.status(503).json({ error: 'FEEDBACK_SECRET env var not set on server' });
+  if (!token || token !== secret) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
+    const content = await readFile(join(__dirname, 'Feedback.txt'), 'utf8');
+    res.type('text/plain').send(content);
+  } catch (err) {
+    res.status(404).json({ error: 'Feedback.txt not found', detail: err.message });
+  }
+});
+
 // ── POST /api/feedback ─ appends feedback to Feedback.txt ───────────────────
 app.post('/api/feedback', async (req, res) => {
   const { grade, comments, suggestion } = req.body || {};
