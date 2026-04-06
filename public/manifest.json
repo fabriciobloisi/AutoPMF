@@ -1,0 +1,13 @@
+{
+  "name": "AutoPMF",
+  "short_name": "AutoPMF",
+  "description": "AI-powered personalized news experience",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007aff",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "prosus-logo.png", "sizes": "any", "type": "image/png" }
+  ]
+}

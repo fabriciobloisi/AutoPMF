@@ -1,0 +1,14 @@
+{
+  "name": "autopmf",
+  "version": "1.0.0",
+  "description": "AI-powered personalized news app, governed by ControlNews.md, powered by Claude",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "express": "^4.21.2"
+  }
+}

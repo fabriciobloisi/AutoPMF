@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>AutoPMF</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- iPhone frame (desktop) / full-screen (mobile) -->
+<div class="phone">
+  <div class="status-bar">
+    <span class="sb-time" id="sb-time">9:41</span>
+    <div class="sb-notch"></div>
+    <span class="sb-right">
+      <svg viewBox="0 0 18 12" width="18" height="12"><path fill="currentColor" d="M1 8h2v4H1zm4-2h2v6H5zm4-3h2v9H9zm4-3h2v12h-2z"/></svg>
+      <svg viewBox="0 0 16 12" width="16" height="12"><path fill="currentColor" d="M8 3a8 8 0 0 1 5.66 2.34l-1.42 1.42a6 6 0 0 0-8.48 0L2.34 5.34A8 8 0 0 1 8 3zm0 4a4 4 0 0 1 2.83 1.17l-1.42 1.42a2 2 0 0 0-2.82 0L5.17 8.17A4 4 0 0 1 8 7zm0 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
+      <span class="sb-battery"><span class="sb-battery-fill"></span></span>
+    </span>
+  </div>
+
+  <!-- ── Main App Container ── -->
+  <div class="app">
+
+    <!-- Left Drawer -->
+    <aside class="drawer" id="drawer">
+      <div class="drawer-header">
+        <div class="app-logo">
+          <img class="logo-mark" src="prosus-logo.png" alt="Prosus">
+        </div>
+        <div class="app-name">AutoPMF</div>
+        <div class="app-tagline">AutoLoop to find Product Market Fit</div>
+      </div>
+      <nav class="drawer-nav">
+        <button class="nav-item" id="drawer-refresh-btn">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </span>
+          <span>Refresh news</span>
+        </button>
+        <button class="nav-item" id="drawer-customize-btn">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M7.76 7.76a6 6 0 0 0 0 8.49M16.24 7.76a6 6 0 0 1 0 8.49"/></svg>
+          </span>
+          <span>Customize</span>
+        </button>
+        <button class="nav-item" id="about-btn">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </span>
+          <span>About AutoPMF</span>
+        </button>
+      </nav>
+      <div class="drawer-footer">
+        <button class="nav-item" id="settings-btn">
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
+        </button>
+        <button class="nav-item danger" id="end-btn">
+          <span class="nav-icon">⏻</span>
+          <span>End</span>
+        </button>
+      </div>
+    </aside>
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+    <!-- ── Feed Screen ── -->
+    <section class="screen feed-screen active" id="feed-screen">
+      <header class="nav-bar">
+        <button class="icon-btn" id="menu-btn" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <h1 class="nav-title">AutoPMF</h1>
+        <div class="nav-right">
+          <button class="icon-btn" id="refresh-btn" aria-label="Refresh">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+          <button class="icon-btn danger" id="end-top-btn" aria-label="End session">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Category filter bar -->
+      <div class="category-bar" id="category-bar">
+        <button class="cat-btn active" data-cat="all">All</button>
+        <button class="cat-btn" data-cat="Technology">Tech</button>
+        <button class="cat-btn" data-cat="AI">AI</button>
+        <button class="cat-btn" data-cat="World">World</button>
+        <button class="cat-btn" data-cat="Business">Business</button>
+        <button class="cat-btn" data-cat="Science">Science</button>
+        <button class="cat-btn" data-cat="Climate">Climate</button>
+        <button class="cat-btn" data-cat="Health">Health</button>
+        <button class="cat-btn" data-cat="Culture">Culture</button>
+        <button class="cat-btn" data-cat="Sports">Sports</button>
+        <button class="cat-btn" data-cat="Politics">Politics</button>
+      </div>
+
+      <!-- News Feed -->
+      <div class="feed" id="feed">
+        <div class="feed-loading" id="feed-loading">
+          <div class="spinner"></div>
+          <p>Loading your news…</p>
+        </div>
+        <div class="feed-empty" id="feed-empty" style="display:none">
+          <span class="feed-empty-icon">📰</span>
+          <p>No articles in this category yet.<br>Try refreshing or adjusting your preferences.</p>
+        </div>
+      </div>
+
+      <!-- TikTok Navigation Overlay -->
+      <div class="tiktok-nav" id="tiktok-nav" style="display:none">
+        <div class="tiktok-dots" id="tiktok-dots"></div>
+        <button class="tiktok-arrow up" id="tiktok-up" aria-label="Previous">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
+        </button>
+        <button class="tiktok-arrow down" id="tiktok-down" aria-label="Next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ── Customize Screen ── -->
+    <section class="screen customize-screen" id="customize-screen">
+      <header class="nav-bar">
+        <button class="icon-btn back-btn" id="customize-back" aria-label="Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <h1 class="nav-title">Customize</h1>
+        <button class="icon-btn text-btn" id="customize-save">Done</button>
+      </header>
+
+      <div class="customize-body">
+
+        <div class="cust-section">
+          <div class="cust-label">Display Mode</div>
+          <div class="mode-grid" id="cust-mode-grid">
+            <button class="mode-card active" data-mode="text">
+              <div class="mode-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/></svg>
+              </div>
+              <span>Text</span>
+            </button>
+            <button class="mode-card" data-mode="instagram">
+              <div class="mode-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+              </div>
+              <span>Instagram</span>
+            </button>
+            <button class="mode-card" data-mode="tiktok">
+              <div class="mode-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </div>
+              <span>TikTok</span>
+            </button>
+            <button class="mode-card" data-mode="cnn">
+              <div class="mode-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <span>CNN</span>
+            </button>
+            <button class="mode-card" data-mode="video">
+              <div class="mode-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <span>Video</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cust-section">
+          <div class="cust-label">Topics</div>
+          <div class="topics-grid" id="cust-topics">
+            <button class="topic-chip" data-topic="Technology">Technology</button>
+            <button class="topic-chip" data-topic="AI">AI</button>
+            <button class="topic-chip" data-topic="Business">Business</button>
+            <button class="topic-chip" data-topic="World">World</button>
+            <button class="topic-chip" data-topic="Politics">Politics</button>
+            <button class="topic-chip" data-topic="Science">Science</button>
+            <button class="topic-chip" data-topic="Climate">Climate</button>
+            <button class="topic-chip" data-topic="Health">Health</button>
+            <button class="topic-chip" data-topic="Sports">Sports</button>
+            <button class="topic-chip" data-topic="Culture">Culture</button>
+          </div>
+          <p class="cust-hint">Select topics to focus on. Leave all unselected for a balanced mix.</p>
+        </div>
+
+        <div class="cust-section">
+          <div class="cust-label">Region</div>
+          <div class="region-grid" id="cust-regions">
+            <button class="region-btn active" data-region="Global">🌍 Global</button>
+            <button class="region-btn" data-region="North America">🇺🇸 Americas</button>
+            <button class="region-btn" data-region="Europe">🇪🇺 Europe</button>
+            <button class="region-btn" data-region="Asia">🌏 Asia</button>
+            <button class="region-btn" data-region="Latin America">🌎 LatAm</button>
+            <button class="region-btn" data-region="Middle East">🌙 Mid East</button>
+            <button class="region-btn" data-region="Africa">🌍 Africa</button>
+          </div>
+        </div>
+
+        <div class="cust-section">
+          <div class="cust-label">Article Count</div>
+          <div class="count-row">
+            <button class="count-btn active" data-count="5">Short<br><small>5 articles</small></button>
+            <button class="count-btn" data-count="8">Standard<br><small>8 articles</small></button>
+            <button class="count-btn" data-count="15">Long<br><small>15 articles</small></button>
+          </div>
+        </div>
+
+        <button class="apply-btn" id="cust-apply-btn">Apply &amp; Refresh News</button>
+
+      </div>
+    </section>
+
+    <!-- ── Feedback Screen ── -->
+    <section class="screen feedback-screen" id="feedback-screen">
+      <header class="nav-bar">
+        <button class="icon-btn back-btn" id="feedback-back" aria-label="Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <h1 class="nav-title">Feedback</h1>
+        <div style="width:40px"></div>
+      </header>
+
+      <div class="feedback-body">
+        <div class="feedback-card">
+          <h3>How do you grade this experience?</h3>
+          <div class="slider-wrap">
+            <input type="range" id="grade" min="0" max="10" step="1" value="7">
+            <div class="slider-labels">
+              <span>0<br><small>bad</small></span>
+              <span class="slider-value" id="grade-val">7</span>
+              <span>10<br><small>excellent!</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feedback-card">
+          <h3>Comments</h3>
+          <textarea id="comments" placeholder="Tell us what you thought…" rows="4"></textarea>
+        </div>
+
+        <div class="feedback-card">
+          <h3>What do you suggest to improve the service?</h3>
+          <textarea id="suggestion" placeholder="Share your ideas…" rows="4"></textarea>
+        </div>
+
+        <button class="submit-btn" id="submit-feedback">Submit feedback</button>
+        <div class="feedback-msg" id="feedback-msg"></div>
+      </div>
+    </section>
+
+    <!-- ── Article Detail Modal ── -->
+    <div class="article-modal" id="article-modal">
+      <div class="modal-backdrop" id="article-backdrop"></div>
+      <div class="article-sheet" id="article-sheet">
+        <div class="modal-handle"></div>
+        <div class="article-header" id="article-header">
+          <div class="article-thumb" id="article-thumb">
+            <span id="article-emoji"></span>
+          </div>
+          <div class="article-meta">
+            <span class="article-cat-badge" id="article-cat"></span>
+            <span class="article-source" id="article-source-time"></span>
+          </div>
+        </div>
+        <h2 class="article-headline" id="article-headline"></h2>
+        <p class="article-summary" id="article-summary"></p>
+        <div class="article-divider"></div>
+        <p class="article-detail" id="article-detail"></p>
+        <div class="article-ask-row">
+          <input type="text" id="ask-input" placeholder="Ask Claude about this story…">
+          <button class="ask-send-btn" id="ask-send-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+          </button>
+        </div>
+        <div class="ask-response" id="ask-response" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- ── About Modal ── -->
+    <div class="modal" id="about-modal">
+      <div class="modal-backdrop" data-close-about></div>
+      <div class="modal-sheet about-sheet">
+        <div class="modal-handle"></div>
+        <div class="about-logo-row">
+          <img src="prosus-logo.png" alt="Prosus" class="about-logo">
+          <div>
+            <div class="about-title">AutoPMF</div>
+            <div class="about-subtitle">AutoLoop · Product Market Fit</div>
+          </div>
+        </div>
+        <div class="about-body">
+          <p><strong>AutoPMF</strong> is a structure that enables you to publish an AI service and control the AI service behaviour through a single Markdown file (<em>ControlNews.md</em>).</p>
+          <p>After a test user tries the product, they send feedback — including an NPS score. The <strong>AutoLoop</strong> reads that feedback, generates an improved version of the control file, and publishes the update automatically.</p>
+          <p>The loop repeats every <strong>10 minutes</strong> or every <strong>10 reviews</strong> (customisable), continuously optimising the product until the best possible Product Market Fit is achieved for the prototype.</p>
+          <div class="about-loop-diagram">
+            <div class="loop-step">🚀 Publish</div>
+            <div class="loop-arrow">↓</div>
+            <div class="loop-step">🧪 Test Users</div>
+            <div class="loop-arrow">↓</div>
+            <div class="loop-step">📝 Feedback &amp; NPS</div>
+            <div class="loop-arrow">↓</div>
+            <div class="loop-step">🤖 Claude Optimises</div>
+            <div class="loop-arrow">↓</div>
+            <div class="loop-step">📄 New ControlNews.md</div>
+            <div class="loop-arrow loop-back">↩ repeat</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:4px" data-close-about>Got it</button>
+      </div>
+    </div>
+
+    <!-- ── Settings Modal ── -->
+    <div class="modal" id="settings-modal">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <h3>Settings</h3>
+        <label>Anthropic API key</label>
+        <input type="password" id="api-key-input" placeholder="sk-ant-…">
+        <p class="hint">Stored only in this browser. Never sent anywhere except your local backend.</p>
+        <div class="modal-actions">
+          <button class="btn-ghost" data-close-modal>Cancel</button>
+          <button class="btn-primary" id="save-settings">Save</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /app -->
+</div><!-- /phone -->
+
+<script src="app.js"></script>
+</body>
+</html>
