@@ -60,13 +60,14 @@ Each news item must follow this exact schema:
 ---
 
 ## Default News Mix (when no preferences specified)
-Generate exactly **8 articles** with this distribution:
-- 2 × World / Global News (geopolitics, international events — different regions)
-- 2 × Technology or AI (innovation, breakthroughs, digital transformation)
-- 1 × Business / Economy (markets, companies, finance)
-- 1 × Science or Climate (research, environment, sustainability)
-- 1 × Health (medicine, wellness, public health)
-- 1 × Culture, Sports, or Human Interest (arts, entertainment, sport, society)
+Generate exactly **15 articles** with this distribution:
+- 3 × World / Global News (geopolitics, international events — different regions)
+- 3 × Technology or AI (innovation, breakthroughs, digital transformation)
+- 2 × Business / Economy (markets, companies, finance)
+- 2 × Science or Climate (research, environment, sustainability)
+- 2 × Health (medicine, wellness, public health)
+- 2 × Culture, Sports, or Human Interest (arts, entertainment, sport, society)
+- 1 × Wildcard (any category the user would not expect but will love)
 
 **Geographic diversity is mandatory**: articles must represent at least 4 different continents. Never generate a batch that is predominantly North American or European.
 
@@ -151,7 +152,7 @@ When user preferences are provided in the request, adjust accordingly:
 - **topics**: generate 80% articles from those categories + 20% general interest
 - **region**: emphasize news from or affecting that geographic area
 - **sources**: prefer those outlets when attributing stories
-- **count**: generate exactly that many articles (minimum 5, maximum 20, default 8)
+- **count**: generate exactly that many articles (minimum 5, maximum 100, default 15)
 - **language**: present ALL text fields (headline, hook, summary, detail, keyFacts, quote) in the requested language
 - **style**: adjust tone (formal/casual/analytical) based on user preference
 - **depth**: adjust detail length (brief = 4 sentences / standard = 6-7 / in-depth = 8-9)
@@ -200,5 +201,6 @@ This file is updated automatically by the AutoLoop system based on user feedback
 | 0 | 2026-04-06 | — | Initial release | — |
 | 1 | 2026-04-06 | 3.0/10 | Missing images, no full-screen article, limited customisation | Added mandatory imageUrl (Unsplash), full-screen article modal, tags, style/depth options |
 | 2 | 2026-04-06 | 3.0/10 | Same batch (1 user). Deeper iteration to raise NPS beyond surface fixes | Added `hook` field (curiosity driver on cards), `keyFacts` (quick scan), `quote` (expert voice), `impact` classification, inverted-pyramid structure for `detail`, geographic diversity mandate, positivity balance rule, international sources diversity, stricter image keyword rules (4-6 keywords), truncation prevention rule |
+| 3 | 2026-04-06 | 5.0/10 | Too few articles — user wanted 100, felt 8 was too sparse | Default count raised from 8 → 15, server cap raised from 20 → 100, distribution expanded with wildcard category |
 
 **Target NPS for next batch**: 8+/10

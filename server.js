@@ -29,7 +29,7 @@ app.post('/api/news', async (req, res) => {
   // Build the user request from preferences
   const topics = preferences?.topics?.length ? preferences.topics.join(', ') : 'general global';
   const region = preferences?.region || 'Global';
-  const count  = Math.min(Math.max(Number(preferences?.count) || 8, 5), 20);
+  const count  = Math.min(Math.max(Number(preferences?.count) || 15, 5), 100);
   const lang   = preferences?.language || 'English';
 
   const userMsg =

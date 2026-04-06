@@ -109,6 +109,8 @@ Edit `ControlNews.md` to implement the chosen improvements. Always:
 |---|------|-----|------------|------------|
 | 0 | 2026-04-06 | — | Initial release | 7.0 |
 | 1 | 2026-04-06 | 3.0 | Real images, full-screen articles, richer detail, tags | 9.0 |
+| 2 | 2026-04-06 | 3.0 | hook, keyFacts, quote, geo diversity, inverted pyramid | 8.0 |
+| 3 | 2026-04-06 | 5.0 | Default count 8→15, server cap 20→100, wildcard category | 8.0 |
 
 ---
 
