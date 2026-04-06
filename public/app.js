@@ -680,7 +680,7 @@ $('cust-apply-btn').addEventListener('click', () => {
   loadNews();
 });
 
-// ── Settings Modal (kept for future use) ─────────────────────────────────────
+// ── Settings Modal ──────────────────────────────────────────────────────────
 function openSettings()  { settingsModal.classList.add('open'); }
 function closeSettings() { settingsModal.classList.remove('open'); }
 
@@ -688,6 +688,16 @@ $('settings-btn').addEventListener('click', () => { closeDrawer(); openSettings(
 settingsModal.querySelectorAll('[data-close-modal]').forEach(el =>
   el.addEventListener('click', closeSettings)
 );
+
+// ── Dark Mode ───────────────────────────────────────────────────────────────
+const darkToggle = $('dark-mode-toggle');
+function applyTheme(dark) {
+  document.documentElement.classList.toggle('dark', dark);
+  localStorage.setItem('autopmf_dark', dark ? '1' : '0');
+  darkToggle.checked = dark;
+}
+darkToggle.addEventListener('change', () => applyTheme(darkToggle.checked));
+applyTheme(localStorage.getItem('autopmf_dark') === '1');
 
 // ── About Modal ──────────────────────────────────────────────────────────────
 const aboutModal = $('about-modal');
