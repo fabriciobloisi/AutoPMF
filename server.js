@@ -1,18 +1,18 @@
 import express from 'express';
-import { readFile, appendFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { timingSafeEqual } from 'node:crypto';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import Anthropic from '@anthropic-ai/sdk';
+import { put, get } from '@vercel/blob';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3200;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const FEEDBACK_BLOB = 'feedback/news/feedback.jsonl';
 
 const app = express();
-const feedbackStore = [];   // in-memory fallback when filesystem is read-only (Vercel)
 
 // ── Security middleware ─────────────────────────────────────────────────────
 app.use(helmet({
@@ -30,6 +30,48 @@ app.use(express.static(join(__dirname, 'public')));
 const askLimiter = rateLimit({ windowMs: 60_000, max: 10, message: { error: 'Too many requests, please try again later' } });
 const feedbackLimiter = rateLimit({ windowMs: 60_000, max: 5, message: { error: 'Too many requests, please try again later' } });
 const getFeedbackLimiter = rateLimit({ windowMs: 60_000, max: 10, message: { error: 'Too many requests, please try again later' } });
+
+// ── Blob helpers ────────────────────────────────────────────────────────────
+async function readFeedbackBlob() {
+  const result = await get(FEEDBACK_BLOB, { access: 'private' });
+  if (!result) return { content: '', etag: null };
+  const content = await new Response(result.stream).text();
+  return { content, etag: result.blob.etag };
+}
+
+async function appendFeedbackEntry(entry, retries = 3) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const { content, etag } = await readFeedbackBlob();
+    const newContent = content
+      ? content.trimEnd() + '\n' + JSON.stringify(entry)
+      : JSON.stringify(entry);
+    try {
+      const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
+      if (etag) opts.ifMatch = etag;
+      await put(FEEDBACK_BLOB, newContent, opts);
+      return;
+    } catch (err) {
+      if (attempt < retries && err.code === 'blob_store_condition_not_met') continue;
+      throw err;
+    }
+  }
+}
+
+// ── Auth middleware for feedback endpoints ───────────────────────────────────
+function requireFeedbackSecret(req, res, next) {
+  const secret = process.env.FEEDBACK_SECRET;
+  const auth   = req.headers['authorization'] || '';
+  const token  = auth.startsWith('Bearer ') ? auth.slice(7) : auth;
+
+  if (!secret) return res.status(503).json({ error: 'FEEDBACK_SECRET env var not set on server' });
+
+  const tokenBuf  = Buffer.from(token);
+  const secretBuf = Buffer.from(secret);
+  if (tokenBuf.length !== secretBuf.length || !timingSafeEqual(tokenBuf, secretBuf)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
 
 // ── POST /api/ask ─ ask Claude about an article ──────────────────────────────
 const anthropicClient = ANTHROPIC_API_KEY ? new Anthropic({ apiKey: ANTHROPIC_API_KEY }) : null;
@@ -61,34 +103,19 @@ app.post('/api/ask', askLimiter, async (req, res) => {
   }
 });
 
-// ── GET /get/feedback ─ returns Feedback.txt (requires Authorization header) ─
-app.get('/get/feedback', getFeedbackLimiter, async (req, res) => {
-  const secret = process.env.FEEDBACK_SECRET;
-  const auth   = req.headers['authorization'] || '';
-  const token  = auth.startsWith('Bearer ') ? auth.slice(7) : auth;
-
-  if (!secret) return res.status(503).json({ error: 'FEEDBACK_SECRET env var not set on server' });
-
-  // Timing-safe comparison to prevent brute-force attacks
-  const tokenBuf  = Buffer.from(token);
-  const secretBuf = Buffer.from(secret);
-  if (tokenBuf.length !== secretBuf.length || !timingSafeEqual(tokenBuf, secretBuf)) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  let fileContent = '';
+// ── GET /get/feedback ─ returns feedback JSONL (requires Authorization header) ─
+app.get('/get/feedback', getFeedbackLimiter, requireFeedbackSecret, async (req, res) => {
   try {
-    fileContent = await readFile(join(__dirname, 'Feedback.txt'), 'utf8');
-  } catch (_) { /* file may not exist on Vercel */ }
-
-  const memContent = feedbackStore.join('');
-  const combined = fileContent + memContent;
-
-  if (!combined) return res.status(404).json({ error: 'No feedback yet' });
-  res.type('text/plain').send(combined);
+    const { content } = await readFeedbackBlob();
+    if (!content) return res.status(404).json({ error: 'No feedback yet' });
+    res.type('application/x-ndjson').send(content);
+  } catch (err) {
+    console.error('Feedback read error:', err.message);
+    res.status(500).json({ error: 'Failed to read feedback' });
+  }
 });
 
-// ── POST /api/feedback ─ appends feedback to Feedback.txt ───────────────────
+// ── POST /api/feedback ─ appends feedback to Vercel Blob ────────────────────
 app.post('/api/feedback', feedbackLimiter, async (req, res) => {
   const { grade, comments, suggestion, sessionId } = req.body || {};
   if (grade == null || typeof grade !== 'number' || grade < 0 || grade > 10) {
@@ -99,20 +126,50 @@ app.post('/api/feedback', feedbackLimiter, async (req, res) => {
   const safeSuggestion = typeof suggestion === 'string' ? suggestion.slice(0, 2000) : '';
   const safeSessionId  = typeof sessionId === 'string' ? sessionId.slice(0, 64) : 'unknown';
 
-  const entry =
-    `── ${new Date().toISOString()} ──────────────────────────────\n` +
-    `Session: ${safeSessionId}\n` +
-    `Grade: ${grade}/10\n` +
-    `Comments: ${safeComments || '(none)'}\n` +
-    `Suggestion: ${safeSuggestion || '(none)'}\n\n`;
+  const entry = {
+    timestamp: new Date().toISOString(),
+    sessionId: safeSessionId,
+    grade,
+    comments: safeComments || null,
+    suggestion: safeSuggestion || null,
+    processed: false,
+    processedAt: null,
+  };
 
   try {
-    await appendFile(join(__dirname, 'Feedback.txt'), entry, 'utf8');
-  } catch (_) {
-    // Vercel filesystem is read-only; store in memory so GET can retrieve it
-    feedbackStore.push(entry);
+    await appendFeedbackEntry(entry);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Feedback write error:', err.message);
+    res.status(500).json({ error: 'Failed to save feedback' });
   }
-  res.json({ ok: true });
+});
+
+// ── POST /api/feedback/mark-processed ─ marks unprocessed entries ───────────
+app.post('/api/feedback/mark-processed', getFeedbackLimiter, requireFeedbackSecret, async (req, res) => {
+  try {
+    const { content, etag } = await readFeedbackBlob();
+    if (!content) return res.status(404).json({ error: 'No feedback to process' });
+
+    const now = new Date().toISOString();
+    const updatedLines = content.split('\n').map(line => {
+      if (!line.trim()) return line;
+      const entry = JSON.parse(line);
+      if (!entry.processed) {
+        entry.processed = true;
+        entry.processedAt = now;
+      }
+      return JSON.stringify(entry);
+    });
+
+    const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
+    if (etag) opts.ifMatch = etag;
+    await put(FEEDBACK_BLOB, updatedLines.join('\n'), opts);
+    res.json({ ok: true, markedAt: now });
+  } catch (err) {
+    console.error('Mark processed error:', err.message);
+    res.status(500).json({ error: 'Failed to mark feedback as processed' });
+  }
 });
 
 app.listen(PORT, () => {
