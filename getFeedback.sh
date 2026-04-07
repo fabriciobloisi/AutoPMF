@@ -44,23 +44,6 @@ print(json.dumps(e))
 done <<< "$response"
 
 # Output raw JSONL to stdout — caller captures this directly
+# Note: feedback is NOT marked as processed here.
+# It gets marked after a successful deploy (autoloop-cycle.sh mark-processed).
 echo "$response"
-
-# Extract timestamps of fetched entries to scope the mark-processed call
-timestamps=$(echo "$response" | python3 -c "
-import sys, json
-ts = []
-for line in sys.stdin:
-    line = line.strip()
-    if not line: continue
-    try: ts.append(json.loads(line)['timestamp'])
-    except: pass
-print(json.dumps(ts))
-" 2>/dev/null) || timestamps="[]"
-
-# Mark only the fetched entries as processed on the server
-curl -sf -X POST \
-  -H "Authorization: Bearer $FEEDBACK_SECRET" \
-  -H "Content-Type: application/json" \
-  -d "{\"timestamps\":$timestamps}" \
-  "${DEPLOY_URL}/api/feedback/mark-processed" >/dev/null 2>&1

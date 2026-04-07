@@ -20,10 +20,18 @@ bash scripts/autoloop-cycle.sh ship "<one-line summary of the change>"
 
 This stages all modified files (including `product.md`, `autoloop.md`, `local_feedback.jsonl`, `results.tsv`, and any changed app files), commits with the cycle number, pushes the branch, deploys via `vercel --prod`, and verifies **Ready** status. Retries once on deploy failure.
 
+**If deployment succeeds**, mark the feedback that drove this cycle as processed:
+
+```bash
+bash scripts/autoloop-cycle.sh mark-processed
+```
+
+This ensures feedback is only marked processed after the change is live. If the cycle had failed, the feedback stays unprocessed and will be picked up by the next cycle.
+
 **If deployment fails after 2 attempts:**
 1. Remove `.claude/autoloop-state.local.md` (stops the loop)
 2. Alert the user about the deploy failure
-3. EXIT
+3. EXIT (feedback remains unprocessed — it will be retried next cycle)
 
 ## Step 2 — LOG
 

@@ -52,7 +52,6 @@ Read `product.md` end-to-end. Answer these three questions (internally):
 
 Make the changes. Rules:
 
-- **One concern per cycle.** Don't bundle unrelated improvements.
 - **Always update `product.md`** — even if the fix is code-only, document the change in the Evolution Log at the bottom of `product.md`.
 - **Never remove schema fields** the app depends on.
 - **Never edit `getFeedback.sh`.**
