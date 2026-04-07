@@ -112,8 +112,8 @@
           <p>Loading your news…</p>
         </div>
         <div class="feed-empty" id="feed-empty" style="display:none">
-          <span class="feed-empty-icon">📰</span>
-          <p>No articles in this category yet.<br>Try refreshing or adjusting your preferences.</p>
+          <span class="feed-empty-icon" id="feed-empty-icon">📰</span>
+          <p id="feed-empty-text">No articles in this category yet.<br>Try refreshing or adjusting your preferences.</p>
         </div>
       </div>
 
@@ -309,7 +309,7 @@
         <div class="ask-response" id="ask-response" style="display:none"></div>
       </div>
       <div class="article-ask-footer">
-        <div class="ask-label">Ask Claude</div>
+        <div class="ask-label">Ask the news</div>
         <div class="article-ask-row">
           <input type="text" id="ask-input" placeholder="Ask a follow-up question…">
           <button class="ask-send-btn" id="ask-send-btn">

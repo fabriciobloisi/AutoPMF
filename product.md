@@ -31,7 +31,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 4. Article Detail View
 - Full-screen modal with hero image, category/trending badges
 - Rich content: headline, source + time + read-time, summary, long-form detail
-- **Ask Claude** — sticky footer bar at the bottom of every article with a labeled "ASK CLAUDE" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses
+- **Ask the news** — sticky footer bar at the bottom of every article with a labeled "ASK THE NEWS" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses
 
 ### 5. Personalization & Customization
 - **Topics** — select preferred categories to bias the feed
@@ -50,7 +50,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - Status bar with live clock, signal/wifi/battery icons
 - Navigation drawer with refresh, customize, about, settings, end
 - Gradient color fallbacks per category when images fail to load
-- Loading spinners, empty states, error handling
+- Loading spinners, **fun category-specific empty states** with witty messages, error handling
 - **Dark Mode** — toggle in Settings. Persisted in localStorage. Full dark theme across all views, modals, and display modes
 
 ---
@@ -130,3 +130,4 @@ _Each cycle records what changed in this file and why._
 | 10 | 2026-04-07 | Search bar added below category chips — keyword filter across headline, hook, summary, category, and tags | User feedback (3/10): "I need search". Added real-time search input with clear button. Works in combination with category filter. |
 | 11 | 2026-04-07 | Search keyword highlighting in feed cards — matching text wrapped in yellow `<mark>` tags across all display modes | User feedback (4/10): search should highlight matching keywords in articles. Added highlight function for headline and summary in all 5 modes, with dark mode support. |
 | 12 | 2026-04-07 | Search results prioritise headline matches over body-only matches | User feedback (4/10): title should be prioritised over main text in search. Added stable sort so headline matches rank first. |
+| 13 | 2026-04-08 | Fun empty-category messages, darker blue theme, rename "Ask Claude" to "Ask the news" | User feedback (5.5 avg): empty categories need funny messages; blue too bright; "Ask Claude" should say "Ask the news". Added per-category witty empty states, darkened primary blue from #007AFF to #0062CC, renamed footer label. |
