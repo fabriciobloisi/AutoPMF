@@ -178,9 +178,19 @@ Additionally you can verify changes before pushing to prod using Claude's built-
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
-      "Bash(vercel --prod)"
+      "Bash(vercel --prod)",
+      "WebFetch(domain:auto-pmf.vercel.app)",
+      "Bash(vercel ls:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Skill(autoloop-prepare)",
+      "Skill(autoloop-prepare:*)",
+      "Skill(autoloop-feedback)",
+      "Skill(autoloop-feedback:*)",
+      "Skill(autoloop-deploy)",
+      "Skill(autoloop-deploy:*)"
     ]
   }
 }
+
 ```
 
