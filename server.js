@@ -13,6 +13,7 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const FEEDBACK_BLOB = 'feedback/news/feedback.jsonl';
 
 const app = express();
+app.set('trust proxy', 1);
 
 // ── Security middleware ─────────────────────────────────────────────────────
 app.use(helmet({
@@ -39,28 +40,13 @@ async function readFeedbackBlob() {
   return { content, etag: result.blob.etag };
 }
 
-async function appendFeedbackEntry(entry, maxRetries = 5) {
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    const { content, etag } = await readFeedbackBlob();
-    const newContent = content
-      ? content.trimEnd() + '\n' + JSON.stringify(entry)
-      : JSON.stringify(entry);
-    try {
-      const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
-      if (etag) opts.ifMatch = etag;
-      await put(FEEDBACK_BLOB, newContent, opts);
-      return;
-    } catch (err) {
-      const isConflict = err.code === 'blob_store_condition_not_met'
-        || (err.message && err.message.includes('ETag mismatch'))
-        || (err.message && err.message.includes('Precondition'));
-      if (attempt < maxRetries - 1 && isConflict) {
-        await new Promise(r => setTimeout(r, 50 * Math.pow(2, attempt)));
-        continue;
-      }
-      throw err;
-    }
-  }
+async function appendFeedbackEntry(entry) {
+  const { content } = await readFeedbackBlob();
+  const newContent = content
+    ? content.trimEnd() + '\n' + JSON.stringify(entry)
+    : JSON.stringify(entry);
+  const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
+  await put(FEEDBACK_BLOB, newContent, opts);
 }
 
 // ── Auth middleware for feedback endpoints ───────────────────────────────────
