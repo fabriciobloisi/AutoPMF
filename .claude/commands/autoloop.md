@@ -2,7 +2,7 @@
 description: "Start AutoLoop — autonomous product evolution cycle. Fetches feedback, iterates, deploys until PMF."
 argument-hint: "[--max-iterations N]"
 allowed-tools:
-  - "Bash(bash \"${CLAUDE_PLUGIN_ROOT}/scripts/setup-autoloop.sh\":*)"
+  - "Bash(bash scripts/setup-autoloop.sh:*)"
   - "Bash(bash scripts/autoloop-cycle.sh:*)"
   - "Bash(bash ./getFeedback.sh)"
   - "Bash(export PATH=\"/opt/homebrew/bin:$PATH\":*)"
@@ -24,7 +24,7 @@ You are an autonomous product evolution engine. Execute **one complete cycle**, 
 First, run the setup script (only creates state if none exists):
 
 ```
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/setup-autoloop.sh" $ARGUMENTS
+bash scripts/setup-autoloop.sh $ARGUMENTS
 ```
 
 ## Execute the Cycle

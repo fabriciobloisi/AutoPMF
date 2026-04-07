@@ -2,10 +2,12 @@ node_modules/
 .DS_Store
 *.log
 .vercel
-.claude/
+.claude/launch.json
 .env
 .env.local
 !.env.example
 .env*.local
 env
 .last_cycle
+.last_cycle
+autoloop-state.local.md
