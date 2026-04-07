@@ -23,7 +23,7 @@ cd "$PROJECT_DIR"
 export PATH="/opt/homebrew/bin:$PATH"
 
 RESULTS_FILE="results.tsv"
-SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-15}" # 600
+SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-600}" # 600
 
 # Load env vars
 [[ -f .env ]] && { set -a; source .env; set +a; }
