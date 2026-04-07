@@ -1,2 +1,3 @@
 cycle	date	nps	status	description
 10	2026-04-07	4.0	keep	Search keyword highlighting in feed cards across all display modes
+11	2026-04-07	4.0	keep	Search results prioritise headline matches over body-only matches
