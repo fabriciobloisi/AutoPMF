@@ -6,104 +6,55 @@ AutoLoop is a fully autonomous improvement engine. Once started, it runs in a co
 
 ---
 
-## Start Command
+## How to Start
 
-When the user says **"Start @autoloop.md"**, begin the loop below. Do not stop until PMF is reached or the user interrupts.
+Run the `/autoloop` command. This is the **only** entry point — it handles setup, cycle creation, feedback fetching, building, deploying, and logging automatically.
+
+The `/autoloop` command executes one cycle then exits. The **stop hook** (`hooks/stop-hook.sh`) polls for new feedback every 10 minutes and re-invokes `/autoloop` when feedback arrives.
 
 ---
 
-## The Loop
+## Architecture
 
 ```
-┌─────────────────────────────────────────┐
-│              CYCLE START                │
-│                                         │
-│  1. FETCH  → ./getFeedback.sh           │
-│  2. PARSE  → new feedback after marker? │
-│       ├─ NO  → sleep 600, restart       │
-│       └─ YES → continue                 │
-│  3. PLAN   → what does feedback say?    │
-│  4. BUILD  → change code + product.md   │
-│  5. SHIP   → commit, push, deploy       │
-│  6. LOG    → update logs + marker       │
-│  7. SLEEP  → sleep 600                  │
-│  8. GOTO 1                              │
-└─────────────────────────────────────────┘
+/autoloop (entry point)
+  ├─ setup-autoloop.sh        → creates state file (loop-active signal)
+  ├─ /autoloop-prepare         → autoloop-cycle.sh prepare (creates branch)
+  ├─ /autoloop-feedback        → autoloop-cycle.sh poll (fetch + JSON output)
+  └─ /autoloop-deploy          → autoloop-cycle.sh ship/log/push
+
+stop-hook.sh (between cycles)
+  ├─ polls getFeedback.sh every 10 min
+  ├─ detects PMF (3× NPS ≥ 9.0)
+  └─ re-invokes /autoloop on new feedback
 ```
 
-### Step 1 — FETCH
+### Cycle Tracking
 
-```bash
-bash ./getFeedback.sh
-```
+The **git branch name** is the source of truth for cycle numbers: `autoloop/cycle-N`. The `prepare` subcommand reads the last cycle from the Iteration Log below and creates the next branch.
 
-This appends new feedback to `Feedback.txt`.
+### Everything in Git
 
-### Step 2 — PARSE
+All files are committed and tracked:
+- `local_feedback.jsonl` — append-only JSONL archive of all feedback
+- `results.tsv` — machine-readable experiment log
+- `Feedback.txt` — human-readable feedback archive
+- `product.md`, `autoloop.md`, `server.js`, `public/*` — product files
 
-Read `Feedback.txt`. Find the **most recent `AUTOLOOP ITERATION` marker**. Only consider entries **after** that marker. If no marker exists, process all entries.
+---
 
-**If there is no new feedback after the marker:**
-- Log: `── YYYY-MM-DDTHH:MM:SSZ — No Feedback in last Loop` (append to Feedback.txt)
-- Run `sleep 600`
-- Go back to Step 1
+## Helper Scripts
 
-**If there is new feedback:** extract the grade, comments, and suggestion. Continue to Step 3.
+All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.sh`** — it is called internally by the scripts.
 
-### Step 3 — PLAN
-
-Read `product.md` end-to-end. Answer these three questions (internally, do not output a table):
-
-1. **What is the user asking for?** — Translate feedback into a concrete change.
-2. **Is this a product.md change, a code change, or both?**
-3. **Can I ship this in one small commit?** — If not, pick the smallest slice that addresses the core complaint.
-
-If NPS dropped from the previous cycle, check whether the last change caused a regression before adding anything new.
-
-### Step 4 — BUILD
-
-Make the changes. Rules:
-
-- **One concern per cycle.** Don't bundle unrelated improvements.
-- **Always update `product.md`** — even if the fix is code-only, document the change in the Evolution Log at the bottom of `product.md`.
-- **Never remove schema fields** the app depends on.
-- **Never edit `getFeedback.sh`.**
-- Code changes go in `public/app.js`, `public/styles.css`, `public/index.html`, or `server.js` as needed.
-
-### Step 5 — SHIP
-
-Determine the next cycle number N by reading the Iteration Log below (N = last cycle number + 1).
-
-```bash
-git checkout -b autoloop/cycle-N
-git add product.md autoloop.md Feedback.txt <any changed app files>
-git commit -m "AutoLoop cycle N: <one-line summary>
-
-NPS: X.X/10 → target 9.0/10
-Changes: <bullet list>"
-git push origin autoloop/cycle-N
-export PATH="/opt/homebrew/bin:$PATH" && vercel --prod
-sleep 20
-export PATH="/opt/homebrew/bin:$PATH" && vercel ls --prod
-```
-
-After the 20-second wait, check `vercel ls --prod` output. The most recent deployment must show **● Ready** status. If it does not, retry `vercel --prod` once. If the second attempt also fails, stop and alert the user (see Stop Conditions).
-
-### Step 6 — LOG
-
-1. Add a row to the **Iteration Log** table below.
-2. Append the feedback boundary marker to `Feedback.txt`:
-   ```
-   ── AUTOLOOP ITERATION N ── YYYY-MM-DD ──────────────────────────────
-   ```
-
-### Step 7 — SLEEP
-
-```bash
-sleep 600
-```
-
-Then go back to **Step 1**. This is an infinite loop.
+| Subcommand | Purpose |
+|------------|---------|
+| `prepare` | Creates `autoloop/cycle-<N+1>` branch — sets the cycle number for all subsequent commands |
+| `poll` | Fetches unprocessed feedback via `getFeedback.sh`; sleeps on no-feedback; exits with JSON when new feedback arrives |
+| `ship <msg>` | Commits all files, pushes, deploys to Vercel, verifies (reads cycle from branch) |
+| `log <nps> <status> <desc>` | Appends row to results.tsv (reads cycle from branch) |
+| `push` | Final push of the branch to save all work (logs, feedback, autoloop.md updates) |
+| `status` | Shows branch, cycle, NPS trend, deploy health |
 
 ---
 
@@ -125,17 +76,17 @@ Then go back to **Step 1**. This is an infinite loop.
 ## Stop Conditions
 
 1. **PMF reached:** 3 consecutive cycles with NPS ≥ 9.0. Log "PMF ACHIEVED" and stop.
-2. **User interrupt:** The user says stop, pause, or cancel.
+2. **User interrupt:** The user says stop, pause, or cancel (or runs `/cancel-autoloop`).
 3. **Deploy failure:** If `vercel --prod` fails twice in a row, stop and alert the user.
 
 ---
 
 ## Rules
 
-1. **Never process the same feedback twice.** The `AUTOLOOP ITERATION` marker is the boundary.
+1. **Never process the same feedback twice.** The server's `processed` flag is the boundary — `getFeedback.sh` only fetches unprocessed entries and marks them processed.
 2. **One cycle = one commit.** Small, attributable changes only.
 3. **No feedback = no changes.** Sleep and poll again. Don't invent improvements without user signal.
-4. **If NPS drops**, diagnose before adding features. The last change may have regressed something.
+4. **If NPS drops**, do not fix forward. Identify and **revert** the change that caused the regression. Only resume new work once NPS has recovered.
 5. **Sleep 600 seconds between every cycle**, including no-feedback cycles.
 
 ---
@@ -145,9 +96,11 @@ Then go back to **Step 1**. This is an infinite loop.
 | File | Role | When to Edit |
 |------|------|-------------|
 | `product.md` | Product definition — governs all content and features | Every cycle with feedback |
-| `Feedback.txt` | User feedback log (appended by `getFeedback.sh`) | Only to add iteration markers |
-| `getFeedback.sh` | Fetches remote feedback | Never |
+| `local_feedback.jsonl` | Append-only JSONL archive of all feedback (committed to git) | Never — auto-appended by `getFeedback.sh` |
+| `getFeedback.sh` | Fetches unprocessed feedback from server, marks processed | Never |
 | `autoloop.md` | This file — loop instructions and iteration log | Update iteration log each cycle |
+| `results.tsv` | Machine-readable experiment log (committed to git) | Append a row each cycle via `autoloop-cycle.sh log` |
+| `scripts/autoloop-cycle.sh` | Orchestrator — prepare, poll, ship, log, push, status | Never (unless adding subcommands) |
 | `server.js` | Express backend, Claude API calls | When feedback requires backend changes |
 | `public/app.js` | Frontend logic | When feedback requires frontend changes |
 | `public/index.html` | HTML structure | When feedback requires structural changes |

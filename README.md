@@ -46,6 +46,7 @@ In the Vercel dashboard under **Settings > Environment Variables**:
 |----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | Yes | Your Anthropic API key (starts with `sk-ant-`) used for all Claude requests |
 | `FEEDBACK_SECRET` | Yes | A secret token you choose. Used as Bearer token to access `GET /get/feedback` |
+| `DEPLOY_URL` | Yes | Your Vercel production URL (e.g. `https://autopmf.vercel.app`). Used by `getFeedback.sh` |
 | `BLOB_READ_WRITE_TOKEN` | Yes | Auto-created when linking the blob store. Used for Vercel Private Blob Storage |
 
 ### 4. Deploy
@@ -76,46 +77,87 @@ Or use the helper script which does both:
 
 ## The AutoLoop — Self-Improving Cycle
 
-### Run it
-Prompt Claude code or similair agents with `Start the @autoloop.md`
-
-### Inner working
-
-AutoPMF continuously improves itself through a feedback-driven loop. Every 10 minutes, Claude reads user feedback, updates the app, and redeploys — no human in the loop.
+AutoPMF continuously improves itself through a feedback-driven loop. When new user feedback arrives, Claude reads it, updates the app, and redeploys — no human in the loop. Built as a [Claude Code plugin](https://code.claude.com/docs/en/plugins) using the [Ralph Wiggum technique](https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum) for iterative, self-referential AI development loops.
 
 ```mermaid
 graph LR
     A[Deploy to Vercel] --> B[Users browse news]
     B --> C[Users submit feedback]
-    C --> D[Claude reads feedback]
-    D --> E[Claude updates app]
-    E --> F[Git commit & push]
-    F --> A
-    F --> G[Sleep 10 min]
-    G --> D
+    C --> D[Stop hook detects feedback]
+    D --> E[Claude wakes up]
+    E --> F[Prepare: read state]
+    F --> G[Feedback: parse + build]
+    G --> H[Deploy: ship + log]
+    H --> I[Claude exits]
+    I --> D
 ```
 
-### How it works
+### Run it
 
-1. **Deploy** — Run `vercel --prod` to deploy
-2. **Use** — Users browse the news feed, read articles, ask Claude questions
-3. **Feedback** — Users rate the experience (0–10 NPS) and leave suggestions via the app's "End" button
-4. **Read** — Claude fetches new feedback from `GET /get/feedback`
-5. **Improve** — Claude brainstorms fixes and updates `product.md` (the master prompt that controls all content)
-6. **Ship** — Changes are committed, pushed, and deployed with `vercel --prod`
-7. **Wait** — Sleep 10 minutes, then loop back to step 4
+```
+/autoloop
+```
+
+That's it. The plugin handles everything:
+
+1. **Prepare** — Reads the codebase, checks deployment health, establishes NPS baseline
+2. **Feedback** — Fetches new feedback, plans the change, builds it
+3. **Deploy** — Commits, pushes, deploys to Vercel, logs the cycle
+4. **Wait** — A stop hook polls for new feedback every 10 minutes. Claude only wakes when at least 1 new feedback entry arrives.
+
+To stop the loop:
+
+```
+/cancel-autoloop
+```
+
+### How it works (Ralph Wiggum pattern)
+
+Unlike a traditional sleep-loop inside the conversation, AutoLoop uses Claude Code's **Stop hook** to control the cycle:
+
+- Claude runs **one cycle** (prepare, feedback, deploy), then exits
+- The stop hook intercepts the exit and **polls `getFeedback.sh`** every 10 minutes
+- Only when **new feedback is detected** does the hook re-inject the prompt (exit code 2)
+- Claude wakes up with full context and processes the next cycle
+- This means Claude never wastes tokens on sleeping — it only runs when there's work to do
+
+### Plugin structure
+
+```
+.claude-plugin/plugin.json         # Plugin metadata
+commands/
+  autoloop.md                      # /autoloop — orchestrates the 3 phases
+  autoloop-prepare.md              # Phase 1: read state, check deployment
+  autoloop-feedback.md             # Phase 2: fetch, parse, plan, build
+  autoloop-deploy.md               # Phase 3: commit, push, deploy, log
+  cancel-autoloop.md               # /cancel-autoloop — stop the loop
+hooks/
+  hooks.json                       # Stop hook registration
+  stop-hook.sh                     # Core: polls for feedback, sleeps, re-injects
+scripts/
+  setup-autoloop.sh                # Initialize state file on first run
+  autoloop-cycle.sh                # Orchestrator: poll, ship, log, advance, status
+  parse-feedback.py                # Incremental feedback parser with regression detection
+```
 
 ### Key files
 
 | File | Role |
 |------|------|
 | `product.md` | Master prompt — governs all news content and behaviour. Updated every iteration |
-| `Feedback.txt` | Historical feedback archive (legacy) |
-| `autoloop.md` | Detailed AutoLoop instructions and iteration log |
+| `autoloop.md` | Iteration log, rules, and stop conditions |
+| `Feedback.txt` | Historical feedback archive with iteration markers |
+| `feedback.jsonl` | Raw JSONL feedback (used by stop hook to detect new entries) |
+| `.last_cycle` | Line-number bookmark + cycle number for incremental feedback parsing |
+| `results.tsv` | Machine-readable experiment log (cycle, date, NPS, status, description) |
+| `.claude/autoloop-state.local.md` | Loop state (cycle number, session ID). Deleted on cancel or PMF |
 
-### Target
+### Stop conditions
 
-The loop runs until 3 consecutive feedback batches average NPS 9+, indicating Product Market Fit.
+1. **PMF reached** — 3 consecutive cycles with NPS >= 9.0
+2. **User cancel** — `/cancel-autoloop`
+3. **Deploy failure** — 2 consecutive `vercel --prod` failures
+4. **No feedback for 24 hours** — Stop hook gives up after 144 polls
 
 ## Notes
 
@@ -136,7 +178,7 @@ Additionally you can verify changes before pushing to prod using Claude's built-
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
-      "Bash(vercel --prod)",
+      "Bash(vercel --prod)"
     ]
   }
 }
