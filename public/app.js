@@ -10,6 +10,7 @@ const state = {
   activeArticle: null,  // article open in detail modal
   currentScreen: 'feed',
   previousScreen: 'feed',
+  searchQuery: '',
 };
 
 // ── Utility ──────────────────────────────────────────────────────────────────
@@ -113,15 +114,24 @@ function showLoading(on) {
   feedLoading.style.display = on ? '' : 'none';
 }
 
-// ── Category filtering ────────────────────────────────────────────────────────
+// ── Category + Search filtering ───────────────────────────────────────────────
 function applyFilter() {
-  if (state.currentCategory === 'all') {
-    state.filteredItems = [...state.newsItems];
-  } else {
-    state.filteredItems = state.newsItems.filter(
-      n => n.category === state.currentCategory
+  let items = state.currentCategory === 'all'
+    ? [...state.newsItems]
+    : state.newsItems.filter(n => n.category === state.currentCategory);
+
+  const q = state.searchQuery.trim().toLowerCase();
+  if (q) {
+    items = items.filter(n =>
+      (n.headline || '').toLowerCase().includes(q) ||
+      (n.hook     || '').toLowerCase().includes(q) ||
+      (n.summary  || '').toLowerCase().includes(q) ||
+      (n.category || '').toLowerCase().includes(q) ||
+      (Array.isArray(n.tags) ? n.tags.join(' ') : '').toLowerCase().includes(q)
     );
   }
+
+  state.filteredItems = items;
   state.currentTikTokIndex = 0;
   renderFeed();
 }
@@ -134,6 +144,22 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
     state.currentCategory = btn.dataset.cat;
     applyFilter();
   });
+});
+
+// ── Search bar ────────────────────────────────────────────────────────────────
+const searchInput = $('search-input');
+const searchClear = $('search-clear');
+searchInput.addEventListener('input', () => {
+  state.searchQuery = searchInput.value;
+  searchClear.style.display = state.searchQuery ? '' : 'none';
+  applyFilter();
+});
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  state.searchQuery = '';
+  searchClear.style.display = 'none';
+  searchInput.focus();
+  applyFilter();
 });
 
 // ── Mode switching ────────────────────────────────────────────────────────────
