@@ -1,0 +1,10 @@
+{
+  "name": "autoloop",
+  "version": "1.0.0",
+  "description": "Autonomous product evolution loop. Fetches user feedback, iterates on a news app, and deploys until PMF (NPS >= 9.0 for 3 consecutive cycles). Based on the Ralph Wiggum technique for iterative, self-referential AI development loops.",
+  "author": {
+    "name": "Floris Fok"
+  },
+  "commands": ["./commands/"],
+  "hooks": "./hooks/hooks.json"
+}

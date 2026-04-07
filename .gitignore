@@ -7,5 +7,5 @@ node_modules/
 .env.local
 !.env.example
 .env*.local
-feedback.jsonl
 env
+.last_cycle

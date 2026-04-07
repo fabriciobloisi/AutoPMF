@@ -104,14 +104,82 @@ app.post('/api/ask', askLimiter, async (req, res) => {
 });
 
 // ── GET /get/feedback ─ returns feedback JSONL (requires Authorization header) ─
+// Query params: ?processed=true|false  ?sessionId=xyz  ?since=ISO  ?limit=N
 app.get('/get/feedback', getFeedbackLimiter, requireFeedbackSecret, async (req, res) => {
   try {
     const { content } = await readFeedbackBlob();
     if (!content) return res.status(404).json({ error: 'No feedback yet' });
-    res.type('application/x-ndjson').send(content);
+
+    const { processed, sessionId, since, limit } = req.query;
+    let lines = content.split('\n').filter(l => l.trim());
+
+    if (processed !== undefined) {
+      const wantProcessed = processed === 'true';
+      lines = lines.filter(l => { try { return JSON.parse(l).processed === wantProcessed; } catch { return false; } });
+    }
+    if (sessionId) {
+      lines = lines.filter(l => { try { return JSON.parse(l).sessionId === sessionId; } catch { return false; } });
+    }
+    if (since) {
+      const sinceDate = new Date(since);
+      lines = lines.filter(l => { try { return new Date(JSON.parse(l).timestamp) >= sinceDate; } catch { return false; } });
+    }
+    if (limit) {
+      const n = Math.max(1, parseInt(limit, 10) || 50);
+      lines = lines.slice(-n);
+    }
+
+    if (lines.length === 0) return res.status(404).json({ error: 'No matching feedback' });
+    res.type('application/x-ndjson').send(lines.join('\n') + '\n');
   } catch (err) {
     console.error('Feedback read error:', err.message);
     res.status(500).json({ error: 'Failed to read feedback' });
+  }
+});
+
+// ── GET /get/feedback/stats ─ aggregate feedback statistics ───────────────────
+app.get('/get/feedback/stats', getFeedbackLimiter, requireFeedbackSecret, async (req, res) => {
+  try {
+    const { content } = await readFeedbackBlob();
+    if (!content) return res.json({ total: 0, unprocessed: 0, averageNps: 0, npsDistribution: {}, uniqueSessions: 0, latestEntry: null, oldestEntry: null });
+
+    const entries = content.split('\n').filter(l => l.trim()).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+
+    let total = 0, unprocessed = 0, gradeSum = 0, gradeCount = 0;
+    const dist = { '0-3': 0, '4-6': 0, '7-8': 0, '9-10': 0 };
+    const sessions = new Set();
+    let oldest = null, latest = null;
+
+    for (const e of entries) {
+      total++;
+      if (!e.processed) unprocessed++;
+      if (e.grade != null) {
+        gradeSum += e.grade;
+        gradeCount++;
+        if (e.grade <= 3) dist['0-3']++;
+        else if (e.grade <= 6) dist['4-6']++;
+        else if (e.grade <= 8) dist['7-8']++;
+        else dist['9-10']++;
+      }
+      if (e.sessionId) sessions.add(e.sessionId);
+      if (e.timestamp) {
+        if (!oldest || e.timestamp < oldest) oldest = e.timestamp;
+        if (!latest || e.timestamp > latest) latest = e.timestamp;
+      }
+    }
+
+    res.json({
+      total,
+      unprocessed,
+      averageNps: gradeCount ? Math.round((gradeSum / gradeCount) * 10) / 10 : 0,
+      npsDistribution: dist,
+      uniqueSessions: sessions.size,
+      latestEntry: latest,
+      oldestEntry: oldest,
+    });
+  } catch (err) {
+    console.error('Feedback stats error:', err.message);
+    res.status(500).json({ error: 'Failed to compute stats' });
   }
 });
 
