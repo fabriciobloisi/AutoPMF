@@ -2,6 +2,17 @@
 
 Automate the Product Market Fit cycle. Feedback in, product out.
 
+<p align="center">
+  <img src="screenshots/homepage.png" alt="AutoPMF news feed" width="300" />
+  <img src="screenshots/feedback.png" alt="AutoPMF feedback screen" width="300" />
+</p>
+
+## How Feedback Drives the Product
+
+AutoPMF is built around one idea: **users shape the product, not developers**. The app serves an AI-curated news feed, and after browsing, users are asked to grade their experience on a 0–10 scale (NPS-style) and leave open-ended comments — what they liked, what felt off, and what they'd improve. A second prompt asks specifically for suggestions to make the service better.
+
+This feedback is the engine of the entire system. Every 10 minutes, an AI agent reads all new feedback, identifies patterns, and autonomously updates the app's master prompt (`product.md`) — the single file that governs what content is shown and how the app behaves. The changes are committed, pushed, and redeployed automatically. No human reviews or approves the changes. The cycle repeats until users consistently rate the experience 9+ out of 10, at which point the app has reached Product-Market Fit.
+
 ## Local Development
 
 ```bash
