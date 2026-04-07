@@ -1,0 +1,9 @@
+env
+.env
+.env.local
+feedback.jsonl
+Feedback.txt
+getFeedback.sh
+autoloop.md
+screenshots/
+.claude/
