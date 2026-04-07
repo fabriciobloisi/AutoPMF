@@ -175,7 +175,7 @@ json.dump({
     'entry_count': len(entries),
     'avg_nps': avg,
     'nps_trend': trend,
-    'regressing': $regressing == 'true',
+    'regressing': '$regressing' == 'true',
 }, sys.stdout, indent=2)
 print()
 "

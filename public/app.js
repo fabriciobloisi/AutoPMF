@@ -39,6 +39,16 @@ function safeColor(c, fallback) {
   return HEX_COLOR.test(c) ? c : fallback;
 }
 
+// Highlight search matches in text (returns escaped HTML with <mark> wrapping)
+function highlight(text) {
+  const s = esc(String(text || ''));
+  const q = state.searchQuery.trim();
+  if (!q) return s;
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`(${escaped})`, 'gi');
+  return s.replace(re, '<mark>$1</mark>');
+}
+
 // ── Elements ─────────────────────────────────────────────────────────────────
 const feedEl         = $('feed');
 const feedLoading    = $('feed-loading');
@@ -281,8 +291,8 @@ function renderTextMode() {
           <span class="cat-badge">${esc(item.category)}</span>
           ${item.trending ? '<span class="trending-badge">TRENDING</span>' : ''}
         </div>
-        <div class="card-headline">${esc(item.headline)}</div>
-        <div class="card-summary">${esc(item.summary)}</div>
+        <div class="card-headline">${highlight(item.headline)}</div>
+        <div class="card-summary">${highlight(item.summary)}</div>
         <div class="card-footer">
           <span class="card-source">${esc(item.source)}</span>
           <span class="card-dot">·</span>
@@ -309,7 +319,7 @@ function renderInstagramMode() {
       <div class="insta-overlay"></div>
       <div class="insta-content">
         <div class="insta-cat">${esc(item.category)}</div>
-        <div class="insta-headline">${esc(item.headline)}</div>
+        <div class="insta-headline">${highlight(item.headline)}</div>
         <div class="insta-footer">
           <span>${esc(item.source)}</span>
           <span>·</span>
@@ -342,8 +352,8 @@ function renderTikTokMode() {
     <div class="tiktok-overlay"></div>
     <div class="tiktok-content">
       <div class="tiktok-cat">${esc(item.category)}</div>
-      <div class="tiktok-headline">${esc(item.headline)}</div>
-      <div class="tiktok-summary">${esc(item.summary)}</div>
+      <div class="tiktok-headline">${highlight(item.headline)}</div>
+      <div class="tiktok-summary">${highlight(item.summary)}</div>
       <div class="tiktok-meta">
         <span>${esc(item.source)}</span>
         <span>·</span>
@@ -435,7 +445,7 @@ function renderCnnMode() {
     <div class="cnn-feat-overlay"></div>
     <div class="cnn-feat-content">
       <div class="cnn-feat-badge">${featured.trending ? 'TOP STORY' : esc(featured.category)}</div>
-      <div class="cnn-feat-headline">${esc(featured.headline)}</div>
+      <div class="cnn-feat-headline">${highlight(featured.headline)}</div>
     </div>
   `;
   featEl.addEventListener('click', () => openArticle(featured));
@@ -456,7 +466,7 @@ function renderCnnMode() {
       cell.innerHTML = `
         <div class="cnn-small-thumb">${imgHtml(item)}</div>
         <div class="cnn-small-cat">${esc(item.category)}</div>
-        <div class="cnn-small-headline">${esc(item.headline)}</div>
+        <div class="cnn-small-headline">${highlight(item.headline)}</div>
         <div class="cnn-small-footer">${esc(item.source)} · ${esc(item.timeAgo)}</div>
       `;
       cell.addEventListener('click', () => openArticle(item));
@@ -479,7 +489,7 @@ function renderCnnMode() {
         <div class="cnn-list-thumb">${imgHtml(item)}</div>
         <div class="cnn-list-content">
           <div class="cnn-list-cat">${esc(item.category)} · ${esc(item.region || '')}</div>
-          <div class="cnn-list-headline">${esc(item.headline)}</div>
+          <div class="cnn-list-headline">${highlight(item.headline)}</div>
           <div class="cnn-list-footer">${esc(item.source)} · ${esc(item.timeAgo)} · ${esc(item.readTime)}</div>
         </div>
       `;
@@ -512,7 +522,7 @@ function renderVideoMode() {
           <span class="video-cat">${esc(item.category)}</span>
           ${item.trending ? '<span class="video-trending">· TRENDING</span>' : ''}
         </div>
-        <div class="video-title">${esc(item.headline)}</div>
+        <div class="video-title">${highlight(item.headline)}</div>
         <div class="video-meta">${esc(item.source)} · ${esc(item.timeAgo)} · ${esc(item.readTime)}</div>
       </div>
     `;

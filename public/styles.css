@@ -270,6 +270,18 @@ input:focus, textarea:focus, button:focus { outline: none; }
 }
 .search-clear:hover { color: #3c3c43; }
 
+/* ── Search highlight ── */
+mark {
+  background: #ffe066;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.dark-mode mark {
+  background: #b8860b;
+  color: #fff;
+}
+
 /* ── Feed Area ── */
 .feed {
   flex: 1;

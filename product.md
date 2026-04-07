@@ -26,7 +26,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 3. Category Filtering & Search
 - Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics
 - Instant client-side filtering of the loaded feed
-- **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing.
+- **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing. **Matching keywords are highlighted** in yellow across all display modes.
 
 ### 4. Article Detail View
 - Full-screen modal with hero image, category/trending badges
@@ -128,3 +128,4 @@ _Each cycle records what changed in this file and why._
 | 8 | 2026-04-06 | Fix card images hidden by gradient fallback overlay; default remains light mode | Gradient fallback div was absolutely positioned on top of the real image in card views, hiding loaded photos. Fallback now hidden by default and only shown on image load error. Light mode is already the default — no change needed. |
 | 9 | 2026-04-06 | Ken Burns slow zoom animation on images in Instagram, TikTok, and Video modes | User feedback (6/10): everything felt boring and static. Added subtle 12s zoom animation to card images in visual modes for movement and life. |
 | 10 | 2026-04-07 | Search bar added below category chips — keyword filter across headline, hook, summary, category, and tags | User feedback (3/10): "I need search". Added real-time search input with clear button. Works in combination with category filter. |
+| 11 | 2026-04-07 | Search keyword highlighting in feed cards — matching text wrapped in yellow `<mark>` tags across all display modes | User feedback (4/10): search should highlight matching keywords in articles. Added highlight function for headline and summary in all 5 modes, with dark mode support. |
