@@ -23,7 +23,7 @@ cd "$PROJECT_DIR"
 export PATH="/opt/homebrew/bin:$PATH"
 
 RESULTS_FILE="results.tsv"
-SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-600}"
+SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-15}" # 600
 
 # Load env vars
 [[ -f .env ]] && { set -a; source .env; set +a; }
@@ -232,15 +232,15 @@ cmd_ship() {
 
     # Verify
     local deploy_status
-    deploy_status=$(vercel ls --prod 2>&1 | head -5)
-    if echo "$deploy_status" | grep -q "● Ready"; then
+    deploy_status=$(vercel ls --prod 2>&1 | head -10)
+    if echo "$deploy_status" | grep -qi "Ready"; then
         echo "Deployment verified: Ready"
     else
         echo "First deploy check failed. Retrying..."
         vercel --prod --yes
         sleep 20
-        deploy_status=$(vercel ls --prod 2>&1 | head -5)
-        if echo "$deploy_status" | grep -q "● Ready"; then
+        deploy_status=$(vercel ls --prod 2>&1 | head -10)
+        if echo "$deploy_status" | grep -qi "Ready"; then
             echo "Deployment verified on retry: Ready"
         else
             die "Deployment failed after 2 attempts. Manual intervention required."
