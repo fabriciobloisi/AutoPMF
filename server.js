@@ -39,8 +39,8 @@ async function readFeedbackBlob() {
   return { content, etag: result.blob.etag };
 }
 
-async function appendFeedbackEntry(entry, retries = 3) {
-  for (let attempt = 0; attempt <= retries; attempt++) {
+async function appendFeedbackEntry(entry, maxRetries = 5) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
     const { content, etag } = await readFeedbackBlob();
     const newContent = content
       ? content.trimEnd() + '\n' + JSON.stringify(entry)
@@ -51,7 +51,13 @@ async function appendFeedbackEntry(entry, retries = 3) {
       await put(FEEDBACK_BLOB, newContent, opts);
       return;
     } catch (err) {
-      if (attempt < retries && err.code === 'blob_store_condition_not_met') continue;
+      const isConflict = err.code === 'blob_store_condition_not_met'
+        || (err.message && err.message.includes('ETag mismatch'))
+        || (err.message && err.message.includes('Precondition'));
+      if (attempt < maxRetries - 1 && isConflict) {
+        await new Promise(r => setTimeout(r, 50 * Math.pow(2, attempt)));
+        continue;
+      }
       throw err;
     }
   }
