@@ -139,6 +139,12 @@ function applyFilter() {
       (n.category || '').toLowerCase().includes(q) ||
       (Array.isArray(n.tags) ? n.tags.join(' ') : '').toLowerCase().includes(q)
     );
+    // Prioritise headline matches over body-only matches
+    items.sort((a, b) => {
+      const aHead = (a.headline || '').toLowerCase().includes(q) ? 0 : 1;
+      const bHead = (b.headline || '').toLowerCase().includes(q) ? 0 : 1;
+      return aHead - bHead;
+    });
   }
 
   state.filteredItems = items;
