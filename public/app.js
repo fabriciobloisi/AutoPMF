@@ -253,7 +253,7 @@ function renderTextMode() {
       <div class="card-content">
         <div class="card-cat-row">
           <span class="cat-badge">${esc(item.category)}</span>
-          ${item.trending ? '<span class="trending-badge">🔥 Trending</span>' : ''}
+          ${item.trending ? '<span class="trending-badge">TRENDING</span>' : ''}
         </div>
         <div class="card-headline">${esc(item.headline)}</div>
         <div class="card-summary">${esc(item.summary)}</div>
@@ -288,7 +288,7 @@ function renderInstagramMode() {
           <span>${esc(item.source)}</span>
           <span>·</span>
           <span>${esc(item.timeAgo)}</span>
-          ${item.trending ? '<span class="insta-trending">🔥 Trending</span>' : ''}
+          ${item.trending ? '<span class="insta-trending">TRENDING</span>' : ''}
         </div>
       </div>
     `;
@@ -322,7 +322,7 @@ function renderTikTokMode() {
         <span>${esc(item.source)}</span>
         <span>·</span>
         <span>${esc(item.timeAgo)}</span>
-        ${item.trending ? '<span class="tiktok-trending-badge">🔥 Trending</span>' : ''}
+        ${item.trending ? '<span class="tiktok-trending-badge">TRENDING</span>' : ''}
       </div>
     </div>
     ${items.length > 1 ? '<div class="swipe-hint">Swipe up/down to browse</div>' : ''}
@@ -408,7 +408,7 @@ function renderCnnMode() {
     ${imgHtml(featured)}
     <div class="cnn-feat-overlay"></div>
     <div class="cnn-feat-content">
-      <div class="cnn-feat-badge">${featured.trending ? '🔥 Top Story' : esc(featured.category)}</div>
+      <div class="cnn-feat-badge">${featured.trending ? 'TOP STORY' : esc(featured.category)}</div>
       <div class="cnn-feat-headline">${esc(featured.headline)}</div>
     </div>
   `;
@@ -484,7 +484,7 @@ function renderVideoMode() {
       <div class="video-info">
         <div class="video-cat-row">
           <span class="video-cat">${esc(item.category)}</span>
-          ${item.trending ? '<span class="video-trending">· 🔥 Trending</span>' : ''}
+          ${item.trending ? '<span class="video-trending">· TRENDING</span>' : ''}
         </div>
         <div class="video-title">${esc(item.headline)}</div>
         <div class="video-meta">${esc(item.source)} · ${esc(item.timeAgo)} · ${esc(item.readTime)}</div>

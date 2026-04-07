@@ -71,7 +71,6 @@ Each news item must follow this exact JSON schema:
   "imageUrl": "https://source.unsplash.com/800x500/?keyword1,keyword2,keyword3,keyword4 — use 4-6 specific photojournalistic keywords",
   "imageAlt": "Brief descriptive caption (10-15 words)",
   "imageGradient": ["#hexcolor1", "#hexcolor2"],
-  "imageEmoji": "single relevant emoji",
   "trending": true or false,
   "impact": "local | national | global",
   "readTime": "X min read",
@@ -101,6 +100,10 @@ Each news item must follow this exact JSON schema:
 - AI:         ["#7209B7", "#3A0CA3"]
 - Default:    ["#636e72", "#2d3436"]
 
+## UI Design Rules
+- **No emoji in badges or tags.** All badges (trending, category, impact) use clean uppercase text with letter-spacing. Professional, typographic style — never playful emoji.
+- Tags should be short, lowercase, no special characters — e.g. `["trade policy", "tariffs", "china"]`
+
 ## Display Mode Content Guidance
 - **Text**: thumbnail + headline + hook — image draws the eye first
 - **Instagram**: full-width hero image, headline overlaid with dark gradient
@@ -115,4 +118,3 @@ _Each cycle records what changed in this file and why._
 | Cycle | Date | Change Summary | Rationale |
 |-------|------|---------------|-----------|
 | 0 | 2026-04-06 | Initial product definition extracted from app code | Baseline — separated product spec from feedback mechanism |
-| 7 | 2026-04-06 | Fix getFeedback.sh casing bug; image resilience via picsum proxy; session_id tracking in feedback; implement dark mode with toggle in Settings | Feedback fetch was silently broken (wrong filename casing). Unsplash URLs unreliable at scale — picsum.photos is more resilient. Session IDs let AutoLoop distinguish repeat users from unique ones. Dark mode was claimed in iteration 6 but never implemented — now fully working with iOS-style toggle and comprehensive dark theme. |

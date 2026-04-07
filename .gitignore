@@ -4,4 +4,5 @@ node_modules/
 .vercel
 .claude/
 .env
+.env.local
 !.env.example

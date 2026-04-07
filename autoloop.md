@@ -112,11 +112,6 @@ Then go back to **Step 1**. This is an infinite loop.
 | # | Date | NPS | Key Change | Target |
 |---|------|-----|-----------|--------|
 | 0 | 2026-04-06 | — | Baseline: extracted product definition | 9.0 |
-| 3 | 2026-04-06 | 2.0 | Removed fire emoji, professional trending badges | 9.0 |
-| 4 | 2026-04-06 | 3.0 | Source names capped 20 chars, single-line footers | 9.0 |
-| 5 | 2026-04-06 | 4.0 | Ask Claude sticky footer bar | 9.0 |
-| 6 | 2026-04-06 | 5.0 | Dark mode with toggle in Settings | 9.0 |
-| 7 | 2026-04-06 | — | Fix getFeedback.sh casing bug, image resilience via picsum proxy, session_id in feedback, implement dark mode toggle in Settings | 9.0 |
 
 ---
 

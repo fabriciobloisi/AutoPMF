@@ -313,9 +313,13 @@ input:focus, textarea:focus, button:focus { outline: none; }
   color: #636366;
 }
 .trending-badge {
-  font-size: 10px; font-weight: 700;
+  font-size: 9px; font-weight: 700;
   color: #ff3b30;
-  letter-spacing: 0.3px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255, 59, 48, 0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 .card-headline {
   font-size: 15px; font-weight: 700;
@@ -400,10 +404,11 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .insta-trending {
   background: #ff3b30;
   color: #fff;
-  font-size: 10px; font-weight: 700;
+  font-size: 9px; font-weight: 700;
   padding: 2px 7px;
   border-radius: 4px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* ═══════════════════════════════════════════════
@@ -482,10 +487,11 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .tiktok-trending-badge {
   background: #ff3b30;
   color: #fff;
-  font-size: 10px; font-weight: 700;
+  font-size: 9px; font-weight: 700;
   padding: 2px 8px;
   border-radius: 4px;
   text-transform: uppercase;
+  letter-spacing: 1px;
   letter-spacing: 0.5px;
 }
 .swipe-hint {
@@ -740,8 +746,10 @@ input:focus, textarea:focus, button:focus { outline: none; }
   color: #636366;
 }
 .video-trending {
-  font-size: 10px; font-weight: 700;
+  font-size: 9px; font-weight: 700;
   color: #ff3b30;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 .video-title {
   font-size: 15px; font-weight: 700;
@@ -1166,11 +1174,13 @@ input:focus, textarea:focus, button:focus { outline: none; }
   display: inline-block;
 }
 .article-trending-badge {
-  font-size: 10px; font-weight: 700;
+  font-size: 9px; font-weight: 700;
   color: #fff;
   background: #ff3b30;
   padding: 4px 9px;
   border-radius: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 /* Scrollable article body */
