@@ -20,7 +20,14 @@ The app runs at `http://localhost:3200`. For watch mode: `source .env && npm run
 2. Import your GitHub repository
 3. Vercel auto-detects the configuration from `vercel.json`
 
-### 2. Add Environment Variables
+### 2. Set Up Blob Storage
+
+```bash
+vercel blob create-store feedback --access private
+vercel env pull   # pulls BLOB_READ_WRITE_TOKEN into .env.local
+```
+
+### 3. Add Environment Variables
 
 In the Vercel dashboard under **Settings > Environment Variables**:
 
@@ -28,8 +35,9 @@ In the Vercel dashboard under **Settings > Environment Variables**:
 |----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | Yes | Your Anthropic API key (starts with `sk-ant-`) used for all Claude requests |
 | `FEEDBACK_SECRET` | Yes | A secret token you choose. Used as Bearer token to access `GET /get/feedback` |
+| `BLOB_READ_WRITE_TOKEN` | Yes | Auto-created when linking the blob store. Used for Vercel Private Blob Storage |
 
-### 3. Deploy
+### 4. Deploy
 
 ```bash
 vercel --prod
@@ -37,10 +45,22 @@ vercel --prod
 
 ## Feedback API
 
-Users submit feedback through the app UI. To retrieve all collected feedback:
+Feedback is stored as JSONL in Vercel Private Blob Storage. To retrieve all collected feedback:
 
 ```bash
 curl -H "Authorization: Bearer $FEEDBACK_SECRET" https://your-domain.com/get/feedback
+```
+
+To mark all entries as processed:
+
+```bash
+curl -X POST -H "Authorization: Bearer $FEEDBACK_SECRET" https://your-domain.com/api/feedback/mark-processed
+```
+
+Or use the helper script which does both:
+
+```bash
+./getFeedback.sh
 ```
 
 ## The AutoLoop — Self-Improving Cycle
@@ -79,7 +99,7 @@ graph LR
 | File | Role |
 |------|------|
 | `product.md` | Master prompt — governs all news content and behaviour. Updated every iteration |
-| `Feedback.txt` | Append-only log of user feedback |
+| `Feedback.txt` | Historical feedback archive (legacy) |
 | `autoloop.md` | Detailed AutoLoop instructions and iteration log |
 
 ### Target
