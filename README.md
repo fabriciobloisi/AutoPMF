@@ -2,6 +2,17 @@
 
 Automate the Product Market Fit cycle. Feedback in, product out.
 
+<p align="center">
+  <img src="screenshots/homepage.png" alt="AutoPMF news feed" width="300" />
+  <img src="screenshots/feedback.png" alt="AutoPMF feedback screen" width="300" />
+</p>
+
+## How Feedback Drives the Product
+
+AutoPMF is built around one idea: **users shape the product, not developers**. The app serves an AI-curated news feed, and after browsing, users are asked to grade their experience on a 0–10 scale (NPS-style) and leave open-ended comments — what they liked, what felt off, and what they'd improve. A second prompt asks specifically for suggestions to make the service better.
+
+This feedback is the engine of the entire system. Every 10 minutes, an AI agent reads all new feedback, identifies patterns, and autonomously updates the app's master prompt (`product.md`) — the single file that governs what content is shown and how the app behaves. The changes are committed, pushed, and redeployed automatically. No human reviews or approves the changes. The cycle repeats until users consistently rate the experience 9+ out of 10, at which point the app has reached Product-Market Fit.
+
 ## Local Development
 
 ```bash
@@ -65,6 +76,11 @@ Or use the helper script which does both:
 
 ## The AutoLoop — Self-Improving Cycle
 
+### Run it
+Prompt Claude code or similair agents with `Start the @autoloop.md`
+
+### Inner working
+
 AutoPMF continuously improves itself through a feedback-driven loop. Every 10 minutes, Claude reads user feedback, updates the app, and redeploys — no human in the loop.
 
 ```mermaid
@@ -104,3 +120,25 @@ The loop runs until 3 consecutive feedback batches average NPS 9+, indicating Pr
 ## Notes
 
 Additionally you can verify changes before pushing to prod using Claude's built-in browser and inspect tools.
+
+### Suggested Permission file
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(export PATH=\"/opt/homebrew/bin:$PATH\")",
+      "Bash(vercel env:*)",
+      "Bash(vercel --prod --yes)",
+      "Bash(ANTHROPIC_API_KEY=test-key node -e \":*)",
+      "Bash(bash:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(vercel --prod)",
+    ]
+  }
+}
+```
+
