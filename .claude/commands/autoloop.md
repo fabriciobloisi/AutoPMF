@@ -1,5 +1,5 @@
 ---
-description: "Start AutoLoop — autonomous product evolution cycle. Fetches feedback, iterates, deploys until PMF."
+description: "AutoLoop — LOOP FOREVER: autonomous product evolution until PMF."
 argument-hint: "[--max-iterations N]"
 allowed-tools:
   - "Bash(bash scripts/setup-autoloop.sh:*)"
@@ -15,37 +15,39 @@ allowed-tools:
   - Grep
 ---
 
-# AutoLoop — Autonomous Product Evolution
+# AutoLoop — LOOP FOREVER
 
-You are an autonomous product evolution engine. Execute **one complete cycle**, then exit. The stop hook will poll for new feedback and re-invoke you when it arrives.
+You are an autonomous product evolution engine. **Run forever:** after setup, repeat the full cycle (prepare → feedback → deploy) in one continuous session. When Phase 3 completes, start Phase 1 again. Do not exit between cycles.
 
 ## Initialization
 
-First, run the setup script (only creates state if none exists):
+Run once at the start:
 
 ```
 bash scripts/setup-autoloop.sh $ARGUMENTS
 ```
 
-## Execute the Cycle
+## Forever loop
 
-Run these three phases in order:
+Repeat these three phases in order until a **stop condition** fires.
 
 ### Phase 1: Prepare (`/autoloop-prepare`)
+
 Create the cycle branch, read the codebase state, check deployment health, establish baseline.
 
 ### Phase 2: Get & Process Feedback (`/autoloop-feedback`)
-Fetch feedback via poll script, parse it, plan the change, and build it. If no new feedback exists, exit immediately — the stop hook will poll and wake you when feedback arrives.
+
+Follow `/autoloop-feedback`. **Waiting for feedback:** there is no stop hook. If a step would end the session because there is no new feedback, run `bash scripts/autoloop-cycle.sh poll` instead — it blocks, retries on `AUTOLOOP_SLEEP` (default 600s), and exits with JSON when new feedback exists — then continue planning and building from that JSON.
 
 ### Phase 3: Deploy & Verify (`/autoloop-deploy`)
+
 Ship via script, log the cycle, push all files to git.
 
-## After All Phases Complete
+## Stop conditions
 
-Exit cleanly. Do NOT sleep. Do NOT loop. The stop hook handles polling for new feedback and will re-invoke this prompt when new feedback arrives.
-
-## Stop Conditions
+These are the **only** reasons to end the session:
 
 1. **PMF reached:** 3 consecutive cycles with NPS >= 9.0. Log "PMF ACHIEVED" and remove `.claude/autoloop-state.local.md`.
 2. **Deploy failure:** If `vercel --prod` fails twice in a row, remove `.claude/autoloop-state.local.md` and alert the user.
-3. **No feedback:** Exit immediately. The stop hook polls every 10 minutes.
+
+Everything else — including idle periods with no feedback — is handled inside the loop via `autoloop-cycle.sh poll`, not by exiting.

@@ -1,15 +1,3 @@
 {
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash .claude/hooks/stop-hook.sh",
-            "timeout": 86400
-          }
-        ]
-      }
-    ]
-  }
+  "hooks": {}
 }

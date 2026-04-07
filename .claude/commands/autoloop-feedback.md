@@ -14,7 +14,7 @@ allowed-tools:
 
 ## Step 1 — FETCH
 
-Run the poll script (non-blocking — returns immediately if feedback exists):
+Run the poll script (`getFeedback.sh` under the hood). It returns JSON as soon as new feedback exists; if none yet, it sleeps and retries until it does.
 
 ```bash
 bash scripts/autoloop-cycle.sh poll
@@ -33,8 +33,7 @@ This calls `getFeedback.sh` internally, fetches **unprocessed** entries from the
 }
 ```
 
-**If `has_new_feedback` is false:**
-EXIT immediately. Do not continue to Step 2. The stop hook will poll for new feedback.
+**If `has_new_feedback` is false:** run `bash scripts/autoloop-cycle.sh poll` again from Step 1 until `has_new_feedback` is true (same command blocks and retries).
 
 **If `has_new_feedback` is true:** use the JSON output directly. Continue to Step 2.
 
