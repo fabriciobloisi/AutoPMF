@@ -6,3 +6,5 @@ node_modules/
 .env
 .env.local
 !.env.example
+.env*.local
+feedback.jsonl
