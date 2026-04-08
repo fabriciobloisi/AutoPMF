@@ -75,6 +75,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 12 | 2026-04-08 | 5.5 | Fun empty-category messages, darker blue, rename Ask Claude to Ask the news | 9.0 |
 | 13 | 2026-04-08 | 5.8 | Simplified feedback form, faster Ken Burns animation | 9.0 |
 | 14 | 2026-04-08 | 6.5 | Fun empty-search messages, mobile safe-area fix, fix mark-processed bug | 9.0 |
+| 15 | 2026-04-08 | 3.0 | Fix feedback FAB hidden on mobile by safe-area inset | 9.0 |
 
 ---
 

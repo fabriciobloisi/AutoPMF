@@ -60,6 +60,7 @@ input:focus, textarea:focus, button:focus { outline: none; }
   .article-modal { position: fixed; }
   .modal-sheet, .article-sheet { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
   .article-ask-footer { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+  .feedback-fab { top: calc(6px + env(safe-area-inset-top)); }
 }
 
 /* safe-area insets now applied in the main mobile query above */
