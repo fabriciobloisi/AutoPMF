@@ -4,3 +4,4 @@ cycle	date	nps	status	description
 12	2026-04-08	5.5	keep	Fun empty-category messages, darker blue theme, rename Ask Claude to Ask the news
 13	2026-04-08	5.8	keep	Simplified feedback form, faster Ken Burns animation
 14	2026-04-08	6.5	keep	Fun empty-search messages, mobile safe-area fix, fix mark-processed bug
+15	2026-04-08	3.0	keep	Fix feedback FAB hidden on mobile by safe-area inset
