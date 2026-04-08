@@ -45,7 +45,7 @@ async function appendFeedbackEntry(entry) {
   const newContent = content
     ? content.trimEnd() + '\n' + JSON.stringify(entry)
     : JSON.stringify(entry);
-  const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
+  const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 0 };
   await put(FEEDBACK_BLOB, newContent, opts);
 }
 
@@ -292,7 +292,7 @@ app.post('/api/feedback/mark-processed', getFeedbackLimiter, requireFeedbackSecr
       return JSON.stringify(entry);
     });
 
-    const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
+    const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 0 };
     await put(FEEDBACK_BLOB, updatedLines.join('\n'), opts);
     return res.json({ ok: true, markedAt: now });
   } catch (err) {
