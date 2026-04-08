@@ -92,6 +92,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 29 | 2026-04-08 | 8.0 | No-op — positive feedback, no actionable change | 9.0 |
 | 30 | 2026-04-08 | 8.0 | No-op — duplicate feedback from cycle 29 (mark-processed was missed) | 9.0 |
 | 31 | 2026-04-08 | 7.5 | Multi-select categories, fix Ask the news auto-scroll | 9.0 |
+| 32 | 2026-04-08 | 7.5 | No-op — duplicate feedback from cycle 31 (mark-processed was missed) | 9.0 |
 
 ---
 
