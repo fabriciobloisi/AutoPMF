@@ -13,3 +13,4 @@ cycle	date	nps	status	description
 21	2026-04-08	3.5	keep	Fix Vercel Blob cache causing duplicate feedback processing
 22	2026-04-08	7.0	keep	Category bar filters to only show selected topics after personalization
 23	2026-04-08	7.0	keep	No-op — duplicate feedback from cycle 22 (mark-processed was missed)
+24	2026-04-08	7.0	keep	Ask the news: shorter conversational responses, improved paragraph formatting
