@@ -26,7 +26,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 3. Category Filtering & Search
 - Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics
 - Instant client-side filtering of the loaded feed
-- **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing. **Matching keywords are highlighted** in yellow across all display modes. **Results are ranked by relevance** — headline matches appear before body-only matches.
+- **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing. **Matching keywords are highlighted** in yellow across all display modes. **Results are ranked by relevance** — headline matches appear before body-only matches. **Fun empty-search messages** when no results found.
 
 ### 4. Article Detail View
 - Full-screen modal with hero image, category/trending badges
@@ -132,3 +132,4 @@ _Each cycle records what changed in this file and why._
 | 12 | 2026-04-07 | Search results prioritise headline matches over body-only matches | User feedback (4/10): title should be prioritised over main text in search. Added stable sort so headline matches rank first. |
 | 13 | 2026-04-08 | Fun empty-category messages, darker blue theme, rename "Ask Claude" to "Ask the news" | User feedback (5.5 avg): empty categories need funny messages; blue too bright; "Ask Claude" should say "Ask the news". Added per-category witty empty states, darkened primary blue from #007AFF to #0062CC, renamed footer label. |
 | 14 | 2026-04-08 | Simplified feedback form (removed suggestion field), faster Ken Burns animation (6s, 12% zoom) | User feedback (5.8 avg): feedback form too complex with separate suggestion field; image animations too slow/subtle. Streamlined to single comments field, doubled animation speed from 12s to 6s with increased zoom from 8% to 12%. |
+| 15 | 2026-04-08 | Fun empty-search messages, mobile safe-area fix for iPhone, fix mark-processed server bug | User feedback (6.5 avg): search needs funny empty state; white area above app on iPhone 15; Ask the news not visible on mobile. Applied safe-area-inset-top/bottom for all mobile browsers (not just standalone), added ask footer bottom padding, colored body to match nav bar. Fixed server mark-processed bug (broken etag handling). |

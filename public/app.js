@@ -211,7 +211,17 @@ const emptyMessages = {
   Politics:   { icon: '🏛️', text: 'No comment at this time.<br>Refresh for the official statement!' },
 };
 
+const searchEmptyMessages = [
+  { icon: '🔍', text: 'Even our best reporters couldn\'t find that.<br>Try different keywords!' },
+  { icon: '🕵️', text: 'Sherlock searched. Watson searched. Nothing.<br>Maybe rephrase your query?' },
+  { icon: '🌵', text: 'It\'s a news desert for that search.<br>Try something broader!' },
+  { icon: '🦗', text: '*crickets*<br>No articles matched your search.' },
+];
+
 function getEmptyMessage(category) {
+  if (state.searchQuery.trim()) {
+    return searchEmptyMessages[Math.floor(Math.random() * searchEmptyMessages.length)];
+  }
   return emptyMessages[category] || emptyMessages.all;
 }
 

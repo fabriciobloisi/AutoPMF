@@ -35,9 +35,9 @@ const getFeedbackLimiter = rateLimit({ windowMs: 60_000, max: 10, message: { err
 // ── Blob helpers ────────────────────────────────────────────────────────────
 async function readFeedbackBlob() {
   const result = await get(FEEDBACK_BLOB, { access: 'private' });
-  if (!result) return { content: '', etag: null };
+  if (!result) return { content: '' };
   const content = await new Response(result.stream).text();
-  return { content, etag: result.blob.etag };
+  return { content };
 }
 
 async function appendFeedbackEntry(entry) {
@@ -269,37 +269,27 @@ app.post('/api/feedback/mark-processed', getFeedbackLimiter, requireFeedbackSecr
   const { timestamps } = req.body || {};
   const scopeSet = Array.isArray(timestamps) && timestamps.length ? new Set(timestamps) : null;
 
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      const { content, etag } = await readFeedbackBlob();
-      if (!content) return res.status(404).json({ error: 'No feedback to process' });
+  try {
+    const { content } = await readFeedbackBlob();
+    if (!content) return res.status(404).json({ error: 'No feedback to process' });
 
-      const now = new Date().toISOString();
-      const updatedLines = content.split('\n').map(line => {
-        if (!line.trim()) return line;
-        const entry = JSON.parse(line);
-        if (!entry.processed && (!scopeSet || scopeSet.has(entry.timestamp))) {
-          entry.processed = true;
-          entry.processedAt = now;
-        }
-        return JSON.stringify(entry);
-      });
-
-      const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
-      if (etag) opts.ifMatch = etag;
-      await put(FEEDBACK_BLOB, updatedLines.join('\n'), opts);
-      return res.json({ ok: true, markedAt: now });
-    } catch (err) {
-      const isConflict = err.code === 'blob_store_condition_not_met'
-        || (err.message && err.message.includes('ETag mismatch'))
-        || (err.message && err.message.includes('Precondition'));
-      if (attempt < maxRetries - 1 && isConflict) {
-        await new Promise(r => setTimeout(r, 50 * Math.pow(2, attempt)));
-        continue;
+    const now = new Date().toISOString();
+    const updatedLines = content.split('\n').map(line => {
+      if (!line.trim()) return line;
+      const entry = JSON.parse(line);
+      if (!entry.processed && (!scopeSet || scopeSet.has(entry.timestamp))) {
+        entry.processed = true;
+        entry.processedAt = now;
       }
-      console.error('Mark processed error:', err.message);
-      return res.status(500).json({ error: 'Failed to mark feedback as processed' });
-    }
+      return JSON.stringify(entry);
+    });
+
+    const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 };
+    await put(FEEDBACK_BLOB, updatedLines.join('\n'), opts);
+    return res.json({ ok: true, markedAt: now });
+  } catch (err) {
+    console.error('Mark processed error:', err.message);
+    return res.status(500).json({ error: 'Failed to mark feedback as processed' });
   }
 });
 
