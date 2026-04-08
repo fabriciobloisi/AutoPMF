@@ -41,7 +41,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 
 ### 6. User Feedback Loop
 - NPS-style grading (0–10 slider)
-- Free-text comments and suggestions
+- Free-text comments (single field — simple and focused)
 - Each submission includes a persistent `sessionId` (random UUID per browser) so AutoLoop can distinguish repeat users from unique testers
 - Feedback is stored and consumed by the AutoLoop to improve this file
 
@@ -108,10 +108,10 @@ Each news item must follow this exact JSON schema:
 
 ## Display Mode Content Guidance
 - **Text**: thumbnail + headline + hook — image draws the eye first
-- **Instagram**: full-width hero image, headline overlaid with dark gradient. Slow Ken Burns zoom on images
-- **TikTok**: image fills entire screen, content overlaid at bottom. Slow Ken Burns zoom on images
+- **Instagram**: full-width hero image, headline overlaid with dark gradient. Ken Burns zoom on images (6s cycle)
+- **TikTok**: image fills entire screen, content overlaid at bottom. Ken Burns zoom on images (6s cycle)
 - **CNN**: large hero for featured story, thumbnails for secondary
-- **Video**: 16:9 image with play button overlay. Slow Ken Burns zoom on images
+- **Video**: 16:9 image with play button overlay. Ken Burns zoom on images (6s cycle)
 
 
 ## AutoLoop Evolution Log
@@ -131,3 +131,4 @@ _Each cycle records what changed in this file and why._
 | 11 | 2026-04-07 | Search keyword highlighting in feed cards — matching text wrapped in yellow `<mark>` tags across all display modes | User feedback (4/10): search should highlight matching keywords in articles. Added highlight function for headline and summary in all 5 modes, with dark mode support. |
 | 12 | 2026-04-07 | Search results prioritise headline matches over body-only matches | User feedback (4/10): title should be prioritised over main text in search. Added stable sort so headline matches rank first. |
 | 13 | 2026-04-08 | Fun empty-category messages, darker blue theme, rename "Ask Claude" to "Ask the news" | User feedback (5.5 avg): empty categories need funny messages; blue too bright; "Ask Claude" should say "Ask the news". Added per-category witty empty states, darkened primary blue from #007AFF to #0062CC, renamed footer label. |
+| 14 | 2026-04-08 | Simplified feedback form (removed suggestion field), faster Ken Burns animation (6s, 12% zoom) | User feedback (5.8 avg): feedback form too complex with separate suggestion field; image animations too slow/subtle. Streamlined to single comments field, doubled animation speed from 12s to 6s with increased zoom from 8% to 12%. |

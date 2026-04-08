@@ -668,7 +668,6 @@ submitFbBtn?.addEventListener('click', async () => {
       body: JSON.stringify({
         grade: Number(gradeEl.value),
         comments: $('comments').value,
-        suggestion: $('suggestion').value,
         page: state.previousScreen || 'feed',
         sessionId: getSessionId(),
       }),
@@ -678,7 +677,6 @@ submitFbBtn?.addEventListener('click', async () => {
     feedbackMsg.textContent = 'Thanks! Your feedback was saved. ✓';
     feedbackMsg.className = 'feedback-msg show success';
     $('comments').value = '';
-    $('suggestion').value = '';
     gradeEl.value = 7;
     gradeValEl.textContent = '7';
     setTimeout(() => showScreen(state.previousScreen || 'feed'), 1200);

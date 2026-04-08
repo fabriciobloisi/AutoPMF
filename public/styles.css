@@ -47,7 +47,7 @@ input:focus, textarea:focus, button:focus { outline: none; }
   .feedback-body { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
   .customize-body { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
   .mode-bar { padding-bottom: calc(8px + env(safe-area-inset-bottom)); height: auto; }
-  #api-key-input, #comments, #suggestion, #ask-input { font-size: 16px; }
+  #api-key-input, #comments, #ask-input { font-size: 16px; }
   .modal { position: fixed; }
   .article-modal { position: fixed; }
   .modal-sheet, .article-sheet { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
@@ -1114,7 +1114,7 @@ mark {
 }
 .slider-labels small { font-size: 11px; color: #8e8e93; }
 .slider-value { font-size: 24px; font-weight: 700; color: #0062CC; line-height: 1; }
-#comments, #suggestion {
+#comments {
   width: 100%;
   border: none;
   background: #f2f2f7;
@@ -1306,12 +1306,12 @@ mark {
 /* Ken Burns slow zoom on visual card modes */
 @keyframes ken-burns {
   0%   { transform: scale(1); }
-  100% { transform: scale(1.08); }
+  100% { transform: scale(1.12); }
 }
 .card-instagram .card-real-img,
 .card-tiktok .card-real-img,
 .video-thumb .card-real-img {
-  animation: ken-burns 12s ease-in-out infinite alternate;
+  animation: ken-burns 6s ease-in-out infinite alternate;
 }
 
 /* ── Article Modal — Full Screen ── */
@@ -1704,7 +1704,7 @@ mark {
 .app.dark-mode .feedback-card h3 { color: #fff; }
 .app.dark-mode #grade { background: #48484a; }
 .app.dark-mode .slider-value { color: #0a84ff; }
-.app.dark-mode #comments, .app.dark-mode #suggestion { background: #3a3a3c; color: #fff; }
+.app.dark-mode #comments { background: #3a3a3c; color: #fff; }
 
 /* Dark mode — Modals */
 .app.dark-mode .modal-sheet { background: #2c2c2e; }

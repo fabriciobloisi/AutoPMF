@@ -73,6 +73,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 10 | 2026-04-07 | 4.0 | Search keyword highlighting in feed cards across all display modes | 9.0 |
 | 11 | 2026-04-07 | 4.0 | Search results prioritise headline matches over body-only matches | 9.0 |
 | 12 | 2026-04-08 | 5.5 | Fun empty-category messages, darker blue, rename Ask Claude to Ask the news | 9.0 |
+| 13 | 2026-04-08 | 5.8 | Simplified feedback form, faster Ken Burns animation | 9.0 |
 
 ---
 
