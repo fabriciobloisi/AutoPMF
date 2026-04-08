@@ -85,6 +85,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 22 | 2026-04-08 | 7.0 | Category bar filters to only show selected topics after personalization | 9.0 |
 | 23 | 2026-04-08 | 7.0 | No-op — duplicate feedback from cycle 22 (mark-processed was missed) | 9.0 |
 | 24 | 2026-04-08 | 7.0 | Ask the news: shorter conversational responses, improved paragraph formatting | 9.0 |
+| 25 | 2026-04-08 | 5.0 | Add share button in article detail — Web Share API on mobile, clipboard on desktop | 9.0 |
 
 ---
 
