@@ -130,29 +130,6 @@
         </div>
       </div>
 
-      <!-- Mode Switcher Bar -->
-      <div class="mode-bar" id="mode-bar">
-        <button class="mode-bar-btn active" data-mode="text" aria-label="Text mode">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/></svg>
-          <span>Text</span>
-        </button>
-        <button class="mode-bar-btn" data-mode="instagram" aria-label="Instagram mode">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-          <span>Insta</span>
-        </button>
-        <button class="mode-bar-btn" data-mode="tiktok" aria-label="TikTok mode">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          <span>TikTok</span>
-        </button>
-        <button class="mode-bar-btn" data-mode="cnn" aria-label="CNN mode">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          <span>CNN</span>
-        </button>
-        <button class="mode-bar-btn" data-mode="video" aria-label="Video mode">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
-          <span>Video</span>
-        </button>
-      </div>
 
       <!-- TikTok Navigation Overlay -->
       <div class="tiktok-nav" id="tiktok-nav" style="display:none">
@@ -450,6 +427,51 @@
           </div>
         </div>
         <button class="btn-primary" style="width:100%;margin-top:4px" data-close-about>Got it</button>
+      </div>
+    </div>
+
+    <!-- ── Onboarding Overlay (first-run) ── -->
+    <div class="onboarding-overlay" id="onboarding-overlay" style="display:none">
+      <div class="onboarding-card">
+        <h2 class="onboarding-title">Welcome to AutoPMF</h2>
+        <p class="onboarding-subtitle">Personalize your news in seconds</p>
+
+        <div class="onboarding-section">
+          <label class="onboarding-label">Your name</label>
+          <input type="text" id="onboarding-name" class="onboarding-input" placeholder="e.g. Alex" autocomplete="given-name">
+        </div>
+
+        <div class="onboarding-section">
+          <label class="onboarding-label">Topics you care about</label>
+          <div class="onboarding-chips" id="onboarding-topics">
+            <button class="onboarding-chip" data-topic="Technology">Technology</button>
+            <button class="onboarding-chip" data-topic="AI">AI</button>
+            <button class="onboarding-chip" data-topic="Business">Business</button>
+            <button class="onboarding-chip" data-topic="World">World</button>
+            <button class="onboarding-chip" data-topic="Politics">Politics</button>
+            <button class="onboarding-chip" data-topic="Science">Science</button>
+            <button class="onboarding-chip" data-topic="Climate">Climate</button>
+            <button class="onboarding-chip" data-topic="Health">Health</button>
+            <button class="onboarding-chip" data-topic="Sports">Sports</button>
+            <button class="onboarding-chip" data-topic="Culture">Culture</button>
+          </div>
+        </div>
+
+        <div class="onboarding-section">
+          <label class="onboarding-label">Region</label>
+          <div class="onboarding-chips" id="onboarding-regions">
+            <button class="onboarding-chip active" data-region="Global">Global</button>
+            <button class="onboarding-chip" data-region="North America">Americas</button>
+            <button class="onboarding-chip" data-region="Europe">Europe</button>
+            <button class="onboarding-chip" data-region="Asia">Asia</button>
+            <button class="onboarding-chip" data-region="Latin America">LatAm</button>
+            <button class="onboarding-chip" data-region="Middle East">Mid East</button>
+            <button class="onboarding-chip" data-region="Africa">Africa</button>
+          </div>
+        </div>
+
+        <button class="onboarding-go-btn" id="onboarding-go">Get my news</button>
+        <button class="onboarding-skip" id="onboarding-skip">Skip — show everything</button>
       </div>
     </div>
 

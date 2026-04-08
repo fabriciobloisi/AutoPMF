@@ -1829,3 +1829,114 @@ html.dark .about-body strong { color: #fff; }
 html.dark .about-section-title { color: #fff; }
 html.dark .about-loop-diagram { background: #3a3a3c; }
 html.dark .loop-step { background: #2c2c2e; color: #fff; }
+
+/* ── Onboarding Overlay ── */
+.onboarding-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.onboarding-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 24px 20px;
+  width: 100%;
+  max-width: 360px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.onboarding-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  margin-bottom: 4px;
+}
+.onboarding-subtitle {
+  font-size: 14px;
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+.onboarding-section { margin-bottom: 16px; }
+.onboarding-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.onboarding-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  background: #f8f8f8;
+  color: #000;
+  transition: border-color 0.2s;
+}
+.onboarding-input:focus { border-color: #0062CC; background: #fff; }
+.onboarding-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.onboarding-chip {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #f0f0f0;
+  color: #333;
+  border: 1.5px solid transparent;
+  transition: all 0.15s;
+}
+.onboarding-chip.active {
+  background: #0062CC;
+  color: #fff;
+  border-color: #0062CC;
+}
+.onboarding-go-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: #0062CC;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: background 0.15s;
+}
+.onboarding-go-btn:active { background: #004fa3; }
+.onboarding-skip {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #888;
+}
+.onboarding-skip:active { color: #555; }
+
+/* Dark mode — onboarding */
+html.dark .onboarding-card { background: #1c1c1e; }
+html.dark .onboarding-title { color: #fff; }
+html.dark .onboarding-subtitle { color: #8e8e93; }
+html.dark .onboarding-label { color: #aeaeb2; }
+html.dark .onboarding-input { background: #2c2c2e; border-color: #3a3a3c; color: #fff; }
+html.dark .onboarding-input:focus { border-color: #0a84ff; background: #3a3a3c; }
+html.dark .onboarding-chip { background: #2c2c2e; color: #aeaeb2; }
+html.dark .onboarding-chip.active { background: #0a84ff; color: #fff; border-color: #0a84ff; }
+html.dark .onboarding-go-btn { background: #0a84ff; }
+html.dark .onboarding-skip { color: #636366; }

@@ -189,9 +189,8 @@ function setMode(mode) {
   state.currentMode = mode;
   localStorage.setItem('autopmf_mode', mode);
 
-  // Update customize screen mode cards + feed mode bar
+  // Update customize screen mode cards
   document.querySelectorAll('.mode-card').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  document.querySelectorAll('.mode-bar-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
 
   renderFeed();
 }
@@ -966,18 +965,67 @@ aboutModal.querySelectorAll('[data-close-about]').forEach(el =>
 function initMode() {
   const mode = state.currentMode;
   document.querySelectorAll('.mode-card').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  document.querySelectorAll('.mode-bar-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+}
 
-  // Wire up mode bar click handlers
-  document.querySelectorAll('.mode-bar-btn').forEach(b => {
-    b.addEventListener('click', () => setMode(b.dataset.mode));
+// ── Onboarding (first-run) ──────────────────────────────────────────────────
+const ONBOARDED_KEY = 'autopmf_onboarded';
+
+function showOnboarding() {
+  const overlay = $('onboarding-overlay');
+  overlay.style.display = 'flex';
+
+  // Topic chips toggle
+  overlay.querySelectorAll('#onboarding-topics .onboarding-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('active'));
   });
+
+  // Region chips — single-select
+  overlay.querySelectorAll('#onboarding-regions .onboarding-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      overlay.querySelectorAll('#onboarding-regions .onboarding-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  // "Get my news" button
+  $('onboarding-go').addEventListener('click', () => {
+    const name = $('onboarding-name').value.trim();
+    if (name) localStorage.setItem('autopmf_user_name', name);
+
+    const topics = [...overlay.querySelectorAll('#onboarding-topics .onboarding-chip.active')].map(c => c.dataset.topic);
+    const regionChip = overlay.querySelector('#onboarding-regions .onboarding-chip.active');
+    const region = regionChip ? regionChip.dataset.region : 'Global';
+
+    state.preferences.topics = topics;
+    state.preferences.region = region;
+    localStorage.setItem('autopmf_prefs', JSON.stringify(state.preferences));
+
+    // Sync customize screen UI
+    document.querySelectorAll('#cust-topics .topic-chip').forEach(c => c.classList.toggle('active', topics.includes(c.dataset.topic)));
+    document.querySelectorAll('#cust-regions .region-btn').forEach(c => c.classList.toggle('active', c.dataset.region === region));
+
+    finishOnboarding();
+  });
+
+  // "Skip" button
+  $('onboarding-skip').addEventListener('click', finishOnboarding);
+}
+
+function finishOnboarding() {
+  localStorage.setItem(ONBOARDED_KEY, '1');
+  const overlay = $('onboarding-overlay');
+  overlay.style.display = 'none';
+  loadNews();
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
   initMode();
-  loadNews();
+  if (!localStorage.getItem(ONBOARDED_KEY)) {
+    showOnboarding();
+  } else {
+    loadNews();
+  }
 }
 
 init();
