@@ -83,6 +83,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 20 | 2026-04-08 | 3.5 | No-op — duplicate feedback from cycle 19 (mark-processed was missed) | 9.0 |
 | 21 | 2026-04-08 | 3.5 | Fix Vercel Blob cache causing duplicate feedback processing | 9.0 |
 | 22 | 2026-04-08 | 7.0 | Category bar filters to only show selected topics after personalization | 9.0 |
+| 23 | 2026-04-08 | 7.0 | No-op — duplicate feedback from cycle 22 (mark-processed was missed) | 9.0 |
 
 ---
 
