@@ -7,3 +7,4 @@ cycle	date	nps	status	description
 15	2026-04-08	3.0	keep	Fix feedback FAB hidden on mobile by safe-area inset
 16	2026-04-08	5.0	keep	Fix blue bar on mobile — neutral body background
 17	2026-04-08	5.0	keep	Fix Ask the news — server timeout 60s, client-side 30s abort, auto-scroll to response
+18	2026-04-08	5.0	keep	No-op — duplicate feedback from cycle 17 (mark-processed was missed)

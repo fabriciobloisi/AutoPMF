@@ -78,6 +78,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 15 | 2026-04-08 | 3.0 | Fix feedback FAB hidden on mobile by safe-area inset | 9.0 |
 | 16 | 2026-04-08 | 5.0 | Fix blue bar on mobile — neutral body background | 9.0 |
 | 17 | 2026-04-08 | 5.0 | Fix Ask the news — server timeout + client timeout + auto-scroll | 9.0 |
+| 18 | 2026-04-08 | 5.0 | No-op — duplicate feedback from cycle 17 (mark-processed was missed) | 9.0 |
 
 ---
 
