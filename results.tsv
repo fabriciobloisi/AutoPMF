@@ -6,3 +6,4 @@ cycle	date	nps	status	description
 14	2026-04-08	6.5	keep	Fun empty-search messages, mobile safe-area fix, fix mark-processed bug
 15	2026-04-08	3.0	keep	Fix feedback FAB hidden on mobile by safe-area inset
 16	2026-04-08	5.0	keep	Fix blue bar on mobile — neutral body background
+17	2026-04-08	5.0	keep	Fix Ask the news — server timeout 60s, client-side 30s abort, auto-scroll to response
