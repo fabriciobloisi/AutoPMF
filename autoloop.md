@@ -76,6 +76,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 13 | 2026-04-08 | 5.8 | Simplified feedback form, faster Ken Burns animation | 9.0 |
 | 14 | 2026-04-08 | 6.5 | Fun empty-search messages, mobile safe-area fix, fix mark-processed bug | 9.0 |
 | 15 | 2026-04-08 | 3.0 | Fix feedback FAB hidden on mobile by safe-area inset | 9.0 |
+| 16 | 2026-04-08 | 5.0 | Fix blue bar on mobile — neutral body background | 9.0 |
 
 ---
 

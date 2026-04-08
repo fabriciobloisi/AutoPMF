@@ -35,7 +35,7 @@ input:focus, textarea:focus, button:focus { outline: none; }
 }
 
 @media (max-width: 500px) {
-  body { background: #0062CC; margin: 0; }
+  body { background: #f2f2f7; margin: 0; }
   .phone {
     width: 100%;
     height: 100svh;
@@ -1764,7 +1764,7 @@ mark {
 .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
 
 /* ── Dark Mode ── */
-@media (max-width: 500px) { html.dark body { background: #1c1c1e; } }
+@media (max-width: 500px) { html.dark body { background: #000; } }
 html.dark .app { background: #000; }
 html.dark .header { background: #1c1c1e; border-bottom-color: #38383a; }
 html.dark .header-title { color: #fff; }
