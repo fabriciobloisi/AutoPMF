@@ -1475,6 +1475,8 @@ mark {
   color: #000;
   line-height: 1.5;
 }
+.ask-response p { margin: 0 0 6px 0; }
+.ask-response p:last-child { margin-bottom: 0; }
 .ask-response.loading {
   display: flex; align-items: center; gap: 6px;
   color: #8e8e93;

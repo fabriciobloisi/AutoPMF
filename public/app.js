@@ -653,7 +653,7 @@ async function askClaude() {
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || 'Failed');
     responseEl.className = 'ask-response';
-    responseEl.textContent = data.text;
+    responseEl.innerHTML = data.text.split('\n').filter(p => p.trim()).map(p => `<p>${esc(p)}</p>`).join('');
     responseEl.style.display = 'block';
     $('ask-input').value = '';
     $('article-body').scrollTo({ top: $('article-body').scrollHeight, behavior: 'smooth' });

@@ -83,8 +83,8 @@ app.post('/api/ask', askLimiter, async (req, res) => {
   try {
     const response = await anthropicClient.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 1024,
-      system: 'You are a knowledgeable news analyst. Answer questions about news articles concisely and accurately.',
+      max_tokens: 256,
+      system: 'You are a knowledgeable news analyst. Answer in 2-3 short sentences max. Be conversational and natural — no bullet points, no markdown headers, no bold text. Write like a smart friend explaining over coffee.',
       messages: [{ role: 'user', content: context }],
     });
     const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
