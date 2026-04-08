@@ -39,6 +39,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - **First-run onboarding** — on first visit, a welcome overlay asks for your name, preferred topics, and region before showing any news. Preferences are saved to localStorage and applied immediately. Users can skip to get the default experience.
 - **Topics** — select preferred categories to bias the feed
 - **Region** — choose a geographic focus (Global, Americas, Europe, Asia, LatAm, Middle East, Africa)
+- **News sources** — select preferred sources (Reuters, BBC, Bloomberg, Wired, etc.) in Customize. Only articles from selected sources appear in the feed. Leave all unselected to see everything.
 - **Article count** — Short (5), Standard (8), or Long (15) feed lengths
 - **Display mode** — persisted in localStorage across sessions (accessible via Customize screen)
 
@@ -144,3 +145,4 @@ _Each cycle records what changed in this file and why._
 | 22 | 2026-04-08 | Category bar filters to only show selected topics after personalization | User feedback (7/10): after personalizing, they don't want to see unselected categories. Category chips now hide non-selected topics when preferences are set. "All" chip always visible. |
 | 24 | 2026-04-08 | Ask the news responses shorter and conversational, improved formatting | User feedback (7/10): responses were long and bot-formatted. Reduced max_tokens to 256, updated system prompt for conversational 2-3 sentence answers, render paragraphs properly in client. |
 | 25 | 2026-04-08 | Share button in article detail — Web Share API on mobile, clipboard on desktop | User feedback (5/10): missing share option to send articles to friends via WhatsApp/email. Added share button in article hero with native share sheet on mobile and clipboard copy with green flash feedback on desktop. |
+| 26 | 2026-04-08 | News source selector in Customize — filter feed by preferred sources | User feedback (5/10): wants to choose news sources like TechCrunch, CNN, Reuters. Added 20-source selector in Customize screen with chip toggles. Feed filters to selected sources only. |

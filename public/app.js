@@ -6,7 +6,7 @@ const state = {
   currentCategory: 'all',
   currentTikTokIndex: 0,
   loading: false,
-  preferences: JSON.parse(localStorage.getItem('autopmf_prefs') || '{"topics":[],"region":"Global","count":8}'),
+  preferences: JSON.parse(localStorage.getItem('autopmf_prefs') || '{"topics":[],"region":"Global","count":8,"sources":[]}'),
   activeArticle: null,  // article open in detail modal
   currentScreen: 'feed',
   previousScreen: 'feed',
@@ -135,6 +135,12 @@ function applyFilter() {
   let items = state.currentCategory === 'all'
     ? [...state.newsItems]
     : state.newsItems.filter(n => n.category === state.currentCategory);
+
+  // Filter by preferred sources
+  const sources = state.preferences.sources || [];
+  if (sources.length > 0) {
+    items = items.filter(n => sources.includes(n.source));
+  }
 
   const q = state.searchQuery.trim().toLowerCase();
   if (q) {
@@ -902,6 +908,11 @@ function openCustomize() {
     btn.classList.toggle('active', btn.dataset.region === (prefs.region || 'Global'));
   });
 
+  // Restore sources
+  document.querySelectorAll('.source-chip').forEach(chip => {
+    chip.classList.toggle('selected', (prefs.sources || []).includes(chip.dataset.source));
+  });
+
   // Restore count
   const count = String(prefs.count || 8);
   document.querySelectorAll('.count-btn').forEach(btn => {
@@ -923,6 +934,11 @@ function saveCustomize() {
   const activeRegion = document.querySelector('.region-btn.active');
   state.preferences.region = activeRegion ? activeRegion.dataset.region : 'Global';
 
+  // Sources
+  const sources = [];
+  document.querySelectorAll('.source-chip.selected').forEach(c => sources.push(c.dataset.source));
+  state.preferences.sources = sources;
+
   // Count
   const activeCount = document.querySelector('.count-btn.active');
   state.preferences.count = activeCount ? Number(activeCount.dataset.count) : 8;
@@ -933,6 +949,11 @@ function saveCustomize() {
 
 // Topic chip toggle
 document.querySelectorAll('.topic-chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('selected'));
+});
+
+// Source chip toggle
+document.querySelectorAll('.source-chip').forEach(chip => {
   chip.addEventListener('click', () => chip.classList.toggle('selected'));
 });
 

@@ -1013,6 +1013,24 @@ mark {
 }
 .topic-chip:active { opacity: 0.7; }
 
+/* Source chips */
+.sources-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.source-chip {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px; font-weight: 500;
+  background: #f2f2f7;
+  color: #3c3c43;
+  border: 1.5px solid transparent;
+  transition: all 0.15s;
+}
+.source-chip.selected {
+  background: rgba(0,122,255,0.08);
+  border-color: #0062CC;
+  color: #0062CC;
+}
+.source-chip:active { opacity: 0.7; }
+
 /* Region buttons */
 .region-grid {
   display: grid;
@@ -1706,6 +1724,8 @@ mark {
 .app.dark-mode .mode-card.active .mode-card-icon { color: #0a84ff; }
 .app.dark-mode .topic-chip { background: #3a3a3c; color: #ebebf5; }
 .app.dark-mode .topic-chip.selected { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
+.app.dark-mode .source-chip { background: #3a3a3c; color: #ebebf5; }
+.app.dark-mode .source-chip.selected { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
 .app.dark-mode .region-btn { background: #3a3a3c; color: #ebebf5; }
 .app.dark-mode .region-btn.active { background: rgba(10,132,255,0.15); border-color: #0a84ff; color: #0a84ff; }
 .app.dark-mode .count-btn { background: #3a3a3c; color: #ebebf5; }
