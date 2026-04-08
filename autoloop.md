@@ -87,6 +87,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 24 | 2026-04-08 | 7.0 | Ask the news: shorter conversational responses, improved paragraph formatting | 9.0 |
 | 25 | 2026-04-08 | 5.0 | Add share button in article detail — Web Share API on mobile, clipboard on desktop | 9.0 |
 | 26 | 2026-04-08 | 5.0 | News source selector in Customize — filter feed by preferred sources | 9.0 |
+| 27 | 2026-04-08 | 5.0 | Expand categories from 10 to 17 — Entertainment, Finance, Space, Education, Travel, Food, Opinion | 9.0 |
 
 ---
 
