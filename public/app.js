@@ -621,6 +621,25 @@ function closeArticle() {
 
 $('article-close-btn').addEventListener('click', closeArticle);
 
+// Share article
+$('article-share-btn').addEventListener('click', async () => {
+  const item = state.activeArticle;
+  if (!item) return;
+  const text = `${item.headline}\n\n${item.hook || item.summary}`;
+  const shareData = { title: item.headline, text };
+
+  if (navigator.share) {
+    try { await navigator.share(shareData); } catch {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = $('article-share-btn');
+      btn.style.background = 'rgba(52,199,89,0.7)';
+      setTimeout(() => btn.style.background = '', 1200);
+    } catch {}
+  }
+});
+
 // Ask Claude about the article
 $('ask-send-btn').addEventListener('click', askClaude);
 $('ask-input').addEventListener('keydown', e => {

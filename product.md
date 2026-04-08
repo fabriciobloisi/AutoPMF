@@ -32,6 +32,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 4. Article Detail View
 - Full-screen modal with hero image, category/trending badges
 - Rich content: headline, source + time + read-time, summary, long-form detail
+- **Share button** — in the article hero area, a share icon lets users share articles via native Web Share API (WhatsApp, email, etc. on mobile) or copy to clipboard on desktop. Visual feedback (green flash) on clipboard copy.
 - **Ask the news** — sticky footer bar at the bottom of every article with a labeled "ASK THE NEWS" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses. **Responses are short (2-3 sentences), conversational, and naturally formatted** — no bullet points, no markdown headers, no bold text.
 
 ### 5. Personalization & Customization
@@ -142,3 +143,4 @@ _Each cycle records what changed in this file and why._
 | 21 | 2026-04-08 | Fix Vercel Blob cache causing duplicate feedback processing | Vercel Blob cacheControlMaxAge was 60s, causing stale reads during mark-processed. Set to 0 for immediate consistency. |
 | 22 | 2026-04-08 | Category bar filters to only show selected topics after personalization | User feedback (7/10): after personalizing, they don't want to see unselected categories. Category chips now hide non-selected topics when preferences are set. "All" chip always visible. |
 | 24 | 2026-04-08 | Ask the news responses shorter and conversational, improved formatting | User feedback (7/10): responses were long and bot-formatted. Reduced max_tokens to 256, updated system prompt for conversational 2-3 sentence answers, render paragraphs properly in client. |
+| 25 | 2026-04-08 | Share button in article detail — Web Share API on mobile, clipboard on desktop | User feedback (5/10): missing share option to send articles to friends via WhatsApp/email. Added share button in article hero with native share sheet on mobile and clipboard copy with green flash feedback on desktop. |
