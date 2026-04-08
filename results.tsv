@@ -9,3 +9,4 @@ cycle	date	nps	status	description
 17	2026-04-08	5.0	keep	Fix Ask the news — server timeout 60s, client-side 30s abort, auto-scroll to response
 18	2026-04-08	5.0	keep	No-op — duplicate feedback from cycle 17 (mark-processed was missed)
 19	2026-04-08	3.5	keep	Remove bottom mode bar, add first-run onboarding for personalization
+20	2026-04-08	3.5	keep	No-op — duplicate feedback from cycle 19 (mark-processed was missed)
