@@ -627,6 +627,8 @@ async function askClaude() {
   $('ask-send-btn').disabled = true;
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
     const r = await fetch('/api/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -634,17 +636,22 @@ async function askClaude() {
         question,
         article: state.activeArticle,
       }),
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || 'Failed');
     responseEl.className = 'ask-response';
     responseEl.textContent = data.text;
     responseEl.style.display = 'block';
     $('ask-input').value = '';
+    $('article-body').scrollTo({ top: $('article-body').scrollHeight, behavior: 'smooth' });
   } catch (err) {
     responseEl.className = 'ask-response';
-    responseEl.textContent = '⚠️ ' + err.message;
+    const msg = err.name === 'AbortError' ? 'Request timed out — please try again.' : err.message;
+    responseEl.textContent = '⚠️ ' + msg;
     responseEl.style.display = 'block';
+    $('article-body').scrollTo({ top: $('article-body').scrollHeight, behavior: 'smooth' });
   } finally {
     $('ask-send-btn').disabled = false;
   }
