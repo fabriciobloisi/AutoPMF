@@ -25,6 +25,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 
 ### 3. Category Filtering & Search
 - Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics
+- **Personalized category bar** — when the user has selected preferred topics (via onboarding or Customize), only those topics appear as chips (plus "All"). If no topics are selected, all chips are shown.
 - Instant client-side filtering of the loaded feed
 - **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing. **Matching keywords are highlighted** in yellow across all display modes. **Results are ranked by relevance** — headline matches appear before body-only matches. **Fun empty-search messages** when no results found.
 
@@ -139,3 +140,4 @@ _Each cycle records what changed in this file and why._
 | 18 | 2026-04-08 | Fix Ask the news — increase server timeout, add client-side timeout with auto-scroll | User feedback (5.0): "Claude did not respond; something went wrong after asking the news." Vercel serverless function had 10s default timeout, too short for Claude API. Extended to 60s. Added 30s client-side abort with clear error message. Auto-scroll article body to show response. |
 | 19 | 2026-04-08 | Remove bottom mode bar, add first-run onboarding for personalization | User feedback (3.5 avg): bottom mode bar wastes space, users want personalized news. Removed persistent mode bar (mode selection lives in Customize). Added first-run onboarding overlay asking name, topics, region — preferences saved to localStorage and applied immediately. |
 | 21 | 2026-04-08 | Fix Vercel Blob cache causing duplicate feedback processing | Vercel Blob cacheControlMaxAge was 60s, causing stale reads during mark-processed. Set to 0 for immediate consistency. |
+| 22 | 2026-04-08 | Category bar filters to only show selected topics after personalization | User feedback (7/10): after personalizing, they don't want to see unselected categories. Category chips now hide non-selected topics when preferences are set. "All" chip always visible. |

@@ -168,6 +168,18 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
   });
 });
 
+// Show only selected topic chips (+ "All"); show all if no preferences set
+function updateCategoryBar() {
+  const topics = state.preferences.topics || [];
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    if (btn.dataset.cat === 'all' || topics.length === 0) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = topics.includes(btn.dataset.cat) ? '' : 'none';
+    }
+  });
+}
+
 // ── Search bar ────────────────────────────────────────────────────────────────
 const searchInput = $('search-input');
 const searchClear = $('search-clear');
@@ -897,6 +909,7 @@ function saveCustomize() {
   state.preferences.count = activeCount ? Number(activeCount.dataset.count) : 8;
 
   localStorage.setItem('autopmf_prefs', JSON.stringify(state.preferences));
+  updateCategoryBar();
 }
 
 // Topic chip toggle
@@ -1015,12 +1028,14 @@ function finishOnboarding() {
   localStorage.setItem(ONBOARDED_KEY, '1');
   const overlay = $('onboarding-overlay');
   overlay.style.display = 'none';
+  updateCategoryBar();
   loadNews();
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
   initMode();
+  updateCategoryBar();
   if (!localStorage.getItem(ONBOARDED_KEY)) {
     showOnboarding();
   } else {
