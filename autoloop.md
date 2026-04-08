@@ -72,6 +72,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 9 | 2026-04-06 | 6.0 | Ken Burns slow zoom on images in Instagram, TikTok, Video modes | 9.0 |
 | 10 | 2026-04-07 | 4.0 | Search keyword highlighting in feed cards across all display modes | 9.0 |
 | 11 | 2026-04-07 | 4.0 | Search results prioritise headline matches over body-only matches | 9.0 |
+| 12 | 2026-04-08 | 5.5 | Fun empty-category messages, darker blue, rename Ask Claude to Ask the news | 9.0 |
 
 ---
 

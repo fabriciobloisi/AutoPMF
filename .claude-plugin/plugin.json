@@ -6,5 +6,5 @@
     "name": "Floris Fok"
   },
   "commands": ["./commands/"],
-  "hooks": "./hooks/hooks.json"
+  "hooks": "../.claude/hooks/hooks.json"
 }

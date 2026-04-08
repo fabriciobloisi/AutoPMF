@@ -190,6 +190,25 @@ function setMode(mode) {
   renderFeed();
 }
 
+// ── Empty state messages per category ─────────────────────────────────────────
+const emptyMessages = {
+  all:        { icon: '🍵', text: 'The newsroom took a tea break.<br>Hit refresh and they\'ll get back to work!' },
+  Technology: { icon: '🤖', text: 'The robots are still booting up.<br>Try again in a moment!' },
+  AI:         { icon: '🧠', text: 'AI is thinking really hard right now.<br>Give it a sec — or hit refresh!' },
+  World:      { icon: '🌍', text: 'The world is suspiciously quiet.<br>Refresh to see what\'s really going on.' },
+  Business:   { icon: '💼', text: 'Markets are closed, traders are napping.<br>Refresh for the latest!' },
+  Science:    { icon: '🔬', text: 'Still awaiting peer review.<br>Try refreshing — science takes time!' },
+  Climate:    { icon: '🌱', text: 'The forecast? Empty — for now.<br>Refresh to check the climate pulse!' },
+  Health:     { icon: '🧘', text: 'Take a deep breath. Nothing here yet.<br>Refresh and feel better!' },
+  Culture:    { icon: '🎭', text: 'The muse is on vacation.<br>Refresh and she might come back!' },
+  Sports:     { icon: '⚽', text: 'Halftime! No scores to report.<br>Refresh for the next play!' },
+  Politics:   { icon: '🏛️', text: 'No comment at this time.<br>Refresh for the official statement!' },
+};
+
+function getEmptyMessage(category) {
+  return emptyMessages[category] || emptyMessages.all;
+}
+
 // ── Main render dispatcher ────────────────────────────────────────────────────
 function renderFeed() {
   showLoading(false);
@@ -202,6 +221,9 @@ function renderFeed() {
   if (state.filteredItems.length === 0 && !state.loading) {
     feedEl.innerHTML = '';
     feedEl.appendChild(feedLoading); feedLoading.style.display = 'none';
+    const emptyMsg = getEmptyMessage(state.currentCategory);
+    $('feed-empty-icon').textContent = emptyMsg.icon;
+    $('feed-empty-text').innerHTML = emptyMsg.text;
     feedEmpty.style.display = '';
     feedEl.appendChild(feedEmpty);
     return;

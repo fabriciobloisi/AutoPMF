@@ -132,8 +132,11 @@ cmd_poll() {
     while true; do
         echo "── $(now_iso) Fetching feedback..."
 
-        # Fetch unprocessed entries from server (stdout = raw JSONL)
-        raw=$(bash ./getFeedback.sh 2>/dev/null) || raw=""
+        # Fetch unprocessed entries from server (stdout = raw JSONL).
+        # getFeedback.sh exits non-zero if mark-processed curl fails; without
+        # || true, `raw=$(...) || raw=""` would discard captured JSON anyway.
+        raw=$(bash ./getFeedback.sh 2>/dev/null || true)
+        echo "raw: $raw"
 
         if [[ -n "$raw" ]]; then
             local trend
@@ -301,6 +304,70 @@ cmd_push() {
     echo "Pushed $branch to origin. Cycle $cycle saved."
 }
 
+# ─── MARK-PROCESSED ───────────────────────────────────────
+# Marks feedback entries for the current cycle as processed on the server.
+# Called after a successful deploy so feedback isn't lost on failed cycles.
+
+cmd_mark_processed() {
+    local cycle
+    cycle=$(get_cycle)
+    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch. Run 'prepare' first."
+
+    : "${FEEDBACK_SECRET:?FEEDBACK_SECRET is not set}"
+    : "${DEPLOY_URL:?DEPLOY_URL is not set}"
+
+    # Extract timestamps of entries for this cycle that aren't yet processed
+    local timestamps
+    timestamps=$(python3 -c "
+import json
+ts = []
+for line in open('local_feedback.jsonl'):
+    line = line.strip()
+    if not line: continue
+    try:
+        e = json.loads(line)
+        if e.get('cycle') == $cycle and not e.get('processed'):
+            ts.append(e['timestamp'])
+    except: pass
+print(json.dumps(ts))
+" 2>/dev/null) || timestamps="[]"
+
+    if [[ "$timestamps" == "[]" ]]; then
+        echo "No unprocessed feedback for cycle $cycle to mark."
+        return 0
+    fi
+
+    echo "Marking feedback as processed for cycle $cycle..."
+    curl -sf -X POST \
+      -H "Authorization: Bearer $FEEDBACK_SECRET" \
+      -H "Content-Type: application/json" \
+      -d "{\"timestamps\":$timestamps}" \
+      "${DEPLOY_URL}/api/feedback/mark-processed" >/dev/null 2>&1
+
+    # Update local_feedback.jsonl to reflect processed state
+    python3 -c "
+import json
+from datetime import datetime, timezone
+cycle = $cycle
+lines = []
+for line in open('local_feedback.jsonl'):
+    line = line.strip()
+    if not line: continue
+    try:
+        e = json.loads(line)
+        if e.get('cycle') == cycle and not e.get('processed'):
+            e['processed'] = True
+            e['processedAt'] = datetime.now(timezone.utc).isoformat()
+        lines.append(json.dumps(e))
+    except:
+        lines.append(line)
+with open('local_feedback.jsonl', 'w') as f:
+    f.write('\n'.join(lines) + '\n')
+"
+
+    echo "Feedback for cycle $cycle marked as processed."
+}
+
 # ─── STATUS ────────────────────────────────────────────────
 # Quick health check: branch, cycle, NPS trend, deploy status.
 
@@ -348,12 +415,13 @@ cmd_status() {
 # ─── Main dispatch ─────────────────────────────────────────
 
 case "${1:-help}" in
-    prepare) cmd_prepare ;;
-    poll)    cmd_poll ;;
-    ship)    shift; cmd_ship "$@" ;;
-    log)     shift; cmd_log "$@" ;;
-    push)    cmd_push ;;
-    status)  cmd_status ;;
+    prepare)        cmd_prepare ;;
+    poll)            cmd_poll ;;
+    ship)            shift; cmd_ship "$@" ;;
+    log)             shift; cmd_log "$@" ;;
+    push)            cmd_push ;;
+    mark-processed)  cmd_mark_processed ;;
+    status)          cmd_status ;;
     help|*)
         echo "Usage: autoloop-cycle.sh <command> [args]"
         echo ""
@@ -363,6 +431,7 @@ case "${1:-help}" in
         echo "  ship <msg> [--dry-run]        Commit, push, deploy (reads cycle from branch)"
         echo "  log <nps> <status> <desc>     Append results.tsv row (reads cycle from branch)"
         echo "  push                          Final push to save all work"
+        echo "  mark-processed                Mark this cycle's feedback as processed on server"
         echo "  status                        Show branch, NPS trend, deploy health"
         ;;
 esac
