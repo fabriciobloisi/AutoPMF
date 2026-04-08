@@ -2,3 +2,4 @@ cycle	date	nps	status	description
 10	2026-04-07	4.0	keep	Search keyword highlighting in feed cards across all display modes
 11	2026-04-07	4.0	keep	Search results prioritise headline matches over body-only matches
 12	2026-04-08	5.5	keep	Fun empty-category messages, darker blue theme, rename Ask Claude to Ask the news
+13	2026-04-08	5.8	keep	Simplified feedback form, faster Ken Burns animation
