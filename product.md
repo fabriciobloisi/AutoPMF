@@ -25,6 +25,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 
 ### 3. Category Filtering & Search
 - Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics, Entertainment, Finance, Space, Education, Travel, Food, Opinion
+- **Multi-select categories** — tap multiple category chips to filter the feed by several topics at once. Selected chips stay highlighted. Tap "All" to clear the selection and show everything.
 - **Personalized category bar** — when the user has selected preferred topics (via onboarding or Customize), only those topics appear as chips (plus "All"). If no topics are selected, all chips are shown.
 - Instant client-side filtering of the loaded feed
 - **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing. **Matching keywords are highlighted** in yellow across all display modes. **Results are ranked by relevance** — headline matches appear before body-only matches. **Fun empty-search messages** when no results found.
@@ -33,7 +34,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - Full-screen modal with hero image, category/trending badges
 - Rich content: headline, source + time + read-time, summary, long-form detail
 - **Share button** — in the article hero area, a share icon lets users share articles via native Web Share API (WhatsApp, email, etc. on mobile) or copy to clipboard on desktop. Visual feedback (green flash) on clipboard copy.
-- **Ask the news** — sticky footer bar at the bottom of every article with a labeled "ASK THE NEWS" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses. **Responses are short (2-3 sentences), conversational, and naturally formatted** — no bullet points, no markdown headers, no bold text. **Quotes key phrases from the article in italics.** Response scrolls into view automatically.
+- **Ask the news** — sticky footer bar at the bottom of every article with a labeled "ASK THE NEWS" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses. **Responses are short (2-3 sentences), conversational, and naturally formatted** — no bullet points, no markdown headers, no bold text. **Quotes key phrases from the article in italics.** Response auto-scrolls into view within the article container so the user immediately sees the answer.
 
 ### 5. Personalization & Customization
 - **First-run onboarding** — on first visit, a welcome overlay asks for your name, preferred topics, and region before showing any news. Preferences are saved to localStorage and applied immediately. Users can skip to get the default experience.
@@ -155,3 +156,4 @@ _Each cycle records what changed in this file and why._
 | 26 | 2026-04-08 | News source selector in Customize — filter feed by preferred sources | User feedback (5/10): wants to choose news sources like TechCrunch, CNN, Reuters. Added 20-source selector in Customize screen with chip toggles. Feed filters to selected sources only. |
 | 27 | 2026-04-08 | Expanded categories from 10 to 17 — Entertainment, Finance, Space, Education, Travel, Food, Opinion | User feedback (5/10): too few news categories. Added 7 new categories across category bar, Customize, onboarding, with fun empty states and gradient colors. |
 | 28 | 2026-04-08 | Ask the news: italic quotes from article, scroll response into view | User feedback (7/10): response requires scrolling, wants article quotes in italics. Updated prompt to quote key phrases in *italics*, render italic markdown in client, scroll response into view instead of to bottom. |
+| 31 | 2026-04-08 | Multi-select categories, fix Ask the news auto-scroll | User feedback (7.5 avg): category bar should allow multi-select so feed shows all selected topics; Ask the news response should auto-focus to the new message. Changed category bar from single-select to toggle-based multi-select with "All" to reset. Fixed response scroll to use container-relative offset. |

@@ -134,7 +134,9 @@ function showLoading(on) {
 function applyFilter() {
   let items = state.currentCategory === 'all'
     ? [...state.newsItems]
-    : state.newsItems.filter(n => n.category === state.currentCategory);
+    : state.selectedCategories && state.selectedCategories.size > 0
+      ? state.newsItems.filter(n => state.selectedCategories.has(n.category))
+      : state.newsItems.filter(n => n.category === state.currentCategory);
 
   // Filter by preferred sources
   const sources = state.preferences.sources || [];
@@ -164,12 +166,32 @@ function applyFilter() {
   renderFeed();
 }
 
-// ── Category bar ──────────────────────────────────────────────────────────────
+// ── Category bar (multi-select) ──────────────────────────────────────────────
+state.selectedCategories = new Set();
 document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    state.currentCategory = btn.dataset.cat;
+    const cat = btn.dataset.cat;
+    if (cat === 'all') {
+      // "All" clears multi-select
+      state.selectedCategories.clear();
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else {
+      // Toggle this category
+      document.querySelector('.cat-btn[data-cat="all"]').classList.remove('active');
+      if (state.selectedCategories.has(cat)) {
+        state.selectedCategories.delete(cat);
+        btn.classList.remove('active');
+      } else {
+        state.selectedCategories.add(cat);
+        btn.classList.add('active');
+      }
+      // If nothing selected, revert to "All"
+      if (state.selectedCategories.size === 0) {
+        document.querySelector('.cat-btn[data-cat="all"]').classList.add('active');
+      }
+    }
+    state.currentCategory = state.selectedCategories.size > 0 ? '__multi__' : 'all';
     applyFilter();
   });
 });
@@ -689,8 +711,12 @@ async function askClaude() {
     responseEl.innerHTML = data.text.split('\n').filter(p => p.trim()).map(p => `<p>${fmtAsk(p)}</p>`).join('');
     responseEl.style.display = 'block';
     $('ask-input').value = '';
-    // Scroll response into view after render
-    setTimeout(() => responseEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    // Scroll article-body container so the response is visible
+    setTimeout(() => {
+      const container = $('article-body');
+      const top = responseEl.offsetTop - container.offsetTop;
+      container.scrollTo({ top, behavior: 'smooth' });
+    }, 100);
   } catch (err) {
     responseEl.className = 'ask-response';
     const msg = err.name === 'AbortError' ? 'Request timed out — please try again.' : err.message;
