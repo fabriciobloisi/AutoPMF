@@ -107,7 +107,15 @@ app.get('/get/feedback', getFeedbackLimiter, requireFeedbackSecret, async (req, 
 
     if (processed !== undefined) {
       const wantProcessed = processed === 'true';
-      lines = lines.filter(l => { try { return JSON.parse(l).processed === wantProcessed; } catch { return false; } });
+      // Match stats semantics: missing/false/null = unprocessed; only explicit true = processed
+      lines = lines.filter(l => {
+        try {
+          const e = JSON.parse(l);
+          return wantProcessed ? e.processed === true : e.processed !== true;
+        } catch {
+          return false;
+        }
+      });
     }
     if (sessionId) {
       lines = lines.filter(l => { try { return JSON.parse(l).sessionId === sessionId; } catch { return false; } });

@@ -19,8 +19,12 @@ if [[ "$branch" =~ ^autoloop/cycle-([0-9]+)$ ]]; then
   cycle="${BASH_REMATCH[1]}"
 fi
 
-# Fetch only unprocessed feedback as JSONL
-response=$(curl -sf -H "Authorization: Bearer $FEEDBACK_SECRET" "${DEPLOY_URL}/get/feedback?processed=false" 2>/dev/null) || response=""
+# Fetch only unprocessed feedback as JSONL (--max-time avoids hanging on stuck TLS/proxies)
+response=$(
+  curl -sf --connect-timeout 15 --max-time 120 \
+    -H "Authorization: Bearer $FEEDBACK_SECRET" \
+    "${DEPLOY_URL}/get/feedback?processed=false" 2>/dev/null
+) || response=""
 
 if [[ -z "$response" ]]; then
   exit 0

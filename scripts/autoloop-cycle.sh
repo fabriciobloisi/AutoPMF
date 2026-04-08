@@ -23,7 +23,8 @@ cd "$PROJECT_DIR"
 export PATH="/opt/homebrew/bin:$PATH"
 
 RESULTS_FILE="results.tsv"
-SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-600}" # 600
+# Default 3m between polls; long sleeps feel like a hang — set AUTOLOOP_SLEEP=600 for slower cadence
+SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-180}"
 
 # Load env vars
 [[ -f .env ]] && { set -a; source .env; set +a; }
@@ -133,25 +134,33 @@ cmd_poll() {
         echo "── $(now_iso) Fetching feedback..."
 
         # Fetch unprocessed entries from server (stdout = raw JSONL).
-        # getFeedback.sh exits non-zero if mark-processed curl fails; without
-        # || true, `raw=$(...) || raw=""` would discard captured JSON anyway.
+        # || true: subshell capture drops stdout on non-zero; keep empty raw → sleep.
         raw=$(bash ./getFeedback.sh 2>/dev/null || true)
-        echo "raw: $raw"
-
         if [[ -n "$raw" ]]; then
+            echo "Fetched feedback (${#raw} bytes)."
             local trend
             trend=$(get_nps_trend)
             local regressing
             regressing=$(check_regression "$trend")
 
-            python3 -c "
-import sys, json
+            # JSON via stdin — avoids bash/python breakage when comments contain quotes, $(), etc.
+            export AUTOLOOP_POLL_CYCLE="$cycle"
+            export AUTOLOOP_POLL_TREND="$trend"
+            export AUTOLOOP_POLL_REGRESSING="$regressing"
+            printf '%s' "$raw" | python3 -c "
+import json, os, sys
 
-lines = '''$raw'''.strip().split('\n')
+raw = sys.stdin.read()
+cycle = int(os.environ['AUTOLOOP_POLL_CYCLE'])
+trend_s = os.environ.get('AUTOLOOP_POLL_TREND', '')
+regressing = os.environ.get('AUTOLOOP_POLL_REGRESSING', '') == 'true'
+
+lines = raw.strip().split('\n')
 entries = []
 for line in lines:
     line = line.strip()
-    if not line: continue
+    if not line:
+        continue
     try:
         e = json.loads(line)
         if e.get('grade') is not None:
@@ -161,31 +170,34 @@ for line in lines:
                 'comments': e.get('comments', '') or '',
                 'suggestion': e.get('suggestion', '') or '',
             })
-    except: pass
+    except Exception:
+        pass
 
 if not entries:
     json.dump({'has_new_feedback': False}, sys.stdout)
+    print()
     sys.exit(0)
 
 grades = [e['grade'] for e in entries]
-avg = round(sum(grades)/len(grades), 1)
-trend = [float(x) for x in '$trend'.split(',') if x]
+avg = round(sum(grades) / len(grades), 1)
+trend = [float(x) for x in trend_s.split(',') if x]
 
 json.dump({
     'has_new_feedback': True,
-    'cycle': $cycle,
+    'cycle': cycle,
     'entries': entries,
     'entry_count': len(entries),
     'avg_nps': avg,
     'nps_trend': trend,
-    'regressing': '$regressing' == 'true',
+    'regressing': regressing,
 }, sys.stdout, indent=2)
 print()
 "
+            unset AUTOLOOP_POLL_CYCLE AUTOLOOP_POLL_TREND AUTOLOOP_POLL_REGRESSING
             exit 0
         fi
 
-        echo "No new feedback. Sleeping ${SLEEP_INTERVAL}s..."
+        echo "No new feedback (empty body — e.g. 404 No matching feedback, auth fail, or curl timeout). Sleeping ${SLEEP_INTERVAL}s..."
         sleep "$SLEEP_INTERVAL"
     done
 }
@@ -342,7 +354,7 @@ print(json.dumps(ts))
     local max_attempts=3
     local mark_ok=false
     for attempt in $(seq 1 $max_attempts); do
-        if curl -sf -X POST \
+        if curl -sf --connect-timeout 15 --max-time 120 -X POST \
           -H "Authorization: Bearer $FEEDBACK_SECRET" \
           -H "Content-Type: application/json" \
           -d "{\"timestamps\":$timestamps}" \
