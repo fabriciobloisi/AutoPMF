@@ -11,3 +11,4 @@ cycle	date	nps	status	description
 19	2026-04-08	3.5	keep	Remove bottom mode bar, add first-run onboarding for personalization
 20	2026-04-08	3.5	keep	No-op — duplicate feedback from cycle 19 (mark-processed was missed)
 21	2026-04-08	3.5	keep	Fix Vercel Blob cache causing duplicate feedback processing
+22	2026-04-08	7.0	keep	Category bar filters to only show selected topics after personalization
