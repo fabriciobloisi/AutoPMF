@@ -56,6 +56,8 @@ const feedEmpty      = $('feed-empty');
 const feedScreen     = $('feed-screen');
 const customizeScreen= $('customize-screen');
 const feedbackScreen = $('feedback-screen');
+const statsScreen    = $('stats-screen');
+const progressScreen = $('progress-screen');
 const drawer         = $('drawer');
 const drawerBackdrop = $('drawer-backdrop');
 const tiktokNav      = $('tiktok-nav');
@@ -83,8 +85,12 @@ function showScreen(name) {
   feedScreen.classList.toggle('active', name === 'feed');
   customizeScreen.classList.toggle('active', name === 'customize');
   feedbackScreen.classList.toggle('active', name === 'feedback');
-  $('feedback-fab').style.display = name === 'feedback' ? 'none' : '';
+  statsScreen.classList.toggle('active', name === 'stats');
+  progressScreen.classList.toggle('active', name === 'progress');
+  $('feedback-fab').style.display = (name === 'feedback' || name === 'stats' || name === 'progress') ? 'none' : '';
   $('refresh-btn').style.display = name === 'feed' ? '' : 'none';
+  if (name === 'stats') loadStats();
+  if (name === 'progress') loadProgress();
   closeDrawer();
 }
 
@@ -683,6 +689,144 @@ submitFbBtn?.addEventListener('click', async () => {
     submitFbBtn.disabled = false;
   }
 });
+
+// ── Stats Screen ─────────────────────────────────────────────────────────────
+$('drawer-stats-btn').addEventListener('click', () => { closeDrawer(); showScreen('stats'); });
+$('stats-back').addEventListener('click', () => showScreen('feed'));
+
+let statsCache = null;
+async function loadStats() {
+  const loading = $('stats-loading');
+  const content = $('stats-content');
+  const empty   = $('stats-empty');
+  loading.style.display = ''; content.style.display = 'none'; empty.style.display = 'none';
+  try {
+    const r = await fetch('/api/feedback/public-stats');
+    const d = await r.json();
+    statsCache = d;
+    if (!d.total) { loading.style.display = 'none'; empty.style.display = ''; return; }
+    $('stat-total').textContent = d.total;
+    $('stat-nps').textContent = d.averageNps;
+    $('stat-users').textContent = d.uniqueSessions;
+    $('stat-latest').textContent = d.latestEntry ? new Date(d.latestEntry).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
+    const detractors = (d.npsDistribution['0-3'] || 0) + (d.npsDistribution['4-6'] || 0);
+    const passives = d.npsDistribution['7-8'] || 0;
+    const promoters = d.npsDistribution['9-10'] || 0;
+    const max = Math.max(detractors, passives, promoters, 1);
+    $('nps-bar-detractor').style.width = (detractors / max * 100) + '%';
+    $('nps-bar-passive').style.width = (passives / max * 100) + '%';
+    $('nps-bar-promoter').style.width = (promoters / max * 100) + '%';
+    $('nps-count-detractor').textContent = detractors;
+    $('nps-count-passive').textContent = passives;
+    $('nps-count-promoter').textContent = promoters;
+    loading.style.display = 'none'; content.style.display = '';
+  } catch {
+    loading.style.display = 'none'; empty.style.display = '';
+  }
+}
+
+// ── Progress Screen ──────────────────────────────────────────────────────────
+$('drawer-progress-btn').addEventListener('click', () => { closeDrawer(); showScreen('progress'); });
+$('progress-back').addEventListener('click', () => showScreen('feed'));
+
+async function loadProgress() {
+  const loading = $('progress-loading');
+  const content = $('progress-content');
+  const empty   = $('progress-empty');
+  loading.style.display = ''; content.style.display = 'none'; empty.style.display = 'none';
+  try {
+    const data = statsCache || await fetch('/api/feedback/public-stats').then(r => r.json());
+    if (!data.grades || data.grades.length === 0) { loading.style.display = 'none'; empty.style.display = ''; return; }
+    loading.style.display = 'none'; content.style.display = '';
+    drawNpsChart(data.grades);
+    const latest = data.grades[data.grades.length - 1];
+    const avg = data.averageNps;
+    $('progress-summary').innerHTML =
+      `<strong>${data.grades.length}</strong> feedback response${data.grades.length > 1 ? 's' : ''}. ` +
+      `Latest score: <strong>${latest}</strong>. Average: <strong>${avg}</strong>.`;
+  } catch {
+    loading.style.display = 'none'; empty.style.display = '';
+  }
+}
+
+function drawNpsChart(grades) {
+  const canvas = $('nps-chart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.parentElement.clientWidth - 24;
+  const h = Math.round(w * 0.55);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  ctx.scale(dpr, dpr);
+
+  const isDark = document.body.classList.contains('dark');
+  const pad = { top: 20, right: 16, bottom: 36, left: 36 };
+  const cw = w - pad.left - pad.right;
+  const ch = h - pad.top - pad.bottom;
+
+  // Y-axis grid (0–10)
+  ctx.strokeStyle = isDark ? '#333' : '#e5e5ea';
+  ctx.lineWidth = 0.5;
+  ctx.font = '10px -apple-system, system-ui, sans-serif';
+  ctx.fillStyle = isDark ? '#8e8e93' : '#8e8e93';
+  ctx.textAlign = 'right';
+  for (let i = 0; i <= 10; i += 2) {
+    const y = pad.top + ch - (i / 10) * ch;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
+    ctx.fillText(String(i), pad.left - 6, y + 3);
+  }
+
+  // X-axis labels (# feedback)
+  ctx.textAlign = 'center';
+  const n = grades.length;
+  const maxLabels = Math.min(n, 10);
+  const step = Math.max(1, Math.floor(n / maxLabels));
+  for (let i = 0; i < n; i += step) {
+    const x = pad.left + (i / Math.max(n - 1, 1)) * cw;
+    ctx.fillText('#' + (i + 1), x, h - 8);
+  }
+  // Always label the last one
+  if (n > 1 && (n - 1) % step !== 0) {
+    const x = pad.left + cw;
+    ctx.fillText('#' + n, x, h - 8);
+  }
+
+  // Points
+  const pts = grades.map((g, i) => ({
+    x: pad.left + (n === 1 ? cw / 2 : (i / (n - 1)) * cw),
+    y: pad.top + ch - (g / 10) * ch,
+  }));
+
+  if (n === 1) {
+    ctx.fillStyle = '#0062CC';
+    ctx.beginPath(); ctx.arc(pts[0].x, pts[0].y, 5, 0, Math.PI * 2); ctx.fill();
+    return;
+  }
+
+  // Area fill
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pad.top + ch);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length - 1].x, pad.top + ch);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+  grad.addColorStop(0, isDark ? 'rgba(0,98,204,0.3)' : 'rgba(0,98,204,0.15)');
+  grad.addColorStop(1, isDark ? 'rgba(0,98,204,0)' : 'rgba(0,98,204,0)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = '#0062CC';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+
+  // Dots
+  ctx.fillStyle = '#0062CC';
+  pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fill(); });
+}
 
 // ── Customize Screen ──────────────────────────────────────────────────────────
 $('drawer-customize-btn').addEventListener('click', () => { closeDrawer(); showScreen('customize'); openCustomize(); });

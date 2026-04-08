@@ -44,6 +44,19 @@
           </span>
           <span>About AutoPMF</span>
         </button>
+        <div class="drawer-divider"></div>
+        <button class="nav-item" id="drawer-stats-btn">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg>
+          </span>
+          <span>Stats</span>
+        </button>
+        <button class="nav-item" id="drawer-progress-btn">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </span>
+          <span>Progress</span>
+        </button>
       </nav>
       <div class="drawer-footer">
         <button class="nav-item" id="settings-btn">
@@ -281,6 +294,94 @@
 
         <button class="submit-btn" id="submit-feedback">Submit feedback</button>
         <div class="feedback-msg" id="feedback-msg"></div>
+      </div>
+    </section>
+
+    <!-- ── Stats Screen ── -->
+    <section class="screen stats-screen" id="stats-screen">
+      <div class="sub-bar">
+        <button class="icon-btn back-btn" id="stats-back" aria-label="Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-bar-title">Stats</span>
+        <div style="width:40px"></div>
+      </div>
+      <div class="stats-body" id="stats-body">
+        <div class="stats-loading" id="stats-loading">
+          <div class="spinner"></div>
+          <p>Loading stats…</p>
+        </div>
+        <div class="stats-content" id="stats-content" style="display:none">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number" id="stat-total">0</div>
+              <div class="stat-label">Total Responses</div>
+            </div>
+            <div class="stat-card accent">
+              <div class="stat-number" id="stat-nps">0</div>
+              <div class="stat-label">Average NPS</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="stat-users">0</div>
+              <div class="stat-label">Unique Users</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="stat-latest">—</div>
+              <div class="stat-label">Latest Feedback</div>
+            </div>
+          </div>
+          <div class="stats-section">
+            <h3 class="stats-section-title">NPS Distribution</h3>
+            <div class="nps-dist" id="nps-dist">
+              <div class="nps-bar-row">
+                <span class="nps-bar-label">Detractors (0–6)</span>
+                <div class="nps-bar-track"><div class="nps-bar-fill detractor" id="nps-bar-detractor"></div></div>
+                <span class="nps-bar-count" id="nps-count-detractor">0</span>
+              </div>
+              <div class="nps-bar-row">
+                <span class="nps-bar-label">Passives (7–8)</span>
+                <div class="nps-bar-track"><div class="nps-bar-fill passive" id="nps-bar-passive"></div></div>
+                <span class="nps-bar-count" id="nps-count-passive">0</span>
+              </div>
+              <div class="nps-bar-row">
+                <span class="nps-bar-label">Promoters (9–10)</span>
+                <div class="nps-bar-track"><div class="nps-bar-fill promoter" id="nps-bar-promoter"></div></div>
+                <span class="nps-bar-count" id="nps-count-promoter">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="stats-empty" id="stats-empty" style="display:none">
+          <span class="feed-empty-icon">📊</span>
+          <p>No feedback collected yet.<br>Stats will appear once users submit feedback.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Progress Screen ── -->
+    <section class="screen progress-screen" id="progress-screen">
+      <div class="sub-bar">
+        <button class="icon-btn back-btn" id="progress-back" aria-label="Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-bar-title">Progress</span>
+        <div style="width:40px"></div>
+      </div>
+      <div class="progress-body" id="progress-body">
+        <div class="stats-loading" id="progress-loading">
+          <div class="spinner"></div>
+          <p>Loading progress…</p>
+        </div>
+        <div class="progress-content" id="progress-content" style="display:none">
+          <div class="chart-container">
+            <canvas id="nps-chart" width="600" height="300"></canvas>
+          </div>
+          <div class="progress-summary" id="progress-summary"></div>
+        </div>
+        <div class="stats-empty" id="progress-empty" style="display:none">
+          <span class="feed-empty-icon">📈</span>
+          <p>No feedback data yet.<br>The NPS trend chart will appear here over time.</p>
+        </div>
       </div>
     </section>
 

@@ -175,6 +175,64 @@ app.get('/get/feedback/stats', getFeedbackLimiter, requireFeedbackSecret, async 
   }
 });
 
+// ── GET /api/feedback/public-stats ─ aggregate stats (no auth) ──────────────
+app.get('/api/feedback/public-stats', getFeedbackLimiter, async (req, res) => {
+  try {
+    const { content } = await readFeedbackBlob();
+    if (!content) return res.json({ total: 0, averageNps: 0, npsDistribution: {}, uniqueSessions: 0, latestEntry: null, oldestEntry: null, daily: [] });
+
+    const entries = content.split('\n').filter(l => l.trim()).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+
+    let total = 0, gradeSum = 0, gradeCount = 0;
+    const dist = { '0-3': 0, '4-6': 0, '7-8': 0, '9-10': 0 };
+    const sessions = new Set();
+    let oldest = null, latest = null;
+    const dayMap = {};
+
+    for (const e of entries) {
+      total++;
+      if (e.grade != null) {
+        gradeSum += e.grade;
+        gradeCount++;
+        if (e.grade <= 3) dist['0-3']++;
+        else if (e.grade <= 6) dist['4-6']++;
+        else if (e.grade <= 8) dist['7-8']++;
+        else dist['9-10']++;
+        if (e.timestamp) {
+          const day = e.timestamp.slice(0, 10);
+          if (!dayMap[day]) dayMap[day] = { sum: 0, count: 0 };
+          dayMap[day].sum += e.grade;
+          dayMap[day].count++;
+        }
+      }
+      if (e.sessionId) sessions.add(e.sessionId);
+      if (e.timestamp) {
+        if (!oldest || e.timestamp < oldest) oldest = e.timestamp;
+        if (!latest || e.timestamp > latest) latest = e.timestamp;
+      }
+    }
+
+    // Individual grades in chronological order for the progress chart
+    const grades = entries
+      .filter(e => e.grade != null && e.timestamp)
+      .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+      .map(e => e.grade);
+
+    res.json({
+      total,
+      averageNps: gradeCount ? Math.round((gradeSum / gradeCount) * 10) / 10 : 0,
+      npsDistribution: dist,
+      uniqueSessions: sessions.size,
+      latestEntry: latest,
+      oldestEntry: oldest,
+      grades,
+    });
+  } catch (err) {
+    console.error('Public stats error:', err.message);
+    res.status(500).json({ error: 'Failed to compute stats' });
+  }
+});
+
 // ── POST /api/feedback ─ appends feedback to Vercel Blob ────────────────────
 app.post('/api/feedback', feedbackLimiter, async (req, res) => {
   const { grade, comments, suggestion, sessionId } = req.body || {};
