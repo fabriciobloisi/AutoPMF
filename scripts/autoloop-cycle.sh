@@ -338,11 +338,26 @@ print(json.dumps(ts))
     fi
 
     echo "Marking feedback as processed for cycle $cycle..."
-    curl -sf -X POST \
-      -H "Authorization: Bearer $FEEDBACK_SECRET" \
-      -H "Content-Type: application/json" \
-      -d "{\"timestamps\":$timestamps}" \
-      "${DEPLOY_URL}/api/feedback/mark-processed" >/dev/null 2>&1
+    local attempt
+    local max_attempts=3
+    local mark_ok=false
+    for attempt in $(seq 1 $max_attempts); do
+        if curl -sf -X POST \
+          -H "Authorization: Bearer $FEEDBACK_SECRET" \
+          -H "Content-Type: application/json" \
+          -d "{\"timestamps\":$timestamps}" \
+          "${DEPLOY_URL}/api/feedback/mark-processed"; then
+            mark_ok=true
+            break
+        fi
+        echo "  mark-processed attempt $attempt/$max_attempts failed, retrying in ${attempt}s..."
+        sleep "$attempt"
+    done
+
+    if [[ "$mark_ok" != "true" ]]; then
+        echo "ERROR: Server mark-processed failed after $max_attempts attempts — skipping local update to keep state in sync."
+        return 1
+    fi
 
     # Update local_feedback.jsonl to reflect processed state
     python3 -c "
