@@ -225,7 +225,14 @@ const emptyMessages = {
   Health:     { icon: '🧘', text: 'Take a deep breath. Nothing here yet.<br>Refresh and feel better!' },
   Culture:    { icon: '🎭', text: 'The muse is on vacation.<br>Refresh and she might come back!' },
   Sports:     { icon: '⚽', text: 'Halftime! No scores to report.<br>Refresh for the next play!' },
-  Politics:   { icon: '🏛️', text: 'No comment at this time.<br>Refresh for the official statement!' },
+  Politics:      { icon: '🏛️', text: 'No comment at this time.<br>Refresh for the official statement!' },
+  Entertainment: { icon: '🎬', text: 'The show hasn\'t started yet.<br>Refresh for tonight\'s lineup!' },
+  Finance:       { icon: '📈', text: 'Markets are still calculating.<br>Refresh for the latest numbers!' },
+  Space:         { icon: '🚀', text: 'Houston, we have no articles.<br>Refresh to launch a new search!' },
+  Education:     { icon: '📚', text: 'Class hasn\'t started yet.<br>Refresh for today\'s lessons!' },
+  Travel:        { icon: '✈️', text: 'Destination: unknown.<br>Refresh to explore the world!' },
+  Food:          { icon: '🍽️', text: 'The kitchen is still prepping.<br>Refresh for a fresh serving!' },
+  Opinion:       { icon: '💬', text: 'Everyone\'s speechless — for now.<br>Refresh for hot takes!' },
 };
 
 const searchEmptyMessages = [

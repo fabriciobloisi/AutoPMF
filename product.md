@@ -24,7 +24,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 | **Video** | 16:9 image thumbnails with play button overlay. Feels like a video feed |
 
 ### 3. Category Filtering & Search
-- Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics
+- Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics, Entertainment, Finance, Space, Education, Travel, Food, Opinion
 - **Personalized category bar** — when the user has selected preferred topics (via onboarding or Customize), only those topics appear as chips (plus "All"). If no topics are selected, all chips are shown.
 - Instant client-side filtering of the loaded feed
 - **Search bar** — keyword search input below the category chips. Filters by headline, hook, summary, category, and tags in real-time. Clear button appears when typing. **Matching keywords are highlighted** in yellow across all display modes. **Results are ranked by relevance** — headline matches appear before body-only matches. **Fun empty-search messages** when no results found.
@@ -71,7 +71,7 @@ Each news item must follow this exact JSON schema:
   "detail": "Rich, long-form journalism. 6-9 sentences. Include: (1) what happened and where, (2) why it matters personally and globally, (3) historical context, (4) expert perspective with attribution, (5) what happens next, (6) a human-interest or surprising angle.",
   "keyFacts": ["Concise fact 1", "Concise fact 2", "Concise fact 3"],
   "quote": "A compelling paraphrased quote from an expert with attribution — e.g. 'This changes everything — Dr. Sarah Chen, MIT'",
-  "category": "Technology | Business | World | Politics | Science | Sports | Health | Culture | Climate | AI",
+  "category": "Technology | Business | World | Politics | Science | Sports | Health | Culture | Climate | AI | Entertainment | Finance | Space | Education | Travel | Food | Opinion",
   "source": "Short source name, max 20 characters (use abbreviations: Reuters, AP, BBC, Bloomberg, FT, Guardian, Al Jazeera, DW, NHK, SCMP, Nature, Economist — never 'South China Morning Post', use 'SCMP')",
   "timeAgo": "Just now | X minutes ago | X hours ago | X days ago",
   "imageUrl": "https://source.unsplash.com/800x500/?keyword1,keyword2,keyword3,keyword4 — use 4-6 specific photojournalistic keywords",
@@ -104,6 +104,13 @@ Each news item must follow this exact JSON schema:
 - Culture:    ["#9B5DE5", "#F15BB5"]
 - Climate:    ["#2D6A4F", "#40916C"]
 - AI:         ["#7209B7", "#3A0CA3"]
+- Entertainment: ["#E040FB", "#AA00FF"]
+- Finance:    ["#FF6D00", "#E65100"]
+- Space:      ["#1A237E", "#0D47A1"]
+- Education:  ["#00695C", "#004D40"]
+- Travel:     ["#0277BD", "#01579B"]
+- Food:       ["#BF360C", "#D84315"]
+- Opinion:    ["#4E342E", "#3E2723"]
 - Default:    ["#636e72", "#2d3436"]
 
 ## UI Design Rules
@@ -146,3 +153,4 @@ _Each cycle records what changed in this file and why._
 | 24 | 2026-04-08 | Ask the news responses shorter and conversational, improved formatting | User feedback (7/10): responses were long and bot-formatted. Reduced max_tokens to 256, updated system prompt for conversational 2-3 sentence answers, render paragraphs properly in client. |
 | 25 | 2026-04-08 | Share button in article detail — Web Share API on mobile, clipboard on desktop | User feedback (5/10): missing share option to send articles to friends via WhatsApp/email. Added share button in article hero with native share sheet on mobile and clipboard copy with green flash feedback on desktop. |
 | 26 | 2026-04-08 | News source selector in Customize — filter feed by preferred sources | User feedback (5/10): wants to choose news sources like TechCrunch, CNN, Reuters. Added 20-source selector in Customize screen with chip toggles. Feed filters to selected sources only. |
+| 27 | 2026-04-08 | Expanded categories from 10 to 17 — Entertainment, Finance, Space, Education, Travel, Food, Opinion | User feedback (5/10): too few news categories. Added 7 new categories across category bar, Customize, onboarding, with fun empty states and gradient colors. |
