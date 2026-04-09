@@ -27,3 +27,4 @@ cycle	date	nps	status	description
 35	2026-04-09	4.0	keep	Color-coded category badges across all display modes
 36	2026-04-09	7.0	keep	Multi-select regions in Customize and onboarding
 37	2026-04-09	6.0	keep	Share button on feed cards for better discoverability
+38	2026-04-09	3.0	keep	No-op — grade 3 with no comments, nothing actionable
