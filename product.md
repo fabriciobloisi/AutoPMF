@@ -41,7 +41,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - **Topics** — select preferred categories to bias the feed
 - **Region** — choose one or more geographic regions (Global, Americas, Europe, Asia, LatAm, Middle East, Africa). Multi-select supported — tap "Global" to reset.
 - **News sources** — select preferred sources (Reuters, BBC, Bloomberg, Wired, etc.) in Customize. Only articles from selected sources appear in the feed. Leave all unselected to see everything.
-- **Article count** — Short (5), Standard (8), or Long (15) feed lengths
+- **Article count** — Short (5 total), Standard (8 total), or Long (15 total) feed lengths. Hint clarifies articles are spread across selected topics.
 - **Display mode** — persisted in localStorage across sessions (accessible via Customize screen)
 
 ### 6. User Feedback Loop
@@ -162,3 +162,4 @@ _Each cycle records what changed in this file and why._
 | 35 | 2026-04-09 | Color-coded category badges across all display modes | User feedback (7/10): category labels all look the same, need different colors for at-a-glance identification. Applied per-category colors (from gradient palette) to badges in Text, Instagram, TikTok, CNN, Video modes and article detail. |
 | 36 | 2026-04-09 | Multi-select regions in Customize and onboarding | User feedback (7/10): wants to select multiple regions (e.g. Americas + Europe + Asia) instead of just one. Changed region selector to multi-select toggle with "Global" as reset. |
 | 37 | 2026-04-09 | Share button on feed cards for better discoverability | User feedback (6/10): wanted share button but didn't find existing one in article view. Added share icon to each card footer in text mode, extracted reusable share helper. |
+| 39 | 2026-04-09 | Clarify article count is total, not per topic | User feedback (5/10): expected 5 articles per topic but got 5 total. Updated labels to "5 total" and added hint: "Total articles in your feed — spread across your selected topics." |
