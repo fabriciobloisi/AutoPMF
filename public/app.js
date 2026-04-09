@@ -198,6 +198,15 @@ function applyFilter() {
     });
   }
 
+  // Cap trending badges to max 2 to reduce clutter
+  let trendCount = 0;
+  items.forEach(n => {
+    if (n.trending) {
+      trendCount++;
+      if (trendCount > 2) n._hideTrending = true;
+    }
+  });
+
   state.filteredItems = items;
   state.currentTikTokIndex = 0;
   renderFeed();
@@ -405,7 +414,7 @@ function renderTextMode() {
       <div class="card-content">
         <div class="card-cat-row">
           <span class="cat-badge" style="${catBadgeStyle(item.category)}">${esc(item.category)}</span>
-          ${item.trending ? '<span class="trending-badge">TRENDING</span>' : ''}
+          ${item.trending && !item._hideTrending ? '<span class="trending-badge">TRENDING</span>' : ''}
         </div>
         <div class="card-headline">${highlight(item.headline)}</div>
         <div class="card-summary">${highlight(item.summary)}</div>
@@ -458,7 +467,7 @@ function renderInstagramMode() {
           <span>${esc(item.source)}</span>
           <span>·</span>
           <span>${esc(item.timeAgo)}</span>
-          ${item.trending ? '<span class="insta-trending">TRENDING</span>' : ''}
+          ${item.trending && !item._hideTrending ? '<span class="insta-trending">TRENDING</span>' : ''}
         </div>
       </div>
     `;
@@ -492,7 +501,7 @@ function renderTikTokMode() {
         <span>${esc(item.source)}</span>
         <span>·</span>
         <span>${esc(item.timeAgo)}</span>
-        ${item.trending ? '<span class="tiktok-trending-badge">TRENDING</span>' : ''}
+        ${item.trending && !item._hideTrending ? '<span class="tiktok-trending-badge">TRENDING</span>' : ''}
       </div>
     </div>
     ${items.length > 1 ? '<div class="swipe-hint">Swipe up/down to browse</div>' : ''}
@@ -647,7 +656,7 @@ function renderVideoMode() {
       <div class="video-info">
         <div class="video-cat-row">
           <span class="video-cat" style="${catBadgeStyle(item.category)}">${esc(item.category)}</span>
-          ${item.trending ? '<span class="video-trending">· TRENDING</span>' : ''}
+          ${item.trending && !item._hideTrending ? '<span class="video-trending">· TRENDING</span>' : ''}
         </div>
         <div class="video-title">${highlight(item.headline)}</div>
         <div class="video-meta">${esc(item.source)} · ${esc(item.timeAgo)} · ${esc(item.readTime)}</div>
