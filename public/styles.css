@@ -167,6 +167,20 @@ input:focus, textarea:focus, button:focus { outline: none; }
   cursor: pointer;
 }
 
+/* ── Large Text Mode ── */
+.app.large-text .card-headline { font-size: 18px; }
+.app.large-text .card-summary { font-size: 15px; }
+.app.large-text .card-footer { font-size: 13px; }
+.app.large-text .cat-badge { font-size: 12px; }
+.app.large-text .insta-headline { font-size: 22px; }
+.app.large-text .tiktok-headline { font-size: 24px; }
+.app.large-text .cnn-feat-headline { font-size: 22px; }
+.app.large-text .article-headline { font-size: 26px; }
+.app.large-text .article-summary { font-size: 17px; }
+.app.large-text .article-detail { font-size: 17px; }
+.app.large-text .nav-title { font-size: 19px; }
+.app.large-text .search-input { font-size: 16px; }
+
 /* ── Select All Button ── */
 .select-all-btn {
   font-size: 12px; font-weight: 600;

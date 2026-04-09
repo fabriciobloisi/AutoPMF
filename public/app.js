@@ -1124,6 +1124,16 @@ darkToggle.addEventListener('change', () => {
   applyDarkMode(darkToggle.checked);
 });
 
+// ── Large Text toggle ────────────────────────────────────────────────────────
+const largeTextToggle = $('large-text-toggle');
+function applyLargeText(on) {
+  appEl.classList.toggle('large-text', on);
+  localStorage.setItem('autopmf_largetext', on ? '1' : '0');
+  largeTextToggle.checked = on;
+}
+applyLargeText(localStorage.getItem('autopmf_largetext') === '1');
+largeTextToggle.addEventListener('change', () => applyLargeText(largeTextToggle.checked));
+
 // ── About Modal ──────────────────────────────────────────────────────────────
 const aboutModal = $('about-modal');
 function openAbout()  { closeDrawer(); aboutModal.classList.add('open'); }
