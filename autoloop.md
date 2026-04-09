@@ -127,6 +127,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 64 | 2026-04-09 | 4.0 | No-op — subcategory system requires architecture restructuring | 9.0 |
 | 65 | 2026-04-09 | 4.0 | No-op — duplicate feedback from cycle 64 (mark-processed was missed) | 9.0 |
 | 66 | 2026-04-09 | 4.0 | Fix Saved articles and card footer layout bugs | 9.0 |
+| 67 | 2026-04-09 | 3.7 | Cap trending badges to max 2 per feed | 9.0 |
 
 ---
 

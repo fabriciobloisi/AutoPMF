@@ -56,3 +56,4 @@ cycle	date	nps	status	description
 64	2026-04-09	4.0	keep	No-op — subcategory system requires architecture restructuring
 65	2026-04-09	4.0	keep	No-op — duplicate feedback from cycle 64 (mark-processed was missed)
 66	2026-04-09	4.0	keep	Fix Saved articles and card footer layout bugs
+67	2026-04-09	3.7	keep	Cap trending badges to max 2 per feed
