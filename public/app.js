@@ -956,9 +956,10 @@ function drawNpsChart(grades) {
 // ── Saved Articles ───────────────────────────────────────────────────────────
 $('drawer-saved-btn')?.addEventListener('click', () => {
   closeDrawer();
+  showScreen('feed');
   state.showingSaved = true;
   state.filteredItems = [...state.savedArticles];
-  $('nav-title').textContent = 'Saved';
+  document.querySelector('.nav-title').textContent = 'Saved';
   renderFeed();
 });
 

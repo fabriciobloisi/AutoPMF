@@ -458,11 +458,10 @@ mark {
   margin-bottom: 5px;
 }
 .card-footer {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 4px;
   font-size: 11px; color: #8e8e93;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: 0;
 }
 .card-save-btn {
   margin-left: auto;
