@@ -125,6 +125,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 62 | 2026-04-09 | 8.0 | No-op — positive 8/10, no comments | 9.0 |
 | 63 | 2026-04-09 | 1.0 | Lazy-load images for faster perceived load time | 9.0 |
 | 64 | 2026-04-09 | 4.0 | No-op — subcategory system requires architecture restructuring | 9.0 |
+| 65 | 2026-04-09 | 4.0 | No-op — duplicate feedback from cycle 64 (mark-processed was missed) | 9.0 |
 
 ---
 
