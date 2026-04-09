@@ -102,6 +102,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 39 | 2026-04-09 | 5.0 | Clarify article count is total, not per topic | 9.0 |
 | 40 | 2026-04-09 | 7.0 | New welcome message + feedback spotlight coach mark | 9.0 |
 | 41 | 2026-04-09 | 7.0 | Replace feedback power icon with chat bubble | 9.0 |
+| 42 | 2026-04-09 | 6.0 | Fix region filtering — actually filter feed by selected regions | 9.0 |
 
 ---
 
