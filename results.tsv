@@ -24,3 +24,4 @@ cycle	date	nps	status	description
 32	2026-04-08	7.5	keep	No-op — duplicate feedback from cycle 31 (mark-processed was missed)
 33	2026-04-09	4.0	keep	Prominent Back button in article view — chevron + label in top-left
 34	2026-04-09	1.5	revert	Revert multi-select categories to single-select — users confused by accrue behavior
+35	2026-04-09	4.0	keep	Color-coded category badges across all display modes
