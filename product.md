@@ -39,7 +39,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 ### 5. Personalization & Customization
 - **First-run onboarding** — on first visit, a welcome overlay asks for your name, preferred topics, and region before showing any news. Preferences are saved to localStorage and applied immediately. Users can skip to get the default experience.
 - **Topics** — select preferred categories to bias the feed
-- **Region** — choose a geographic focus (Global, Americas, Europe, Asia, LatAm, Middle East, Africa)
+- **Region** — choose one or more geographic regions (Global, Americas, Europe, Asia, LatAm, Middle East, Africa). Multi-select supported — tap "Global" to reset.
 - **News sources** — select preferred sources (Reuters, BBC, Bloomberg, Wired, etc.) in Customize. Only articles from selected sources appear in the feed. Leave all unselected to see everything.
 - **Article count** — Short (5), Standard (8), or Long (15) feed lengths
 - **Display mode** — persisted in localStorage across sessions (accessible via Customize screen)
@@ -160,3 +160,4 @@ _Each cycle records what changed in this file and why._
 | 33 | 2026-04-09 | Prominent "Back" button in article view | User feedback (4/10): not clear how to go back from an article. Replaced small X icon in top-right with labeled "Back" pill button (chevron + text) in top-left — standard mobile navigation pattern. |
 | 34 | 2026-04-09 | Revert multi-select categories to single-select | User feedback (1.5 avg): category buttons "accrue rather than toggle" — multi-select from cycle 31 confused users. Reverted to original single-select behavior where tapping a category shows only that category. |
 | 35 | 2026-04-09 | Color-coded category badges across all display modes | User feedback (7/10): category labels all look the same, need different colors for at-a-glance identification. Applied per-category colors (from gradient palette) to badges in Text, Instagram, TikTok, CNN, Video modes and article detail. |
+| 36 | 2026-04-09 | Multi-select regions in Customize and onboarding | User feedback (7/10): wants to select multiple regions (e.g. Americas + Europe + Asia) instead of just one. Changed region selector to multi-select toggle with "Global" as reset. |

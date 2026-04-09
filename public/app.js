@@ -930,9 +930,14 @@ function openCustomize() {
     chip.classList.toggle('selected', (prefs.topics || []).includes(chip.dataset.topic));
   });
 
-  // Restore region
+  // Restore regions (multi-select)
+  const regions = Array.isArray(prefs.regions) ? prefs.regions : (prefs.region && prefs.region !== 'Global' ? [prefs.region] : []);
   document.querySelectorAll('.region-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.region === (prefs.region || 'Global'));
+    if (btn.dataset.region === 'Global') {
+      btn.classList.toggle('active', regions.length === 0);
+    } else {
+      btn.classList.toggle('active', regions.includes(btn.dataset.region));
+    }
   });
 
   // Restore sources
@@ -957,9 +962,13 @@ function saveCustomize() {
   document.querySelectorAll('.topic-chip.selected').forEach(c => topics.push(c.dataset.topic));
   state.preferences.topics = topics;
 
-  // Region
-  const activeRegion = document.querySelector('.region-btn.active');
-  state.preferences.region = activeRegion ? activeRegion.dataset.region : 'Global';
+  // Regions (multi-select)
+  const regions = [];
+  document.querySelectorAll('.region-btn.active').forEach(b => {
+    if (b.dataset.region !== 'Global') regions.push(b.dataset.region);
+  });
+  state.preferences.regions = regions;
+  state.preferences.region = regions.length === 1 ? regions[0] : 'Global';
 
   // Sources
   const sources = [];
@@ -984,11 +993,20 @@ document.querySelectorAll('.source-chip').forEach(chip => {
   chip.addEventListener('click', () => chip.classList.toggle('selected'));
 });
 
-// Region single-select
+// Region multi-select (Global = reset)
 document.querySelectorAll('.region-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn.dataset.region === 'Global') {
+      document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else {
+      document.querySelector('.region-btn[data-region="Global"]').classList.remove('active');
+      btn.classList.toggle('active');
+      // If none selected, revert to Global
+      if (!document.querySelector('.region-btn.active')) {
+        document.querySelector('.region-btn[data-region="Global"]').classList.add('active');
+      }
+    }
   });
 });
 
@@ -1059,11 +1077,19 @@ function showOnboarding() {
     chip.addEventListener('click', () => chip.classList.toggle('active'));
   });
 
-  // Region chips — single-select
+  // Region chips — multi-select (Global = reset)
   overlay.querySelectorAll('#onboarding-regions .onboarding-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      overlay.querySelectorAll('#onboarding-regions .onboarding-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
+      if (chip.dataset.region === 'Global') {
+        overlay.querySelectorAll('#onboarding-regions .onboarding-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      } else {
+        overlay.querySelector('#onboarding-regions .onboarding-chip[data-region="Global"]').classList.remove('active');
+        chip.classList.toggle('active');
+        if (!overlay.querySelector('#onboarding-regions .onboarding-chip.active')) {
+          overlay.querySelector('#onboarding-regions .onboarding-chip[data-region="Global"]').classList.add('active');
+        }
+      }
     });
   });
 
@@ -1073,16 +1099,21 @@ function showOnboarding() {
     if (name) localStorage.setItem('autopmf_user_name', name);
 
     const topics = [...overlay.querySelectorAll('#onboarding-topics .onboarding-chip.active')].map(c => c.dataset.topic);
-    const regionChip = overlay.querySelector('#onboarding-regions .onboarding-chip.active');
-    const region = regionChip ? regionChip.dataset.region : 'Global';
+    const regionChips = [...overlay.querySelectorAll('#onboarding-regions .onboarding-chip.active')];
+    const regions = regionChips.filter(c => c.dataset.region !== 'Global').map(c => c.dataset.region);
+    const region = regions.length === 1 ? regions[0] : 'Global';
 
     state.preferences.topics = topics;
+    state.preferences.regions = regions;
     state.preferences.region = region;
     localStorage.setItem('autopmf_prefs', JSON.stringify(state.preferences));
 
     // Sync customize screen UI
     document.querySelectorAll('#cust-topics .topic-chip').forEach(c => c.classList.toggle('active', topics.includes(c.dataset.topic)));
-    document.querySelectorAll('#cust-regions .region-btn').forEach(c => c.classList.toggle('active', c.dataset.region === region));
+    document.querySelectorAll('#cust-regions .region-btn').forEach(c => {
+      if (c.dataset.region === 'Global') c.classList.toggle('active', regions.length === 0);
+      else c.classList.toggle('active', regions.includes(c.dataset.region));
+    });
 
     finishOnboarding();
   });
