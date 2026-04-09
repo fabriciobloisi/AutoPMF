@@ -13,6 +13,18 @@ const state = {
   searchQuery: '',
 };
 
+// ── Category colors ──────────────────────────────────────────────────────────
+const CAT_COLORS = {
+  Technology:'#0066CC', Business:'#FF6B35', World:'#1A936F', Politics:'#4A4E69',
+  Science:'#00B4D8', Sports:'#52B788', Health:'#E63946', Culture:'#9B5DE5',
+  Climate:'#2D6A4F', AI:'#7209B7', Entertainment:'#E040FB', Finance:'#FF6D00',
+  Space:'#1A237E', Education:'#00695C', Travel:'#0277BD', Food:'#BF360C', Opinion:'#4E342E'
+};
+function catBadgeStyle(cat) {
+  const c = CAT_COLORS[cat];
+  return c ? `background:${c};color:#fff` : '';
+}
+
 // ── Utility ──────────────────────────────────────────────────────────────────
 const $ = (id) => document.getElementById(id);
 function esc(str) {
@@ -356,7 +368,7 @@ function renderTextMode() {
       </div>
       <div class="card-content">
         <div class="card-cat-row">
-          <span class="cat-badge">${esc(item.category)}</span>
+          <span class="cat-badge" style="${catBadgeStyle(item.category)}">${esc(item.category)}</span>
           ${item.trending ? '<span class="trending-badge">TRENDING</span>' : ''}
         </div>
         <div class="card-headline">${highlight(item.headline)}</div>
@@ -386,7 +398,7 @@ function renderInstagramMode() {
       ${imgHtml(item, 'insta-bg-img')}
       <div class="insta-overlay"></div>
       <div class="insta-content">
-        <div class="insta-cat">${esc(item.category)}</div>
+        <div class="insta-cat" style="${catBadgeStyle(item.category)}">${esc(item.category)}</div>
         <div class="insta-headline">${highlight(item.headline)}</div>
         <div class="insta-footer">
           <span>${esc(item.source)}</span>
@@ -419,7 +431,7 @@ function renderTikTokMode() {
     ${imgHtml(item, 'tiktok-bg-img')}
     <div class="tiktok-overlay"></div>
     <div class="tiktok-content">
-      <div class="tiktok-cat">${esc(item.category)}</div>
+      <div class="tiktok-cat" style="${catBadgeStyle(item.category)}">${esc(item.category)}</div>
       <div class="tiktok-headline">${highlight(item.headline)}</div>
       <div class="tiktok-summary">${highlight(item.summary)}</div>
       <div class="tiktok-meta">
@@ -512,7 +524,7 @@ function renderCnnMode() {
     ${imgHtml(featured)}
     <div class="cnn-feat-overlay"></div>
     <div class="cnn-feat-content">
-      <div class="cnn-feat-badge">${featured.trending ? 'TOP STORY' : esc(featured.category)}</div>
+      <div class="cnn-feat-badge" style="${featured.trending ? '' : catBadgeStyle(featured.category)}">${featured.trending ? 'TOP STORY' : esc(featured.category)}</div>
       <div class="cnn-feat-headline">${highlight(featured.headline)}</div>
     </div>
   `;
@@ -533,7 +545,7 @@ function renderCnnMode() {
       cell.className = 'card-cnn-small';
       cell.innerHTML = `
         <div class="cnn-small-thumb">${imgHtml(item)}</div>
-        <div class="cnn-small-cat">${esc(item.category)}</div>
+        <div class="cnn-small-cat" style="${catBadgeStyle(item.category)}">${esc(item.category)}</div>
         <div class="cnn-small-headline">${highlight(item.headline)}</div>
         <div class="cnn-small-footer">${esc(item.source)} · ${esc(item.timeAgo)}</div>
       `;
@@ -587,7 +599,7 @@ function renderVideoMode() {
       </div>
       <div class="video-info">
         <div class="video-cat-row">
-          <span class="video-cat">${esc(item.category)}</span>
+          <span class="video-cat" style="${catBadgeStyle(item.category)}">${esc(item.category)}</span>
           ${item.trending ? '<span class="video-trending">· TRENDING</span>' : ''}
         </div>
         <div class="video-title">${highlight(item.headline)}</div>
@@ -608,6 +620,8 @@ function openArticle(item) {
 
   // Category + trending badges
   $('article-cat').textContent = item.category || '';
+  const catColor = CAT_COLORS[item.category];
+  if (catColor) { $('article-cat').style.background = catColor; $('article-cat').style.color = '#fff'; }
   const trendBadge = $('article-trending');
   trendBadge.style.display = item.trending ? '' : 'none';
 
