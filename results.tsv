@@ -48,3 +48,4 @@ cycle	date	nps	status	description
 56	2026-04-09	2.0	keep	No-op — sports content coverage depends on static news generation
 57	2026-04-09	1.0	keep	Show more text in cards — headline 3 lines, summary 4 lines
 58	2026-04-09	1.0	keep	Rename Video mode to Widescreen, remove misleading play button
+59	2026-04-09	1.0	keep	No-op — duplicate feedback from cycle 58 (mark-processed was missed)
