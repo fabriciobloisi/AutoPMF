@@ -109,6 +109,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 46 | 2026-04-09 | 4.0 | No-op — grade 4 with no comments, nothing actionable | 9.0 |
 | 47 | 2026-04-09 | 3.0 | Load more news button at bottom of feed | 9.0 |
 | 48 | 2026-04-09 | 3.0 | Larger thumbnails in text mode — 80px to 100px | 9.0 |
+| 49 | 2026-04-09 | 3.0 | No-op — duplicate feedback from cycle 48 (mark-processed was missed) | 9.0 |
 
 ---
 
