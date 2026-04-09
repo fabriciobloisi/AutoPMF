@@ -73,3 +73,4 @@
 {"timestamp": "2026-04-09T17:02:20.564Z", "sessionId": "4440ab65-7192-446d-a336-4463339f8fc5", "grade": 8, "comments": null, "suggestion": null, "processed": true, "processedAt": "2026-04-09T17:04:09.205530+00:00", "cycle": 62}
 {"timestamp": "2026-04-09T17:45:26.810Z", "sessionId": "04f8d435-29fa-4c66-a302-cde7bf58e7c0", "grade": 1, "comments": "app loads very slow", "suggestion": null, "processed": true, "processedAt": "2026-04-09T17:50:32.691441+00:00", "cycle": 63}
 {"timestamp": "2026-04-09T17:56:23.264Z", "sessionId": "49a5392f-74b8-4f07-bf89-fa33a22ba2a5", "grade": 4, "comments": "Precisa melhorar as subcategorias  ", "suggestion": null, "processed": true, "processedAt": "2026-04-09T17:58:39.158481+00:00", "cycle": 64}
+{"timestamp": "2026-04-09T17:56:23.264Z", "sessionId": "49a5392f-74b8-4f07-bf89-fa33a22ba2a5", "grade": 4, "comments": "Precisa melhorar as subcategorias  ", "suggestion": null, "processed": false, "processedAt": null, "cycle": 65}
