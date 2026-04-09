@@ -117,6 +117,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 54 | 2026-04-09 | 8.0 | Save articles for later — bookmark icon on cards, Saved in drawer | 9.0 |
 | 55 | 2026-04-09 | 7.0 | No-op — hamburger menu placement follows standard mobile conventions | 9.0 |
 | 56 | 2026-04-09 | 2.0 | No-op — sports content coverage depends on static news generation | 9.0 |
+| 57 | 2026-04-09 | 1.0 | Show more text in cards — headline 3 lines, summary 4 lines | 9.0 |
 
 ---
 
