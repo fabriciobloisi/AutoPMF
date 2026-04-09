@@ -1368,20 +1368,22 @@ mark {
 }
 .article-close-btn {
   position: absolute;
-  top: 14px; right: 14px;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.45);
+  top: 14px; left: 14px;
+  height: 34px;
+  padding: 0 12px 0 8px;
+  border-radius: 17px;
+  background: rgba(0,0,0,0.55);
   backdrop-filter: blur(8px);
   color: #fff;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: center; gap: 4px;
   z-index: 2;
   transition: background 0.15s;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
 }
-.article-close-btn:active { background: rgba(0,0,0,0.65); }
+.article-close-btn:active { background: rgba(0,0,0,0.75); }
 .article-share-btn {
   position: absolute;
-  top: 14px; right: 56px;
+  top: 14px; right: 14px;
   width: 34px; height: 34px;
   border-radius: 50%;
   background: rgba(0,0,0,0.45);
