@@ -354,7 +354,7 @@ function imgHtml(item, extraClass = '') {
   const c1 = safeColor(g[1], '#2d3436');
   const url = proxyImgUrl(item.imageUrl || '');
   if (url) {
-    return `<img class="card-real-img ${extraClass}" src="${esc(url)}" alt="${esc(item.imageAlt || item.headline || '')}"
+    return `<img class="card-real-img ${extraClass}" src="${esc(url)}" alt="${esc(item.imageAlt || item.headline || '')}" loading="lazy"
       onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
       <div class="img-fallback" style="background:linear-gradient(135deg,${c0},${c1})"></div>`;
   }
