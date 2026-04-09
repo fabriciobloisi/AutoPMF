@@ -101,6 +101,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 38 | 2026-04-09 | 3.0 | No-op — grade 3 with no comments, nothing actionable | 9.0 |
 | 39 | 2026-04-09 | 5.0 | Clarify article count is total, not per topic | 9.0 |
 | 40 | 2026-04-09 | 7.0 | New welcome message + feedback spotlight coach mark | 9.0 |
+| 41 | 2026-04-09 | 7.0 | Replace feedback power icon with chat bubble | 9.0 |
 
 ---
 
