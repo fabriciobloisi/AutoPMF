@@ -131,6 +131,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 68 | 2026-04-09 | 8.0 | Larger feedback slider for touch precision | 9.0 |
 | 69 | 2026-04-09 | 7.0 | Large Text accessibility toggle in Settings | 9.0 |
 | 70 | 2026-04-09 | 0.0 | No-op — text size already addressed via Large Text toggle (cycle 69) | 9.0 |
+| 71 | 2026-04-09 | 4.0 | No-op — Finance+Latam content gap is static news generation limitation | 9.0 |
 
 ---
 
