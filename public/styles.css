@@ -442,7 +442,7 @@ mark {
   color: #000;
   line-height: 1.3;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 5px;
@@ -452,7 +452,7 @@ mark {
   color: #636366;
   line-height: 1.38;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 5px;
