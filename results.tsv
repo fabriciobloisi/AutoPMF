@@ -39,3 +39,4 @@ cycle	date	nps	status	description
 47	2026-04-09	3.0	keep	Load more news button at bottom of feed
 48	2026-04-09	3.0	keep	Larger thumbnails in text mode — 80px to 100px
 49	2026-04-09	3.0	keep	No-op — duplicate feedback from cycle 48 (mark-processed was missed)
+50	2026-04-09	1.0	keep	No-op — Portuguese language request requires architecture changes
