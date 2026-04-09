@@ -132,6 +132,41 @@ input:focus, textarea:focus, button:focus { outline: none; }
 }
 .feedback-fab:active { background: rgba(255,59,48,0.1); transform: scale(0.92); }
 
+/* ── Feedback Spotlight ── */
+.spotlight-overlay {
+  position: absolute; inset: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-top: 56px;
+  padding-right: 14px;
+}
+.spotlight-overlay .feedback-fab-highlight {
+  box-shadow: 0 0 0 4px rgba(255,59,48,0.5), 0 0 20px rgba(255,59,48,0.3);
+}
+.spotlight-tooltip {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 240px;
+  margin-top: 4px;
+  margin-right: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  text-align: center;
+}
+.spotlight-tooltip p {
+  font-size: 14px; line-height: 1.4;
+  color: #333; margin-bottom: 12px;
+}
+.spotlight-dismiss {
+  background: #0062CC; color: #fff;
+  border: none; border-radius: 8px;
+  padding: 8px 24px; font-size: 14px; font-weight: 600;
+  cursor: pointer;
+}
+
 /* ── Screens ── */
 .screen {
   position: absolute; left: 0; right: 0; bottom: 0;

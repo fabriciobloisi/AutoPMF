@@ -1135,6 +1135,25 @@ function finishOnboarding() {
   overlay.style.display = 'none';
   updateCategoryBar();
   loadNews();
+  // Show feedback spotlight after a short delay
+  if (!localStorage.getItem('autopmf_spotlight_seen')) {
+    setTimeout(showFeedbackSpotlight, 1500);
+  }
+}
+
+function showFeedbackSpotlight() {
+  const spotlight = $('spotlight-overlay');
+  const fab = $('feedback-fab');
+  if (!spotlight || !fab) return;
+  fab.style.zIndex = '101';
+  fab.style.position = 'relative';
+  spotlight.style.display = 'flex';
+  $('spotlight-dismiss').addEventListener('click', () => {
+    spotlight.style.display = 'none';
+    fab.style.zIndex = '';
+    fab.style.position = '';
+    localStorage.setItem('autopmf_spotlight_seen', '1');
+  });
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
