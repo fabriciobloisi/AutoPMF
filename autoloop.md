@@ -114,6 +114,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 51 | 2026-04-09 | 1.0 | No-op — duplicate feedback from cycle 50 (mark-processed was missed) | 9.0 |
 | 52 | 2026-04-09 | 8.0 | No-op — positive feedback, cat photo suggestion conflicts with premium positioning | 9.0 |
 | 53 | 2026-04-09 | 8.0 | Select All / blacklist sources in Customize | 9.0 |
+| 54 | 2026-04-09 | 8.0 | Save articles for later — bookmark icon on cards, Saved in drawer | 9.0 |
 
 ---
 

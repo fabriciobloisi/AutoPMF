@@ -43,3 +43,4 @@ cycle	date	nps	status	description
 51	2026-04-09	1.0	keep	No-op — duplicate feedback from cycle 50 (mark-processed was missed)
 52	2026-04-09	8.0	keep	No-op — positive feedback, cat photo suggestion conflicts with premium positioning
 53	2026-04-09	8.0	keep	Select All / blacklist sources in Customize
+54	2026-04-09	8.0	keep	Save articles for later — bookmark icon on cards, Saved in drawer
