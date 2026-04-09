@@ -52,3 +52,4 @@ cycle	date	nps	status	description
 60	2026-04-09	8.0	keep	No-op — Bitcoin content preference addressable via Finance filter and search
 61	2026-04-09	6.0	keep	No-op — language selection requires dynamic news generation architecture
 62	2026-04-09	8.0	keep	No-op — positive 8/10, no comments
+63	2026-04-09	1.0	keep	Lazy-load images for faster perceived load time
