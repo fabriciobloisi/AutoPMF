@@ -118,6 +118,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 55 | 2026-04-09 | 7.0 | No-op — hamburger menu placement follows standard mobile conventions | 9.0 |
 | 56 | 2026-04-09 | 2.0 | No-op — sports content coverage depends on static news generation | 9.0 |
 | 57 | 2026-04-09 | 1.0 | Show more text in cards — headline 3 lines, summary 4 lines | 9.0 |
+| 58 | 2026-04-09 | 1.0 | Rename Video mode to Widescreen, remove misleading play button | 9.0 |
 
 ---
 
