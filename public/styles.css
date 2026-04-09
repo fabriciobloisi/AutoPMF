@@ -402,6 +402,13 @@ mark {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.card-share-btn {
+  margin-left: auto;
+  padding: 4px;
+  color: #8e8e93;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
 .card-source { font-weight: 600; color: #636366; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; }
 .card-dot { color: #c7c7cc; }
 

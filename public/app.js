@@ -379,9 +379,16 @@ function renderTextMode() {
           <span>${esc(item.timeAgo)}</span>
           <span class="card-dot">·</span>
           <span>${esc(item.readTime)}</span>
+          <button class="card-share-btn" aria-label="Share" data-idx="${state.filteredItems.indexOf(item)}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          </button>
         </div>
       </div>
     `;
+    card.querySelector('.card-share-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      shareItem(item, e.currentTarget);
+    });
     card.addEventListener('click', () => openArticle(item));
     feedEl.appendChild(card);
   });
@@ -648,24 +655,24 @@ function closeArticle() {
 
 $('article-close-btn').addEventListener('click', closeArticle);
 
-// Share article
-$('article-share-btn').addEventListener('click', async () => {
-  const item = state.activeArticle;
-  if (!item) return;
+// Share article helper
+async function shareItem(item, feedbackBtn) {
   const text = `${item.headline}\n\n${item.hook || item.summary}`;
   const shareData = { title: item.headline, text };
-
   if (navigator.share) {
     try { await navigator.share(shareData); } catch {}
   } else {
     try {
       await navigator.clipboard.writeText(text);
-      const btn = $('article-share-btn');
-      btn.style.background = 'rgba(52,199,89,0.7)';
-      setTimeout(() => btn.style.background = '', 1200);
+      if (feedbackBtn) {
+        feedbackBtn.style.color = '#34c759';
+        setTimeout(() => feedbackBtn.style.color = '', 1200);
+      }
     } catch {}
   }
-});
+}
+
+$('article-share-btn').addEventListener('click', () => shareItem(state.activeArticle, $('article-share-btn')));
 
 // Ask Claude about the article
 $('ask-send-btn').addEventListener('click', askClaude);

@@ -33,7 +33,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - Full-screen modal with hero image, category/trending badges
 - **Back button** — prominent "Back" pill button (chevron + label) in the top-left of the hero image. Standard mobile navigation pattern for clear discoverability.
 - Rich content: headline, source + time + read-time, summary, long-form detail
-- **Share button** — in the article hero area, a share icon lets users share articles via native Web Share API (WhatsApp, email, etc. on mobile) or copy to clipboard on desktop. Visual feedback (green flash) on clipboard copy.
+- **Share button** — available both in the article hero area and on each feed card (text mode). Uses native Web Share API (WhatsApp, email, etc. on mobile) or copy to clipboard on desktop. Visual feedback (green flash) on clipboard copy.
 - **Ask the news** — sticky footer bar at the bottom of every article with a labeled "ASK THE NEWS" prompt. Always visible without scrolling. Users ask follow-up questions and get inline AI responses. **Responses are short (2-3 sentences), conversational, and naturally formatted** — no bullet points, no markdown headers, no bold text. **Quotes key phrases from the article in italics.** Response auto-scrolls into view within the article container so the user immediately sees the answer.
 
 ### 5. Personalization & Customization
@@ -161,3 +161,4 @@ _Each cycle records what changed in this file and why._
 | 34 | 2026-04-09 | Revert multi-select categories to single-select | User feedback (1.5 avg): category buttons "accrue rather than toggle" — multi-select from cycle 31 confused users. Reverted to original single-select behavior where tapping a category shows only that category. |
 | 35 | 2026-04-09 | Color-coded category badges across all display modes | User feedback (7/10): category labels all look the same, need different colors for at-a-glance identification. Applied per-category colors (from gradient palette) to badges in Text, Instagram, TikTok, CNN, Video modes and article detail. |
 | 36 | 2026-04-09 | Multi-select regions in Customize and onboarding | User feedback (7/10): wants to select multiple regions (e.g. Americas + Europe + Asia) instead of just one. Changed region selector to multi-select toggle with "Global" as reset. |
+| 37 | 2026-04-09 | Share button on feed cards for better discoverability | User feedback (6/10): wanted share button but didn't find existing one in article view. Added share icon to each card footer in text mode, extracted reusable share helper. |
