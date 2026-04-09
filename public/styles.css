@@ -167,6 +167,24 @@ input:focus, textarea:focus, button:focus { outline: none; }
   cursor: pointer;
 }
 
+/* ── Load More Button ── */
+.load-more-btn {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 16px auto 24px;
+  padding: 12px;
+  background: #0062CC;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.load-more-btn:active { background: #004da0; }
+.app.dark-mode .load-more-btn { background: #0a84ff; }
+
 /* ── Screens ── */
 .screen {
   position: absolute; left: 0; right: 0; bottom: 0;

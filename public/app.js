@@ -300,6 +300,15 @@ function renderFeed() {
     case 'video':     renderVideoMode();     break;
     default:          renderTextMode();
   }
+
+  // Add "Load more" button at bottom (except TikTok mode)
+  if (state.currentMode !== 'tiktok' && state.filteredItems.length > 0) {
+    const moreBtn = document.createElement('button');
+    moreBtn.className = 'load-more-btn';
+    moreBtn.textContent = 'Load more news';
+    moreBtn.addEventListener('click', loadNews);
+    feedEl.appendChild(moreBtn);
+  }
 }
 
 // ── Helpers: image & gradient ─────────────────────────────────────────────────
