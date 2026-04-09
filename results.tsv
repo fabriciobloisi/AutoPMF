@@ -49,3 +49,4 @@ cycle	date	nps	status	description
 57	2026-04-09	1.0	keep	Show more text in cards — headline 3 lines, summary 4 lines
 58	2026-04-09	1.0	keep	Rename Video mode to Widescreen, remove misleading play button
 59	2026-04-09	1.0	keep	No-op — duplicate feedback from cycle 58 (mark-processed was missed)
+60	2026-04-09	8.0	keep	No-op — Bitcoin content preference addressable via Finance filter and search

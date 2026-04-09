@@ -120,6 +120,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 57 | 2026-04-09 | 1.0 | Show more text in cards — headline 3 lines, summary 4 lines | 9.0 |
 | 58 | 2026-04-09 | 1.0 | Rename Video mode to Widescreen, remove misleading play button | 9.0 |
 | 59 | 2026-04-09 | 1.0 | No-op — duplicate feedback from cycle 58 (mark-processed was missed) | 9.0 |
+| 60 | 2026-04-09 | 8.0 | No-op — Bitcoin content preference addressable via Finance filter and search | 9.0 |
 
 ---
 
