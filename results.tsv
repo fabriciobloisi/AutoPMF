@@ -59,3 +59,4 @@ cycle	date	nps	status	description
 67	2026-04-09	3.7	keep	Cap trending badges to max 2 per feed
 68	2026-04-09	8.0	keep	Larger feedback slider for touch precision
 69	2026-04-09	7.0	keep	Large Text accessibility toggle in Settings
+70	2026-04-09	0.0	keep	No-op — text size already addressed via Large Text toggle (cycle 69)
