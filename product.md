@@ -21,7 +21,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 | **Instagram** | Full-width hero image cards with headline overlay. Visual-first, scroll-friendly |
 | **TikTok** | Full-screen immersive — one story at a time, swipe to navigate. Maximum engagement |
 | **CNN** | Featured hero story + grid of secondary stories + deep-dive list. Editorial authority |
-| **Video** | 16:9 image thumbnails with play button overlay. Feels like a video feed |
+| **Widescreen** | 16:9 cinematic image cards. Wide, immersive visual layout |
 
 ### 3. Category Filtering & Search
 - Horizontal scrollable category chips: All, Tech, AI, World, Business, Science, Climate, Health, Culture, Sports, Politics, Entertainment, Finance, Space, Education, Travel, Food, Opinion
@@ -123,7 +123,7 @@ Each news item must follow this exact JSON schema:
 - **Instagram**: full-width hero image, headline overlaid with dark gradient. Ken Burns zoom on images (6s cycle)
 - **TikTok**: image fills entire screen, content overlaid at bottom. Ken Burns zoom on images (6s cycle)
 - **CNN**: large hero for featured story, thumbnails for secondary
-- **Video**: 16:9 image with play button overlay. Ken Burns zoom on images (6s cycle)
+- **Widescreen**: 16:9 cinematic image cards. Ken Burns zoom on images (6s cycle)
 
 
 ## AutoLoop Evolution Log
@@ -171,3 +171,4 @@ _Each cycle records what changed in this file and why._
 | 53 | 2026-04-09 | Select All / blacklist sources in Customize | User feedback (8/10): wants to blacklist certain publishers. Added "Select All" toggle to sources section — select all then deselect specific ones to block. Toggles between Select All / Clear All. |
 | 54 | 2026-04-09 | Save articles for later — bookmark feature | User feedback (8/10): wants to save articles and get back to them. Added bookmark icon on text mode cards (orange when saved), "Saved" button in drawer menu to view bookmarked articles. Persisted in localStorage. |
 | 57 | 2026-04-09 | Show more text in cards — headline 3 lines, summary 4 lines | User feedback (1/10): headlines and summaries truncated with "..." — wants to see full text. Increased headline line-clamp from 2 to 3 and summary from 2 to 4 for more readable cards. |
+| 58 | 2026-04-09 | Rename Video mode to Widescreen, remove play button | User feedback (1/10): Video mode has play buttons but no actual videos — misleading. Renamed to "Widescreen", removed play button overlay and fake duration, changed icon. Keeps the nice 16:9 layout honestly. |

@@ -640,16 +640,9 @@ function renderVideoMode() {
   state.filteredItems.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card-video';
-    // Simulate video duration based on readTime
-    const mins = parseInt(item.readTime) || 3;
-    const duration = `${mins}:${String(Math.floor(Math.random()*59)).padStart(2,'0')}`;
     card.innerHTML = `
       <div class="video-thumb">
         ${imgHtml(item)}
-        <div class="video-play-btn">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <div class="video-duration">${esc(duration)}</div>
       </div>
       <div class="video-info">
         <div class="video-cat-row">
