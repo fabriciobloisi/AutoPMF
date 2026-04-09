@@ -1186,19 +1186,19 @@ mark {
 .slider-wrap { padding: 0 4px; }
 #grade {
   -webkit-appearance: none; appearance: none;
-  width: 100%; height: 4px;
-  background: #d1d1d6; border-radius: 2px;
+  width: 100%; height: 6px;
+  background: #d1d1d6; border-radius: 3px;
   outline: none; margin-bottom: 14px;
 }
 #grade::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 36px; height: 36px; border-radius: 50%;
   background: #0062CC;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0,122,255,0.4);
 }
 #grade::-moz-range-thumb {
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 36px; height: 36px; border-radius: 50%;
   background: #0062CC; border: none; cursor: pointer;
 }
 .slider-labels {
@@ -1206,7 +1206,7 @@ mark {
   font-size: 12px; color: #8e8e93; text-align: center;
 }
 .slider-labels small { font-size: 11px; color: #8e8e93; }
-.slider-value { font-size: 24px; font-weight: 700; color: #0062CC; line-height: 1; }
+.slider-value { font-size: 32px; font-weight: 800; color: #0062CC; line-height: 1; }
 #comments {
   width: 100%;
   border: none;
