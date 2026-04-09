@@ -50,3 +50,4 @@ cycle	date	nps	status	description
 58	2026-04-09	1.0	keep	Rename Video mode to Widescreen, remove misleading play button
 59	2026-04-09	1.0	keep	No-op — duplicate feedback from cycle 58 (mark-processed was missed)
 60	2026-04-09	8.0	keep	No-op — Bitcoin content preference addressable via Finance filter and search
+61	2026-04-09	6.0	keep	No-op — language selection requires dynamic news generation architecture

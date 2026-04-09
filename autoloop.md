@@ -121,6 +121,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 58 | 2026-04-09 | 1.0 | Rename Video mode to Widescreen, remove misleading play button | 9.0 |
 | 59 | 2026-04-09 | 1.0 | No-op — duplicate feedback from cycle 58 (mark-processed was missed) | 9.0 |
 | 60 | 2026-04-09 | 8.0 | No-op — Bitcoin content preference addressable via Finance filter and search | 9.0 |
+| 61 | 2026-04-09 | 6.0 | No-op — language selection requires dynamic news generation architecture | 9.0 |
 
 ---
 
