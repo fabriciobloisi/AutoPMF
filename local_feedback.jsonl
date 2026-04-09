@@ -58,3 +58,4 @@
 {"timestamp": "2026-04-09T14:01:04.128Z", "sessionId": "084c722f-6fb3-4aba-8987-0d024ea5c5f8", "grade": 3, "comments": "small images", "suggestion": null, "processed": true, "processedAt": "2026-04-09T14:05:27.151705+00:00", "cycle": 48}
 {"timestamp": "2026-04-09T14:01:04.128Z", "sessionId": "084c722f-6fb3-4aba-8987-0d024ea5c5f8", "grade": 3, "comments": "small images", "suggestion": null, "processed": true, "processedAt": "2026-04-09T14:07:15.632577+00:00", "cycle": 49}
 {"timestamp": "2026-04-09T14:09:33.618Z", "sessionId": "084c722f-6fb3-4aba-8987-0d024ea5c5f8", "grade": 1, "comments": "I need portugues language", "suggestion": null, "processed": true, "processedAt": "2026-04-09T14:12:16.998287+00:00", "cycle": 50}
+{"timestamp": "2026-04-09T14:09:33.618Z", "sessionId": "084c722f-6fb3-4aba-8987-0d024ea5c5f8", "grade": 1, "comments": "I need portugues language", "suggestion": null, "processed": false, "processedAt": null, "cycle": 51}
