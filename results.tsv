@@ -33,3 +33,4 @@ cycle	date	nps	status	description
 41	2026-04-09	7.0	keep	Replace feedback power icon with chat bubble
 42	2026-04-09	6.0	keep	Fix region filtering — actually filter feed by selected regions
 43	2026-04-09	7.0	keep	No-op — positive feedback, user likes dark mode
+44	2026-04-09	7.0	keep	No-op — duplicate feedback from cycle 43 (mark-processed was missed)
