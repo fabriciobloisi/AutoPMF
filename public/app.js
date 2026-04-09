@@ -134,9 +134,7 @@ function showLoading(on) {
 function applyFilter() {
   let items = state.currentCategory === 'all'
     ? [...state.newsItems]
-    : state.selectedCategories && state.selectedCategories.size > 0
-      ? state.newsItems.filter(n => state.selectedCategories.has(n.category))
-      : state.newsItems.filter(n => n.category === state.currentCategory);
+    : state.newsItems.filter(n => n.category === state.currentCategory);
 
   // Filter by preferred sources
   const sources = state.preferences.sources || [];
@@ -166,32 +164,12 @@ function applyFilter() {
   renderFeed();
 }
 
-// ── Category bar (multi-select) ──────────────────────────────────────────────
-state.selectedCategories = new Set();
+// ── Category bar ──────────────────────────────────────────────────────────────
 document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const cat = btn.dataset.cat;
-    if (cat === 'all') {
-      // "All" clears multi-select
-      state.selectedCategories.clear();
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    } else {
-      // Toggle this category
-      document.querySelector('.cat-btn[data-cat="all"]').classList.remove('active');
-      if (state.selectedCategories.has(cat)) {
-        state.selectedCategories.delete(cat);
-        btn.classList.remove('active');
-      } else {
-        state.selectedCategories.add(cat);
-        btn.classList.add('active');
-      }
-      // If nothing selected, revert to "All"
-      if (state.selectedCategories.size === 0) {
-        document.querySelector('.cat-btn[data-cat="all"]').classList.add('active');
-      }
-    }
-    state.currentCategory = state.selectedCategories.size > 0 ? '__multi__' : 'all';
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.currentCategory = btn.dataset.cat;
     applyFilter();
   });
 });
