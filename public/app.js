@@ -11,7 +11,20 @@ const state = {
   currentScreen: 'feed',
   previousScreen: 'feed',
   searchQuery: '',
+  savedArticles: JSON.parse(localStorage.getItem('autopmf_saved') || '[]'),
+  showingSaved: false,
 };
+
+// ── Saved articles ───────────────────────────────────────────────────────────
+function isArticleSaved(id) { return state.savedArticles.some(a => a.id === id); }
+function toggleSaveArticle(item) {
+  if (isArticleSaved(item.id)) {
+    state.savedArticles = state.savedArticles.filter(a => a.id !== item.id);
+  } else {
+    state.savedArticles.push(item);
+  }
+  localStorage.setItem('autopmf_saved', JSON.stringify(state.savedArticles));
+}
 
 // ── Category colors ──────────────────────────────────────────────────────────
 const CAT_COLORS = {
@@ -144,6 +157,10 @@ function showLoading(on) {
 
 // ── Category + Search filtering ───────────────────────────────────────────────
 function applyFilter() {
+  if (state.showingSaved) {
+    state.showingSaved = false;
+    document.querySelector('.nav-title').textContent = 'AutoPMF';
+  }
   let items = state.currentCategory === 'all'
     ? [...state.newsItems]
     : state.newsItems.filter(n => n.category === state.currentCategory);
@@ -398,12 +415,23 @@ function renderTextMode() {
           <span>${esc(item.timeAgo)}</span>
           <span class="card-dot">·</span>
           <span>${esc(item.readTime)}</span>
-          <button class="card-share-btn" aria-label="Share" data-idx="${state.filteredItems.indexOf(item)}">
+          <button class="card-save-btn ${isArticleSaved(item.id) ? 'saved' : ''}" aria-label="Save">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="${isArticleSaved(item.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <button class="card-share-btn" aria-label="Share">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
           </button>
         </div>
       </div>
     `;
+    card.querySelector('.card-save-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSaveArticle(item);
+      const btn = e.currentTarget;
+      const saved = isArticleSaved(item.id);
+      btn.classList.toggle('saved', saved);
+      btn.querySelector('svg').setAttribute('fill', saved ? 'currentColor' : 'none');
+    });
     card.querySelector('.card-share-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       shareItem(item, e.currentTarget);
@@ -931,6 +959,15 @@ function drawNpsChart(grades) {
   ctx.fillStyle = '#0062CC';
   pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fill(); });
 }
+
+// ── Saved Articles ───────────────────────────────────────────────────────────
+$('drawer-saved-btn')?.addEventListener('click', () => {
+  closeDrawer();
+  state.showingSaved = true;
+  state.filteredItems = [...state.savedArticles];
+  $('nav-title').textContent = 'Saved';
+  renderFeed();
+});
 
 // ── Customize Screen ──────────────────────────────────────────────────────────
 $('drawer-customize-btn').addEventListener('click', () => { closeDrawer(); showScreen('customize'); openCustomize(); });

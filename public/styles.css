@@ -464,8 +464,15 @@ mark {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.card-share-btn {
+.card-save-btn {
   margin-left: auto;
+  padding: 4px;
+  color: #8e8e93;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.card-save-btn.saved { color: #ff9500; }
+.card-share-btn {
   padding: 4px;
   color: #8e8e93;
   flex-shrink: 0;
