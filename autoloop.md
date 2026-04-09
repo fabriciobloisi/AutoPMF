@@ -115,6 +115,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 52 | 2026-04-09 | 8.0 | No-op — positive feedback, cat photo suggestion conflicts with premium positioning | 9.0 |
 | 53 | 2026-04-09 | 8.0 | Select All / blacklist sources in Customize | 9.0 |
 | 54 | 2026-04-09 | 8.0 | Save articles for later — bookmark icon on cards, Saved in drawer | 9.0 |
+| 55 | 2026-04-09 | 7.0 | No-op — hamburger menu placement follows standard mobile conventions | 9.0 |
 
 ---
 

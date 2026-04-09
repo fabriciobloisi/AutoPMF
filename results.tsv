@@ -44,3 +44,4 @@ cycle	date	nps	status	description
 52	2026-04-09	8.0	keep	No-op — positive feedback, cat photo suggestion conflicts with premium positioning
 53	2026-04-09	8.0	keep	Select All / blacklist sources in Customize
 54	2026-04-09	8.0	keep	Save articles for later — bookmark icon on cards, Saved in drawer
+55	2026-04-09	7.0	keep	No-op — hamburger menu placement follows standard mobile conventions
