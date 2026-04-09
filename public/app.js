@@ -1019,6 +1019,14 @@ document.querySelectorAll('.source-chip').forEach(chip => {
   chip.addEventListener('click', () => chip.classList.toggle('selected'));
 });
 
+// Sources select-all / clear-all toggle
+$('sources-select-all').addEventListener('click', () => {
+  const chips = document.querySelectorAll('.source-chip');
+  const allSelected = [...chips].every(c => c.classList.contains('selected'));
+  chips.forEach(c => c.classList.toggle('selected', !allSelected));
+  $('sources-select-all').textContent = allSelected ? 'Select All' : 'Clear All';
+});
+
 // Region multi-select (Global = reset)
 document.querySelectorAll('.region-btn').forEach(btn => {
   btn.addEventListener('click', () => {

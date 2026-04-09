@@ -40,7 +40,7 @@ Create the best possible news experience — one that is accurate, balanced, con
 - **First-run onboarding** — on first visit, a welcome overlay ("Let's make it yours!") asks for your name, preferred topics, and region before showing any news. Preferences are saved to localStorage and applied immediately. Users can skip to get the default experience. After onboarding, a **spotlight coach mark** highlights the feedback button with a dim overlay and tooltip: "Explore the app and give feedback by pressing this button."
 - **Topics** — select preferred categories to bias the feed
 - **Region** — choose one or more geographic regions (Global, Americas, Europe, Asia, LatAm, Middle East, Africa). Multi-select supported — tap "Global" to reset.
-- **News sources** — select preferred sources (Reuters, BBC, Bloomberg, Wired, etc.) in Customize. Only articles from selected sources appear in the feed. Leave all unselected to see everything.
+- **News sources** — select preferred sources (Reuters, BBC, Bloomberg, Wired, etc.) in Customize. Only articles from selected sources appear in the feed. Leave all unselected to see everything. **"Select All" button** lets users select all sources then deselect specific ones to block/blacklist publishers.
 - **Article count** — Short (5 total), Standard (8 total), or Long (15 total) feed lengths. Hint clarifies articles are spread across selected topics.
 - **Display mode** — persisted in localStorage across sessions (accessible via Customize screen)
 
@@ -168,3 +168,4 @@ _Each cycle records what changed in this file and why._
 | 42 | 2026-04-09 | Fix region filtering — actually filter feed by selected regions | User feedback (6/10): region selection had no effect on feed. Added region filtering to applyFilter() — articles now filtered by selected regions. Supports both multi-select and legacy single-region preferences. |
 | 47 | 2026-04-09 | Load more news button at bottom of feed | User feedback (3/10): too few articles, no way to get more. Added "Load more news" button at the bottom of the feed (all modes except TikTok) that refreshes for a new batch. |
 | 48 | 2026-04-09 | Larger thumbnails in text mode (80px to 100px) | User feedback (3/10): "small images." Increased text mode card thumbnails from 80x80px to 100x100px for better visual impact. |
+| 53 | 2026-04-09 | Select All / blacklist sources in Customize | User feedback (8/10): wants to blacklist certain publishers. Added "Select All" toggle to sources section — select all then deselect specific ones to block. Toggles between Select All / Clear All. |

@@ -167,6 +167,15 @@ input:focus, textarea:focus, button:focus { outline: none; }
   cursor: pointer;
 }
 
+/* ── Select All Button ── */
+.select-all-btn {
+  font-size: 12px; font-weight: 600;
+  color: #0062CC;
+  background: none; border: none;
+  cursor: pointer; margin-left: 8px;
+}
+.app.dark-mode .select-all-btn { color: #0a84ff; }
+
 /* ── Load More Button ── */
 .load-more-btn {
   display: block;
