@@ -96,6 +96,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 33 | 2026-04-09 | 4.0 | Prominent Back button in article view — chevron + label in top-left | 9.0 |
 | 34 | 2026-04-09 | 1.5 | Revert multi-select categories to single-select | 9.0 |
 | 35 | 2026-04-09 | 4.0 | Color-coded category badges across all display modes | 9.0 |
+| 36 | 2026-04-09 | 7.0 | Multi-select regions in Customize and onboarding | 9.0 |
 
 ---
 
