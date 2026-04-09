@@ -113,6 +113,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 50 | 2026-04-09 | 1.0 | No-op — Portuguese language request requires architecture changes | 9.0 |
 | 51 | 2026-04-09 | 1.0 | No-op — duplicate feedback from cycle 50 (mark-processed was missed) | 9.0 |
 | 52 | 2026-04-09 | 8.0 | No-op — positive feedback, cat photo suggestion conflicts with premium positioning | 9.0 |
+| 53 | 2026-04-09 | 8.0 | Select All / blacklist sources in Customize | 9.0 |
 
 ---
 
