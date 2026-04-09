@@ -148,6 +148,16 @@ function applyFilter() {
     ? [...state.newsItems]
     : state.newsItems.filter(n => n.category === state.currentCategory);
 
+  // Filter by preferred regions
+  let regions = state.preferences.regions || [];
+  // Legacy: single region string (not "Global")
+  if (regions.length === 0 && state.preferences.region && state.preferences.region !== 'Global') {
+    regions = [state.preferences.region];
+  }
+  if (regions.length > 0) {
+    items = items.filter(n => regions.includes(n.region));
+  }
+
   // Filter by preferred sources
   const sources = state.preferences.sources || [];
   if (sources.length > 0) {
