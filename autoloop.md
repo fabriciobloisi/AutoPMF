@@ -99,6 +99,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 36 | 2026-04-09 | 7.0 | Multi-select regions in Customize and onboarding | 9.0 |
 | 37 | 2026-04-09 | 6.0 | Share button on feed cards for better discoverability | 9.0 |
 | 38 | 2026-04-09 | 3.0 | No-op — grade 3 with no comments, nothing actionable | 9.0 |
+| 39 | 2026-04-09 | 5.0 | Clarify article count is total, not per topic | 9.0 |
 
 ---
 
