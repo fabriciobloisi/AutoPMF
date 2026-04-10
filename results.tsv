@@ -78,3 +78,4 @@ cycle	date	nps	status	description
 86	2026-04-10	1.0	keep	Fix feed not loading — static first, dynamic for Load More only
 87	2026-04-10	7.0	keep	No-op — more results request addressed by existing Generate fresh news button
 88	2026-04-10	6.0	keep	No-op — personalized AI interest learning and community features require architecture changes
+89	2026-04-10	4.0	keep	No-op — article comments feature requires user identity, database, and moderation architecture
