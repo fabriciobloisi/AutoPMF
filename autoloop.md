@@ -146,6 +146,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 83 | 2026-04-10 | 2.5 | Dynamic news generation via Claude API — fix Load More and refresh | 9.0 |
 | 84 | 2026-04-10 | 2.5 | No-op — duplicate feedback from cycle 83 (mark-processed was missed) | 9.0 |
 | 85 | 2026-04-10 | 4.0 | Fresh news: date-aware generation + Updated timestamp | 9.0 |
+| 86 | 2026-04-10 | 1.0 | Fix feed not loading — static first, dynamic for Load More only | 9.0 |
 
 ---
 

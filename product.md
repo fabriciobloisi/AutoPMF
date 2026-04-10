@@ -10,11 +10,10 @@ Create the best possible news experience — one that is accurate, balanced, con
 ## Current Feature Set
 
 ### 1. AI-Generated News Feed
-- Claude dynamically generates a batch of news articles on every refresh via `/api/news`
+- Static `news.json` loads instantly on page load for immediate content
+- **"Generate fresh news"** button at the bottom uses Claude API (`/api/news`) to dynamically generate additional articles with 20s timeout
 - Articles are realistic, editorially diverse, and globally representative
 - Each article includes headline, hook, summary, long-form detail, key facts, expert quote, metadata, and a curated image
-- **Load More** appends additional dynamically generated articles to the feed
-- Falls back to static `news.json` if the API is unavailable
 
 ### 2. Five Display Modes
 | Mode | Experience |
@@ -184,4 +183,5 @@ _Each cycle records what changed in this file and why._
 | 76 | 2026-04-10 | Purple Theme toggle in Settings | User feedback (7/10): "can you make a purple theme." Added Purple Theme toggle — swaps primary blue (#0062CC) to purple (#7B2FBE) across nav, buttons, slider, and accents. Second user request for purple. |
 | 79 | 2026-04-10 | Revert infinite scroll to manual Load More button | User feedback (3/10): articles flickering due to infinite scroll loop. IntersectionObserver sentinel kept re-triggering loadNews. Reverted to manual "Load more news" button for stability. |
 | 83 | 2026-04-10 | Dynamic news generation via Claude API — fix Load More and refresh | User feedback (4/10): Load More button not working (re-fetched same static file), only 3 articles in filtered categories. Added `/api/news` endpoint for dynamic article generation. Refresh generates fresh articles, Load More appends new ones. Static news.json as fallback. |
-| 85 | 2026-04-10 | Fresh news: date-aware generation + "Updated" timestamp | User feedback (4/10): "old news." Added today's date to Claude news prompt for timely articles. Loading text says "Generating fresh news." Feed shows "Updated HH:MM" timestamp. |
+| 85 | 2026-04-10 | Fresh news: date-aware generation + "Updated" timestamp | User feedback (4/10): "old news." Added today's date to Claude news prompt for timely articles. Feed shows "Updated HH:MM" timestamp. |
+| 86 | 2026-04-10 | Fix feed not loading — static first, dynamic for Load More | User feedback (1/10): "News feed does not load." Dynamic API (cycle 83) was too slow on Vercel, no timeout caused infinite spinner. Reverted to static news.json for initial load (instant). Dynamic generation only via "Generate fresh news" button with 20s timeout. |

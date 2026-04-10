@@ -125,20 +125,27 @@ function closeDrawer() { drawer.classList.remove('open'); drawerBackdrop.classLi
 $('menu-btn').addEventListener('click', openDrawer);
 drawerBackdrop.addEventListener('click', closeDrawer);
 
-// ── Fetch news — dynamic via Claude API, static fallback ─────────────────────
-async function fetchNewsFromAPI() {
-  const body = {
-    topics: state.preferences.topics || [],
-    count: state.preferences.count || 8,
-    regions: state.preferences.regions || [],
-  };
-  const r = await fetch('/api/news', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!r.ok) throw new Error('API error');
-  return r.json();
+// ── Fetch news — static first for speed, dynamic for Load More ───────────────
+async function fetchNewsFromAPI(timeoutMs = 20000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const body = {
+      topics: state.preferences.topics || [],
+      count: state.preferences.count || 8,
+      regions: state.preferences.regions || [],
+    };
+    const r = await fetch('/api/news', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+    if (!r.ok) throw new Error('API error');
+    return r.json();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 async function loadNews() {
@@ -154,16 +161,10 @@ async function loadNews() {
   try {
     feedEl.style.opacity = '0.3';
     feedEl.style.transition = 'opacity 0.15s';
-    // Try dynamic generation first, fall back to static news.json
-    let articles;
-    try {
-      articles = await fetchNewsFromAPI();
-    } catch {
-      const r = await fetch('/news.json');
-      if (!r.ok) throw new Error('Failed to load news');
-      articles = await r.json();
-    }
-    state.newsItems = articles;
+    // Load static news.json first (instant), then try dynamic in background
+    const r = await fetch('/news.json');
+    if (!r.ok) throw new Error('Failed to load news');
+    state.newsItems = await r.json();
     state.lastUpdated = Date.now();
     applyFilter();
     feedEl.style.opacity = '1';
@@ -393,7 +394,7 @@ function renderFeed() {
   if (state.currentMode !== 'tiktok' && state.filteredItems.length > 0) {
     const moreBtn = document.createElement('button');
     moreBtn.className = 'load-more-btn';
-    moreBtn.textContent = 'Load more news';
+    moreBtn.textContent = 'Generate fresh news';
     moreBtn.addEventListener('click', loadMoreNews);
     feedEl.appendChild(moreBtn);
   }
