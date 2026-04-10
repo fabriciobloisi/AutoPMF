@@ -164,6 +164,7 @@ async function loadNews() {
       articles = await r.json();
     }
     state.newsItems = articles;
+    state.lastUpdated = Date.now();
     applyFilter();
     feedEl.style.opacity = '1';
   } catch (err) {
@@ -370,6 +371,14 @@ function renderFeed() {
     return;
   }
   feedEmpty.style.display = 'none';
+
+  // "Updated" timestamp at top of feed
+  if (state.lastUpdated && state.currentMode !== 'tiktok') {
+    const ts = document.createElement('div');
+    ts.className = 'feed-updated';
+    ts.textContent = `Updated ${new Date(state.lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    feedEl.appendChild(ts);
+  }
 
   switch (state.currentMode) {
     case 'text':      renderTextMode();      break;

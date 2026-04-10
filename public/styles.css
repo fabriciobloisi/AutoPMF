@@ -223,6 +223,15 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .load-more-btn:active { background: #004da0; }
 .app.dark-mode .load-more-btn { background: #0a84ff; }
 
+.feed-updated {
+  text-align: center;
+  font-size: 11px;
+  color: #8e8e93;
+  padding: 6px 0 2px;
+  letter-spacing: 0.3px;
+}
+.app.dark-mode .feed-updated { color: #636366; }
+
 /* ── Screens ── */
 .screen {
   position: absolute; left: 0; right: 0; bottom: 0;
