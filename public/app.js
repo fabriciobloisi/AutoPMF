@@ -1144,6 +1144,16 @@ function applyLargeText(on) {
 applyLargeText(localStorage.getItem('autopmf_largetext') === '1');
 largeTextToggle.addEventListener('change', () => applyLargeText(largeTextToggle.checked));
 
+// ── Purple Theme toggle ──────────────────────────────────────────────────────
+const purpleToggle = $('purple-theme-toggle');
+function applyPurpleTheme(on) {
+  appEl.classList.toggle('purple-theme', on);
+  localStorage.setItem('autopmf_purple', on ? '1' : '0');
+  purpleToggle.checked = on;
+}
+applyPurpleTheme(localStorage.getItem('autopmf_purple') === '1');
+purpleToggle.addEventListener('change', () => applyPurpleTheme(purpleToggle.checked));
+
 // ── About Modal ──────────────────────────────────────────────────────────────
 const aboutModal = $('about-modal');
 function openAbout()  { closeDrawer(); aboutModal.classList.add('open'); }

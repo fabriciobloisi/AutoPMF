@@ -167,6 +167,21 @@ input:focus, textarea:focus, button:focus { outline: none; }
   cursor: pointer;
 }
 
+/* ── Purple Theme ── */
+.app.purple-theme .nav-bar { background: #7B2FBE; }
+.app.purple-theme .load-more-btn { background: #7B2FBE; }
+.app.purple-theme .load-more-btn:active { background: #5E1D96; }
+.app.purple-theme .apply-btn { background: #7B2FBE; }
+.app.purple-theme .submit-btn { background: #7B2FBE; }
+.app.purple-theme .onboarding-go-btn { background: #7B2FBE; }
+.app.purple-theme .spotlight-dismiss { background: #7B2FBE; }
+.app.purple-theme .btn-primary { background: #7B2FBE; }
+.app.purple-theme .slider-value { color: #7B2FBE; }
+.app.purple-theme .select-all-btn { color: #7B2FBE; }
+.app.purple-theme #grade::-webkit-slider-thumb { background: #7B2FBE; }
+.app.purple-theme #grade::-moz-range-thumb { background: #7B2FBE; }
+.app.purple-theme .stat-card.accent { background: linear-gradient(135deg, #7B2FBE, #9B5DE5); }
+
 /* ── Large Text Mode ── */
 .app.large-text .card-headline { font-size: 18px; }
 .app.large-text .card-summary { font-size: 15px; }
