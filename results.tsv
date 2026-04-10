@@ -73,3 +73,4 @@ cycle	date	nps	status	description
 81	2026-04-10	0.0	keep	No-op — stale news and push notifications require architecture changes
 82	2026-04-10	2.0	keep	No-op — vague color complaint, no specifics to act on
 83	2026-04-10	2.5	keep	Dynamic news generation via Claude API — fix broken Load More and refresh
+84	2026-04-10	2.5	keep	No-op — duplicate feedback from cycle 83 (mark-processed was missed)
