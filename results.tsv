@@ -71,3 +71,4 @@ cycle	date	nps	status	description
 79	2026-04-10	3.0	revert	Revert infinite scroll to manual Load More button — fix flickering
 80	2026-04-10	5.0	keep	No-op — fashion/luxury category request is static content limitation
 81	2026-04-10	0.0	keep	No-op — stale news and push notifications require architecture changes
+82	2026-04-10	2.0	keep	No-op — vague color complaint, no specifics to act on
