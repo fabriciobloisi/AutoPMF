@@ -61,3 +61,4 @@ cycle	date	nps	status	description
 69	2026-04-09	7.0	keep	Large Text accessibility toggle in Settings
 70	2026-04-09	0.0	keep	No-op — text size already addressed via Large Text toggle (cycle 69)
 71	2026-04-09	4.0	keep	No-op — Finance+Latam content gap is static news generation limitation
+72	2026-04-10	6.0	keep	Infinite scroll — auto-load more news on scroll
