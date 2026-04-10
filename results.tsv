@@ -74,3 +74,4 @@ cycle	date	nps	status	description
 82	2026-04-10	2.0	keep	No-op — vague color complaint, no specifics to act on
 83	2026-04-10	2.5	keep	Dynamic news generation via Claude API — fix broken Load More and refresh
 84	2026-04-10	2.5	keep	No-op — duplicate feedback from cycle 83 (mark-processed was missed)
+85	2026-04-10	4.0	keep	Fresh news: date-aware generation + Updated timestamp
