@@ -134,6 +134,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 71 | 2026-04-09 | 4.0 | No-op — Finance+Latam content gap is static news generation limitation | 9.0 |
 | 72 | 2026-04-10 | 6.0 | Infinite scroll — auto-load more news on scroll | 9.0 |
 | 73 | 2026-04-10 | 7.0 | No-op — positive 7/10, no comments | 9.0 |
+| 74 | 2026-04-10 | 7.0 | No-op — duplicate feedback from cycle 73 (mark-processed was missed) | 9.0 |
 
 ---
 
