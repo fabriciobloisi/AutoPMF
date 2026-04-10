@@ -137,10 +137,13 @@ async function loadNews() {
   refreshBtn.querySelector('svg').classList.add('spinning');
 
   try {
+    feedEl.style.opacity = '0.3';
+    feedEl.style.transition = 'opacity 0.15s';
     const r = await fetch('/news.json');
     if (!r.ok) throw new Error('Failed to load news');
     state.newsItems = await r.json();
     applyFilter();
+    feedEl.style.opacity = '1';
   } catch (err) {
     console.error('loadNews error:', err);
     showLoading(false);
