@@ -140,6 +140,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 77 | 2026-04-10 | 7.0 | No-op — duplicate feedback from cycle 76 (mark-processed was missed) | 9.0 |
 | 78 | 2026-04-10 | 7.0 | No-op — persistent duplicate from cycle 76 purple theme feedback | 9.0 |
 | 79 | 2026-04-10 | 3.0 | Revert infinite scroll to manual Load More button — fix flickering | 9.0 |
+| 80 | 2026-04-10 | 5.0 | No-op — fashion/luxury category request is static content limitation | 9.0 |
 
 ---
 
