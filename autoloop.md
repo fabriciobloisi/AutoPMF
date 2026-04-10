@@ -136,6 +136,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 73 | 2026-04-10 | 7.0 | No-op — positive 7/10, no comments | 9.0 |
 | 74 | 2026-04-10 | 7.0 | No-op — duplicate feedback from cycle 73 (mark-processed was missed) | 9.0 |
 | 75 | 2026-04-10 | 6.0 | Smooth fade transition on feed refresh | 9.0 |
+| 76 | 2026-04-10 | 6.5 | Purple Theme toggle in Settings | 9.0 |
 
 ---
 

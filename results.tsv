@@ -65,3 +65,4 @@ cycle	date	nps	status	description
 73	2026-04-10	7.0	keep	No-op — positive 7/10, no comments
 74	2026-04-10	7.0	keep	No-op — duplicate feedback from cycle 73 (mark-processed was missed)
 75	2026-04-10	6.0	keep	Smooth fade transition on feed refresh
+76	2026-04-10	6.5	keep	Purple Theme toggle in Settings
