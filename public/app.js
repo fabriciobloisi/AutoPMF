@@ -327,13 +327,20 @@ function renderFeed() {
     default:          renderTextMode();
   }
 
-  // Add "Load more" button at bottom (except TikTok mode)
+  // Infinite scroll sentinel (except TikTok mode)
   if (state.currentMode !== 'tiktok' && state.filteredItems.length > 0) {
-    const moreBtn = document.createElement('button');
-    moreBtn.className = 'load-more-btn';
-    moreBtn.textContent = 'Load more news';
-    moreBtn.addEventListener('click', loadNews);
-    feedEl.appendChild(moreBtn);
+    const sentinel = document.createElement('div');
+    sentinel.className = 'load-more-btn';
+    sentinel.textContent = 'Loading more…';
+    sentinel.style.opacity = '0.5';
+    feedEl.appendChild(sentinel);
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !state.loading) {
+        obs.disconnect();
+        loadNews();
+      }
+    }, { rootMargin: '200px' });
+    obs.observe(sentinel);
   }
 }
 
