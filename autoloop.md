@@ -147,6 +147,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 84 | 2026-04-10 | 2.5 | No-op — duplicate feedback from cycle 83 (mark-processed was missed) | 9.0 |
 | 85 | 2026-04-10 | 4.0 | Fresh news: date-aware generation + Updated timestamp | 9.0 |
 | 86 | 2026-04-10 | 1.0 | Fix feed not loading — static first, dynamic for Load More only | 9.0 |
+| 87 | 2026-04-10 | 7.0 | No-op — more results request addressed by existing Generate fresh news button | 9.0 |
 
 ---
 
