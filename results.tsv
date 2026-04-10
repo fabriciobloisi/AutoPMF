@@ -76,3 +76,4 @@ cycle	date	nps	status	description
 84	2026-04-10	2.5	keep	No-op — duplicate feedback from cycle 83 (mark-processed was missed)
 85	2026-04-10	4.0	keep	Fresh news: date-aware generation + Updated timestamp
 86	2026-04-10	1.0	keep	Fix feed not loading — static first, dynamic for Load More only
+87	2026-04-10	7.0	keep	No-op — more results request addressed by existing Generate fresh news button
