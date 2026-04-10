@@ -143,6 +143,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 80 | 2026-04-10 | 5.0 | No-op — fashion/luxury category request is static content limitation | 9.0 |
 | 81 | 2026-04-10 | 0.0 | No-op — stale news and push notifications require architecture changes | 9.0 |
 | 82 | 2026-04-10 | 2.0 | No-op — vague color complaint, no specifics to act on | 9.0 |
+| 83 | 2026-04-10 | 2.5 | Dynamic news generation via Claude API — fix Load More and refresh | 9.0 |
 
 ---
 

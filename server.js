@@ -65,8 +65,87 @@ function requireFeedbackSecret(req, res, next) {
   next();
 }
 
-// ── POST /api/ask ─ ask Claude about an article ──────────────────────────────
+// ── POST /api/news ─ generate fresh news articles via Claude ────────────────
 const anthropicClient = ANTHROPIC_API_KEY ? new Anthropic({ apiKey: ANTHROPIC_API_KEY }) : null;
+const newsLimiter = rateLimit({ windowMs: 60_000, max: 5, message: { error: 'Too many requests, please try again later' } });
+
+const NEWS_SCHEMA = `Return a JSON array of news article objects. Each object must have these fields:
+- id: unique alphanumeric string
+- headline: clear, compelling, factual (max 90 chars)
+- hook: one punchy sentence (max 120 chars) — a hook, NOT a summary
+- summary: 2-3 sentence balanced summary
+- detail: rich long-form journalism, 6-9 sentences covering what happened, why it matters, context, expert perspective, what's next, human interest
+- keyFacts: array of 3 concise facts
+- quote: expert quote with attribution, e.g. "This changes everything — Dr. Sarah Chen, MIT"
+- category: one of Technology, Business, World, Politics, Science, Sports, Health, Culture, Climate, AI, Entertainment, Finance, Space, Education, Travel, Food, Opinion
+- source: short name max 20 chars (Reuters, AP, BBC, Bloomberg, FT, Guardian, Al Jazeera, DW, NHK, SCMP, Nature, Economist, Wired, TechCrunch, ArsTechnica, Verge, WSJ, NYT, WaPo, CNN)
+- timeAgo: "Just now" or "X minutes ago" or "X hours ago"
+- imageUrl: https://source.unsplash.com/800x500/?keyword1,keyword2,keyword3,keyword4 — use 4-6 specific photojournalistic keywords
+- imageAlt: brief caption (10-15 words)
+- imageGradient: array of 2 hex colors matching the category
+- trending: boolean (max 2 true per batch)
+- impact: "local" | "national" | "global"
+- readTime: "X min read"
+- region: "Global" | "North America" | "Europe" | "Asia" | "Latin America" | "Middle East" | "Africa" | "Oceania"
+- tags: array of 3 lowercase tags
+
+IMPORTANT: Return ONLY the JSON array, no markdown fences, no explanation.`;
+
+const GRADIENT_MAP = {
+  Technology: ['#0066CC', '#7B2FBE'], Business: ['#FF6B35', '#F7931E'], World: ['#1A936F', '#114B5F'],
+  Politics: ['#4A4E69', '#22223B'], Science: ['#00B4D8', '#0077B6'], Sports: ['#52B788', '#1B4332'],
+  Health: ['#E63946', '#C1121F'], Culture: ['#9B5DE5', '#F15BB5'], Climate: ['#2D6A4F', '#40916C'],
+  AI: ['#7209B7', '#3A0CA3'], Entertainment: ['#E040FB', '#AA00FF'], Finance: ['#FF6D00', '#E65100'],
+  Space: ['#1A237E', '#0D47A1'], Education: ['#00695C', '#004D40'], Travel: ['#0277BD', '#01579B'],
+  Food: ['#BF360C', '#D84315'], Opinion: ['#4E342E', '#3E2723'],
+};
+
+app.post('/api/news', newsLimiter, async (req, res) => {
+  if (!anthropicClient) return res.status(503).json({ error: 'ANTHROPIC_API_KEY not configured on server' });
+
+  const { topics, count, regions } = req.body || {};
+  const articleCount = Math.min(Math.max(Number(count) || 8, 3), 15);
+
+  let topicInstruction = '';
+  if (Array.isArray(topics) && topics.length > 0) {
+    topicInstruction = `Focus on these categories: ${topics.join(', ')}. Distribute articles across them.`;
+  } else {
+    topicInstruction = 'Cover a diverse mix of categories.';
+  }
+
+  let regionInstruction = '';
+  if (Array.isArray(regions) && regions.length > 0 && !regions.includes('Global')) {
+    regionInstruction = ` Prioritize news from these regions: ${regions.join(', ')}.`;
+  }
+
+  try {
+    const response = await anthropicClient.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 8192,
+      system: `You are a world-class news editor generating realistic, editorially diverse, globally representative news articles. Write as if these are real current events from today. Be specific with names, places, numbers. Each article should feel like it belongs in a premium news app.`,
+      messages: [{ role: 'user', content: `Generate exactly ${articleCount} news articles as a JSON array.\n\n${topicInstruction}${regionInstruction}\n\n${NEWS_SCHEMA}` }],
+    });
+    const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
+
+    // Parse JSON — handle potential markdown fences
+    const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
+    const articles = JSON.parse(cleaned);
+
+    // Validate and patch gradients
+    for (const a of articles) {
+      if (!a.imageGradient || a.imageGradient.length !== 2) {
+        a.imageGradient = GRADIENT_MAP[a.category] || ['#636e72', '#2d3436'];
+      }
+    }
+
+    res.json(articles);
+  } catch (err) {
+    console.error('News generation error:', err.message);
+    res.status(500).json({ error: 'Failed to generate news' });
+  }
+});
+
+// ── POST /api/ask ─ ask Claude about an article ──────────────────────────────
 
 app.post('/api/ask', askLimiter, async (req, res) => {
   if (!anthropicClient) return res.status(503).json({ error: 'ANTHROPIC_API_KEY not configured on server' });

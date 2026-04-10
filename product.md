@@ -10,9 +10,11 @@ Create the best possible news experience — one that is accurate, balanced, con
 ## Current Feature Set
 
 ### 1. AI-Generated News Feed
-- Claude generates a batch of news articles on every refresh
+- Claude dynamically generates a batch of news articles on every refresh via `/api/news`
 - Articles are realistic, editorially diverse, and globally representative
 - Each article includes headline, hook, summary, long-form detail, key facts, expert quote, metadata, and a curated image
+- **Load More** appends additional dynamically generated articles to the feed
+- Falls back to static `news.json` if the API is unavailable
 
 ### 2. Five Display Modes
 | Mode | Experience |
@@ -181,3 +183,4 @@ _Each cycle records what changed in this file and why._
 | 75 | 2026-04-10 | Smooth fade transition on feed refresh | User feedback (6/10): "news are blinking" on refresh. Added opacity fade (0.3 → 1) during content swap to eliminate visual flash. |
 | 76 | 2026-04-10 | Purple Theme toggle in Settings | User feedback (7/10): "can you make a purple theme." Added Purple Theme toggle — swaps primary blue (#0062CC) to purple (#7B2FBE) across nav, buttons, slider, and accents. Second user request for purple. |
 | 79 | 2026-04-10 | Revert infinite scroll to manual Load More button | User feedback (3/10): articles flickering due to infinite scroll loop. IntersectionObserver sentinel kept re-triggering loadNews. Reverted to manual "Load more news" button for stability. |
+| 83 | 2026-04-10 | Dynamic news generation via Claude API — fix Load More and refresh | User feedback (4/10): Load More button not working (re-fetched same static file), only 3 articles in filtered categories. Added `/api/news` endpoint for dynamic article generation. Refresh generates fresh articles, Load More appends new ones. Static news.json as fallback. |

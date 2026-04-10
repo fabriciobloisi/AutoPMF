@@ -125,7 +125,22 @@ function closeDrawer() { drawer.classList.remove('open'); drawerBackdrop.classLi
 $('menu-btn').addEventListener('click', openDrawer);
 drawerBackdrop.addEventListener('click', closeDrawer);
 
-// ── Fetch static news from news.json ──────────────────────────────────────────
+// ── Fetch news — dynamic via Claude API, static fallback ─────────────────────
+async function fetchNewsFromAPI() {
+  const body = {
+    topics: state.preferences.topics || [],
+    count: state.preferences.count || 8,
+    regions: state.preferences.regions || [],
+  };
+  const r = await fetch('/api/news', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error('API error');
+  return r.json();
+}
+
 async function loadNews() {
   if (state.loading) return;
 
@@ -139,9 +154,16 @@ async function loadNews() {
   try {
     feedEl.style.opacity = '0.3';
     feedEl.style.transition = 'opacity 0.15s';
-    const r = await fetch('/news.json');
-    if (!r.ok) throw new Error('Failed to load news');
-    state.newsItems = await r.json();
+    // Try dynamic generation first, fall back to static news.json
+    let articles;
+    try {
+      articles = await fetchNewsFromAPI();
+    } catch {
+      const r = await fetch('/news.json');
+      if (!r.ok) throw new Error('Failed to load news');
+      articles = await r.json();
+    }
+    state.newsItems = articles;
     applyFilter();
     feedEl.style.opacity = '1';
   } catch (err) {
@@ -151,6 +173,34 @@ async function loadNews() {
   } finally {
     state.loading = false;
     refreshBtn.querySelector('svg').classList.remove('spinning');
+  }
+}
+
+async function loadMoreNews() {
+  if (state.loading) return;
+
+  state.loading = true;
+  const moreBtn = feedEl.querySelector('.load-more-btn');
+  if (moreBtn) {
+    moreBtn.textContent = 'Loading...';
+    moreBtn.disabled = true;
+  }
+
+  try {
+    const articles = await fetchNewsFromAPI();
+    // Append new articles (avoid duplicates by id)
+    const existingIds = new Set(state.newsItems.map(a => a.id));
+    const newArticles = articles.filter(a => !existingIds.has(a.id));
+    state.newsItems = [...state.newsItems, ...newArticles];
+    applyFilter();
+  } catch (err) {
+    console.error('loadMoreNews error:', err);
+    if (moreBtn) {
+      moreBtn.textContent = 'Failed — tap to retry';
+      moreBtn.disabled = false;
+    }
+  } finally {
+    state.loading = false;
   }
 }
 
@@ -335,7 +385,7 @@ function renderFeed() {
     const moreBtn = document.createElement('button');
     moreBtn.className = 'load-more-btn';
     moreBtn.textContent = 'Load more news';
-    moreBtn.addEventListener('click', loadNews);
+    moreBtn.addEventListener('click', loadMoreNews);
     feedEl.appendChild(moreBtn);
   }
 }
