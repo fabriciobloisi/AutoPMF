@@ -46,6 +46,21 @@ This ensures feedback is only marked processed after the change is live. If the 
    ```
    Where status is `keep` or `revert`.
 
+## Step 2.5 — RECORD LEARNING (Self-Learning Loop)
+
+After logging the NPS result, record the lesson in `learnings.md`:
+
+```bash
+bash scripts/autoloop-cycle.sh learn <cycle> <nps> <prev_nps> "<description>"
+```
+
+This writes a structured entry to `learnings.md` with the NPS delta and lesson learned.
+Next cycle, Claude reads this file to build on what worked and avoid what failed.
+
+**This is the self-learning loop: each cycle teaches the next one.**
+
+---
+
 ## Step 3 — PUSH
 
 Save all log updates to git:
