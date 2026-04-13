@@ -23,8 +23,11 @@ cd "$PROJECT_DIR"
 export PATH="/opt/homebrew/bin:$PATH"
 
 RESULTS_FILE="results.tsv"
-# Default 3m between polls; long sleeps feel like a hang — set AUTOLOOP_SLEEP=600 for slower cadence
+# Default 3m between polls; set AUTOLOOP_SLEEP=600 for slower cadence
 SLEEP_INTERVAL="${AUTOLOOP_SLEEP:-180}"
+# Minimum feedback entries required before cycling.
+# Set AUTOLOOP_MIN_FEEDBACK=5 to wait for at least 5 responses per cycle.
+MIN_FEEDBACK="${AUTOLOOP_MIN_FEEDBACK:-1}"
 
 # Load env vars
 [[ -f .env ]] && { set -a; source .env; set +a; }
@@ -147,6 +150,7 @@ cmd_poll() {
             export AUTOLOOP_POLL_CYCLE="$cycle"
             export AUTOLOOP_POLL_TREND="$trend"
             export AUTOLOOP_POLL_REGRESSING="$regressing"
+            export AUTOLOOP_MIN_FEEDBACK="$MIN_FEEDBACK"
             printf '%s' "$raw" | python3 -c "
 import json, os, sys
 
@@ -157,24 +161,58 @@ regressing = os.environ.get('AUTOLOOP_POLL_REGRESSING', '') == 'true'
 
 lines = raw.strip().split('\n')
 entries = []
+skipped = []
+min_feedback = int(os.environ.get('AUTOLOOP_MIN_FEEDBACK', '1'))
 for line in lines:
     line = line.strip()
     if not line:
         continue
     try:
         e = json.loads(line)
-        if e.get('grade') is not None:
-            entries.append({
-                'timestamp': e.get('timestamp', ''),
-                'grade': e['grade'],
-                'comments': e.get('comments', '') or '',
-                'suggestion': e.get('suggestion', '') or '',
-            })
+        grade = e.get('grade')
+        # Guardrails: skip entries with missing/invalid grade or empty content
+        if grade is None:
+            skipped.append({'reason': 'missing_grade', 'entry': e})
+            continue
+        # Accept numeric strings (e.g. "8" from web forms) in addition to int/float
+        try:
+            grade = float(grade)
+        except (TypeError, ValueError):
+            skipped.append({'reason': 'invalid_grade', 'entry': e})
+            continue
+        if not (0 <= grade <= 10):
+            skipped.append({'reason': 'invalid_grade', 'entry': e})
+            continue
+        comments = (e.get('comments', '') or '').strip()
+        suggestion = (e.get('suggestion', '') or '').strip()
+        # Skip entries with suspiciously short/spammy feedback
+        if len(comments) < 2 and len(suggestion) < 2:
+            skipped.append({'reason': 'empty_feedback', 'entry': e})
+            continue
+        entries.append({
+            'timestamp': e.get('timestamp', ''),
+            'grade': float(grade),
+            'comments': comments,
+            'suggestion': suggestion,
+        })
     except Exception:
         pass
 
+# Store skipped entries for future reference
+if skipped:
+    skipped_file = 'skipped_feedback.jsonl'
+    with open(skipped_file, 'a') as sf:
+        for s in skipped:
+            sf.write(json.dumps(s) + '\n')
+
 if not entries:
-    json.dump({'has_new_feedback': False}, sys.stdout)
+    json.dump({'has_new_feedback': False, 'skipped': len(skipped)}, sys.stdout)
+    print()
+    sys.exit(0)
+
+# Dynamic threshold: wait for AUTOLOOP_MIN_FEEDBACK entries before cycling
+if len(entries) < min_feedback:
+    json.dump({'has_new_feedback': False, 'pending': len(entries), 'needed': min_feedback, 'skipped': len(skipped)}, sys.stdout)
     print()
     sys.exit(0)
 
@@ -190,6 +228,7 @@ json.dump({
     'avg_nps': avg,
     'nps_trend': trend,
     'regressing': regressing,
+    'skipped': len(skipped),
 }, sys.stdout, indent=2)
 print()
 "
@@ -197,7 +236,8 @@ print()
             exit 0
         fi
 
-        echo "No new feedback (empty body — e.g. 404 No matching feedback, auth fail, or curl timeout). Sleeping ${SLEEP_INTERVAL}s..."
+        echo "No new feedback (empty body — auth fail, curl timeout, or min_feedback not reached). Sleeping ${SLEEP_INTERVAL}s..."
+        echo "  (tip: set AUTOLOOP_MIN_FEEDBACK=N to require N entries before cycling; currently ${MIN_FEEDBACK})"
         sleep "$SLEEP_INTERVAL"
     done
 }
@@ -294,6 +334,24 @@ cmd_log() {
     echo ""
     echo "Add this row to the Iteration Log in autoloop.md:"
     echo "| ${cycle} | ${date_str} | ${nps} | ${description} | 9.0 |"
+
+    # Print NPS trend sparkline
+    local trend
+    trend=$(get_nps_trend)
+    if [[ -n "$trend" ]]; then
+        python3 -c "
+t = [float(x) for x in '$trend'.split(',') if x]
+if not t:
+    exit(0)
+bars = ' ▁▂▃▄▅▆▇█'
+mn, mx = min(t), max(t)
+rng = mx - mn if mx != mn else 1
+sparkline = ''.join(bars[min(8, max(0, int((v - mn) / rng * 8)))] for v in t)
+latest = t[-1]
+arrow = '↑' if len(t) >= 2 and t[-1] > t[-2] else '↓' if len(t) >= 2 and t[-1] < t[-2] else '→'
+print(f'  NPS trend: {sparkline} {latest} {arrow}')
+"
+    fi
 }
 
 # ─── PUSH ─────────────────────────────────────────────────
@@ -395,6 +453,40 @@ with open('local_feedback.jsonl', 'w') as f:
     echo "Feedback for cycle $cycle marked as processed."
 }
 
+# ─── ROLLBACK ────────────────────────────────────────────
+# Usage: autoloop-cycle.sh rollback
+#
+# Hard-resets the current autoloop branch to the previous cycle.
+# Used when NPS regresses after a deploy. Safe to call multiple times.
+
+cmd_rollback() {
+    local cycle
+    cycle=$(get_cycle)
+    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch."
+    [[ "$cycle" -le 1 ]] && die "Cannot rollback cycle 1 (no previous cycle)."
+
+    local prev=$((cycle - 1))
+    local prev_branch="autoloop/cycle-${prev}"
+
+    echo "⚠️  Rolling back cycle $cycle → restoring from $prev_branch..."
+
+    # Restore changed product files from the previous cycle branch
+    for f in product.md server.js public/app.js public/styles.css public/index.html; do
+        if git ls-files --error-unmatch "origin/$prev_branch:$f" &>/dev/null 2>&1 \
+            || git show "origin/$prev_branch:$f" &>/dev/null 2>&1; then
+            git show "origin/$prev_branch:$f" > "$f" 2>/dev/null && echo "  Restored $f"
+        fi
+    done
+
+    git add product.md server.js public/app.js public/styles.css public/index.html
+    git commit -m "AutoLoop rollback: revert cycle $cycle changes (NPS regression)"
+    git push origin "autoloop/cycle-${cycle}"
+
+    echo "Deploying rollback to Vercel..."
+    vercel --prod --yes
+    echo "Rollback deployed. Monitor NPS before creating a new cycle."
+}
+
 # ─── STATUS ────────────────────────────────────────────────
 # Quick health check: branch, cycle, NPS trend, deploy status.
 
@@ -448,6 +540,7 @@ case "${1:-help}" in
     log)             shift; cmd_log "$@" ;;
     push)            cmd_push ;;
     mark-processed)  cmd_mark_processed ;;
+    rollback)        cmd_rollback ;;
     status)          cmd_status ;;
     help|*)
         echo "Usage: autoloop-cycle.sh <command> [args]"
@@ -455,10 +548,13 @@ case "${1:-help}" in
         echo "Commands:"
         echo "  prepare                       Create next cycle branch, print cycle number"
         echo "  poll                          Fetch feedback in loop; exit on new feedback (JSON)"
+        echo "    env: AUTOLOOP_SLEEP=N       Sleep N seconds between polls (default: 180)"
+        echo "    env: AUTOLOOP_MIN_FEEDBACK=N  Wait for at least N valid entries per cycle (default: 1)"
         echo "  ship <msg> [--dry-run]        Commit, push, deploy (reads cycle from branch)"
-        echo "  log <nps> <status> <desc>     Append results.tsv row (reads cycle from branch)"
+        echo "  log <nps> <status> <desc>     Append results.tsv row + print NPS sparkline"
         echo "  push                          Final push to save all work"
         echo "  mark-processed                Mark this cycle's feedback as processed on server"
+        echo "  rollback                      Revert cycle changes after NPS regression"
         echo "  status                        Show branch, NPS trend, deploy health"
         ;;
 esac

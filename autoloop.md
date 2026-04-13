@@ -43,6 +43,21 @@ All files are committed and tracked:
 
 ---
 
+## Configuration
+
+Set these in `.env` to tune the loop behaviour:
+
+| Variable | Default | Description |
+|---|---|---|
+| `AUTOLOOP_SLEEP` | `180` | Seconds to sleep between poll attempts |
+| `AUTOLOOP_MIN_FEEDBACK` | `1` | Minimum valid feedback entries required before cycling |
+
+Example: to require at least 3 responses and poll every 10 minutes:
+```env
+AUTOLOOP_SLEEP=600
+AUTOLOOP_MIN_FEEDBACK=3
+```
+
 ## Helper Scripts
 
 All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.sh`** — it is called internally by the scripts.
@@ -54,6 +69,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | `ship <msg>` | Commits all files, pushes, deploys to Vercel, verifies (reads cycle from branch) |
 | `log <nps> <status> <desc>` | Appends row to results.tsv (reads cycle from branch) |
 | `push` | Final push of the branch to save all work (logs, feedback, autoloop.md updates) |
+| `rollback` | Restores product files from the previous cycle and redeploys (use after regression) |
 | `status` | Shows branch, cycle, NPS trend, deploy health |
 
 ---
@@ -93,6 +109,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 1. **Never process the same feedback twice.** The server's `processed` flag is the boundary — `getFeedback.sh` only fetches unprocessed entries and marks them processed.
 2. **One cycle = one commit.** Small, attributable changes only.
 3. **No feedback = no changes.** Sleep and poll again. Don't invent improvements without user signal.
+4. **If NPS drops**, run `autoloop-cycle.sh rollback` to restore the previous state. Do NOT fix forward until NPS has recovered.
 4. **If NPS drops**, do not fix forward. Identify and **revert** the change that caused the regression. Only resume new work once NPS has recovered.
 5. **Sleep 600 seconds between every cycle**, including no-feedback cycles.
 

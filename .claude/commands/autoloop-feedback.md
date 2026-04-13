@@ -35,6 +35,11 @@ This calls `getFeedback.sh` internally, fetches **unprocessed** entries from the
 
 **If `has_new_feedback` is false:** run `bash scripts/autoloop-cycle.sh poll` again from Step 1 until `has_new_feedback` is true (same command blocks and retries).
 
+> **Notes on poll output:**
+> - `skipped`: entries discarded by guardrails (missing grade, invalid score, empty content). These are saved to `skipped_feedback.jsonl` for later review.
+> - `pending` / `needed`: present when there is feedback but not enough to meet `AUTOLOOP_MIN_FEEDBACK`. Keep polling.
+> Set `AUTOLOOP_MIN_FEEDBACK=N` in `.env` to require at least N valid responses before cycling.
+
 **If `has_new_feedback` is true:** use the JSON output directly. Continue to Step 2.
 
 ## Step 2 — PLAN
@@ -45,7 +50,13 @@ Read `product.md` end-to-end. Answer these three questions (internally):
 2. **Is this a product.md change, a code change, or both?**
 3. **Can I ship this in one small commit?** — If not, pick the smallest slice that addresses the core complaint.
 
-**Revert check:** If the JSON output has `"regressing": true`, do NOT fix forward. Instead, identify which earlier change likely caused the regression, revert it, and confirm NPS recovers before making any new changes.
+**Revert check:** If the JSON output has `"regressing": true`, do NOT fix forward. Run the automatic rollback:
+
+```bash
+bash scripts/autoloop-cycle.sh rollback
+```
+
+This restores `product.md` and code files from the previous cycle and deploys. After rollback, wait for new feedback to confirm NPS has recovered before creating any new changes.
 
 ## Step 3 — BUILD
 
