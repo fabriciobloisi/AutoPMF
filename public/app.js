@@ -851,6 +851,20 @@ $('ask-send-btn').addEventListener('click', askClaude);
 $('ask-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') { e.preventDefault(); askClaude(); }
 });
+// Character counter for Ask the news input
+$('ask-input').addEventListener('input', () => {
+  const len = $('ask-input').value.length;
+  let counter = $('ask-char-count');
+  if (!counter) {
+    counter = document.createElement('span');
+    counter.id = 'ask-char-count';
+    counter.className = 'ask-char-count';
+    $('ask-input').parentNode.appendChild(counter);
+  }
+  const remaining = 300 - len;
+  counter.textContent = remaining < 60 ? `${remaining}` : '';
+  counter.classList.toggle('warn', remaining < 30);
+});
 
 async function askClaude() {
   const question = $('ask-input').value.trim();
@@ -1311,7 +1325,8 @@ function showOnboarding() {
 
   // "Get my news" button
   $('onboarding-go').addEventListener('click', () => {
-    const name = $('onboarding-name').value.trim();
+    // Strip HTML tags before storing so the name is always plain text
+    const name = $('onboarding-name').value.replace(/<[^>]*>/g, '').trim();
     if (name) localStorage.setItem('autopmf_user_name', name);
 
     const topics = [...overlay.querySelectorAll('#onboarding-topics .onboarding-chip.active')].map(c => c.dataset.topic);
@@ -1345,7 +1360,8 @@ function finishOnboarding() {
   updateCategoryBar();
   loadNews();
   // Welcome toast with user's name so the name field feels purposeful
-  const userName = localStorage.getItem('autopmf_user_name');
+  const rawName = localStorage.getItem('autopmf_user_name');
+  const userName = rawName ? rawName.replace(/<[^>]*>/g, '').trim() : '';
   if (userName) {
     setTimeout(() => showToast(`Welcome, ${userName}! Your feed is ready.`), 400);
   }

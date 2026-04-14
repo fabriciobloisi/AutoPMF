@@ -1679,6 +1679,11 @@ mark {
   flex-shrink: 0;
 }
 .ask-send-btn:active { opacity: 0.8; }
+.ask-char-count {
+  font-size: 11px; color: #aeaeb2;
+  flex-shrink: 0; min-width: 24px; text-align: right;
+}
+.ask-char-count.warn { color: #ff3b30; font-weight: 600; }
 .ask-response {
   background: #f2f2f7;
   border-radius: 12px;
