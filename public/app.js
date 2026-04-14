@@ -1346,9 +1346,12 @@ function finishOnboarding() {
   if (userName) {
     setTimeout(() => showToast(`Welcome, ${userName}! Your feed is ready.`), 400);
   }
-  // Show feedback spotlight after a short delay
+  // Show feedback spotlight after feed has fully settled — long enough that
+  // rapid refresh clicks won't trigger it mid-interaction
   if (!localStorage.getItem('autopmf_spotlight_seen')) {
-    setTimeout(showFeedbackSpotlight, 1500);
+    setTimeout(() => {
+      if (!state.loading) showFeedbackSpotlight();
+    }, 5000);
   }
 }
 
