@@ -33,6 +33,31 @@ const feedbackLimiter = rateLimit({ windowMs: 60_000, max: 5, message: { error: 
 const getFeedbackLimiter = rateLimit({ windowMs: 60_000, max: 10, message: { error: 'Too many requests, please try again later' } });
 
 // ── Blob helpers ────────────────────────────────────────────────────────────
+
+// Split a raw line that may contain multiple concatenated JSON objects
+// (race condition artifact) into individual JSON strings.
+function splitJsonLine(line) {
+  const results = [];
+  let depth = 0, start = 0, inString = false, escape = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (escape) { escape = false; continue; }
+    if (ch === '\\' && inString) { escape = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === '{') depth++;
+    else if (ch === '}') {
+      depth--;
+      if (depth === 0) {
+        const obj = line.slice(start, i + 1).trim();
+        if (obj) results.push(obj);
+        start = i + 1;
+      }
+    }
+  }
+  return results.length > 0 ? results : [line];
+}
+
 async function readFeedbackBlob() {
   const result = await get(FEEDBACK_BLOB, { access: 'private' });
   if (!result) return { content: '' };
@@ -42,9 +67,12 @@ async function readFeedbackBlob() {
 
 async function appendFeedbackEntry(entry) {
   const { content } = await readFeedbackBlob();
-  const newContent = content
-    ? content.trimEnd() + '\n' + JSON.stringify(entry)
-    : JSON.stringify(entry);
+  // Normalize existing lines: split any concatenated JSON objects before appending
+  const existingLines = content
+    ? content.split('\n').flatMap(l => l.trim() ? splitJsonLine(l.trim()) : [])
+    : [];
+  existingLines.push(JSON.stringify(entry));
+  const newContent = existingLines.join('\n');
   const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 0 };
   await put(FEEDBACK_BLOB, newContent, opts);
 }
@@ -362,14 +390,21 @@ app.post('/api/feedback/mark-processed', getFeedbackLimiter, requireFeedbackSecr
     if (!content) return res.status(404).json({ error: 'No feedback to process' });
 
     const now = new Date().toISOString();
-    const updatedLines = content.split('\n').map(line => {
-      if (!line.trim()) return line;
-      const entry = JSON.parse(line);
-      if (!entry.processed && (!scopeSet || scopeSet.has(entry.timestamp))) {
-        entry.processed = true;
-        entry.processedAt = now;
-      }
-      return JSON.stringify(entry);
+    const updatedLines = content.split('\n').flatMap(line => {
+      if (!line.trim()) return [];
+      // Split concatenated JSON objects caused by race conditions
+      return splitJsonLine(line.trim()).map(rawObj => {
+        try {
+          const entry = JSON.parse(rawObj);
+          if (!entry.processed && (!scopeSet || scopeSet.has(entry.timestamp))) {
+            entry.processed = true;
+            entry.processedAt = now;
+          }
+          return JSON.stringify(entry);
+        } catch {
+          return rawObj; // keep malformed lines as-is rather than dropping
+        }
+      });
     });
 
     const opts = { access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 0 };
