@@ -154,8 +154,9 @@ async function loadNews() {
   state.loading = true;
   showLoading(true);
 
-  // Spin the refresh icon
+  // Spin the refresh icon and disable button during load
   const refreshBtn = $('refresh-btn');
+  refreshBtn.disabled = true;
   refreshBtn.querySelector('svg').classList.add('spinning');
 
   try {
@@ -189,6 +190,7 @@ async function loadNews() {
   } finally {
     state.loading = false;
     refreshBtn.querySelector('svg').classList.remove('spinning');
+    refreshBtn.disabled = false;
   }
 }
 
@@ -918,11 +920,11 @@ submitFbBtn?.addEventListener('click', async () => {
     gradeEl.value = 7;
     gradeValEl.textContent = '7';
     setTimeout(() => showScreen(state.previousScreen || 'feed'), 1200);
+    // Keep button disabled after success to prevent duplicate submissions
   } catch (err) {
     feedbackMsg.textContent = 'Could not save feedback: ' + err.message;
     feedbackMsg.className = 'feedback-msg show error';
-  } finally {
-    submitFbBtn.disabled = false;
+    submitFbBtn.disabled = false; // Only re-enable on error so user can retry
   }
 });
 
