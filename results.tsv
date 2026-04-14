@@ -80,3 +80,4 @@ cycle	date	nps	status	description
 88	2026-04-10	6.0	keep	No-op — personalized AI interest learning and community features require architecture changes
 89	2026-04-10	4.0	keep	No-op — article comments feature requires user identity, database, and moderation architecture
 90	2026-04-14	6.1	keep	Article image scrolls with content; related articles in detail view; Haiku for dynamic news
+91	2026-04-14	5.8	keep	Fresh article on refresh via background Haiku call; staggered card entrance animations
