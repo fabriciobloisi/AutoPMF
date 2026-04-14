@@ -1327,8 +1327,9 @@ function showOnboarding() {
 
   // "Get my news" button
   $('onboarding-go').addEventListener('click', () => {
-    // Strip HTML tags before storing so the name is always plain text
-    const name = $('onboarding-name').value.replace(/<[^>]*>/g, '').trim();
+    // Sanitize name: keep only letters (incl. Unicode), digits, spaces, hyphens, apostrophes
+    const rawInput = $('onboarding-name').value.trim().slice(0, 50);
+    const name = rawInput.replace(/[^\p{L}\p{N}\s'\-]/gu, '').trim();
     if (name) localStorage.setItem('autopmf_user_name', name);
 
     const topics = [...overlay.querySelectorAll('#onboarding-topics .onboarding-chip.active')].map(c => c.dataset.topic);
@@ -1362,9 +1363,10 @@ function finishOnboarding() {
   updateCategoryBar();
   loadNews();
   // Welcome toast with user's name so the name field feels purposeful
-  const rawName = localStorage.getItem('autopmf_user_name');
-  const userName = rawName ? rawName.replace(/<[^>]*>/g, '').trim() : '';
-  if (userName) {
+  const rawName = localStorage.getItem('autopmf_user_name') || '';
+  // Re-sanitize at display time: only show greeting if name contains actual letters
+  const userName = rawName.replace(/[^\p{L}\p{N}\s'\-]/gu, '').trim();
+  if (userName && /\p{L}/u.test(userName)) {
     setTimeout(() => showToast(`Welcome, ${userName}! Your feed is ready.`), 400);
   }
   // Show feedback spotlight after feed has fully settled — long enough that
