@@ -521,18 +521,25 @@ mark {
 }
 .card-save-btn {
   margin-left: auto;
-  padding: 4px;
+  padding: 5px 8px;
   color: #8e8e93;
   flex-shrink: 0;
   transition: color 0.15s;
+  display: flex; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 500;
+  min-height: 32px;
 }
 .card-save-btn.saved { color: #ff9500; }
 .card-share-btn {
-  padding: 4px;
+  padding: 5px 8px;
   color: #8e8e93;
   flex-shrink: 0;
   transition: color 0.15s;
+  display: flex; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 500;
+  min-height: 32px;
 }
+.card-btn-label { line-height: 1; }
 .card-source { font-weight: 600; color: #636366; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; }
 .card-dot { color: #c7c7cc; }
 
