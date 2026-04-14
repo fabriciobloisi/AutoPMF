@@ -155,6 +155,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 92 | 2026-04-14 | 6.0 | Disable refresh button during load; prevent duplicate feedback submissions | 9.0 |
 | 93 | 2026-04-14 | 5.8 | Welcome toast after onboarding; close article before Customize; category overflow fade | 9.0 |
 | 94 | 2026-04-14 | 7.0 | Delay feedback spotlight until feed has settled (5s, loading guard) | 9.0 |
+| 95 | 2026-04-14 | 7.0 | Text labels on Save and Share card buttons for accessibility | 9.0 |
 
 ---
 
