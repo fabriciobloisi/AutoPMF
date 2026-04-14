@@ -161,13 +161,27 @@ async function loadNews() {
   try {
     feedEl.style.opacity = '0.3';
     feedEl.style.transition = 'opacity 0.15s';
-    // Load static news.json first (instant), then try dynamic in background
+    // Load static news.json first (instant)
     const r = await fetch('/news.json');
     if (!r.ok) throw new Error('Failed to load news');
     state.newsItems = await r.json();
     state.lastUpdated = Date.now();
     applyFilter();
     feedEl.style.opacity = '1';
+
+    // Background: fetch 1 fresh article to make feed feel live
+    fetchNewsFromAPI(15000).then(articles => {
+      if (!articles || !articles.length) return;
+      const fresh = articles[0];
+      fresh.timeAgo = 'Just now';
+      fresh.trending = false;
+      const ids = new Set(state.newsItems.map(a => a.id));
+      if (!ids.has(fresh.id)) {
+        state.newsItems = [fresh, ...state.newsItems];
+        state.lastUpdated = Date.now();
+        applyFilter();
+      }
+    }).catch(() => {});  // silent — static feed already shown
   } catch (err) {
     console.error('loadNews error:', err);
     showLoading(false);
@@ -467,9 +481,10 @@ function setHeroImg(item) {
 function renderTextMode() {
   feedEl.classList.add('mode-text');
   feedEl.innerHTML = '';
-  state.filteredItems.forEach(item => {
+  state.filteredItems.forEach((item, idx) => {
     const card = document.createElement('div');
     card.className = 'card-text';
+    card.style.setProperty('--card-idx', idx);
     card.innerHTML = `
       <div class="card-thumb">
         ${imgHtml(item)}
