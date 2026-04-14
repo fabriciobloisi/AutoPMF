@@ -121,7 +121,7 @@ app.post('/api/news', newsLimiter, async (req, res) => {
   try {
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     const response = await anthropicClient.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 8192,
       system: `You are a world-class news editor generating realistic, editorially diverse, globally representative news articles. Today is ${today}. Write as if these are real breaking and developing current events from today and this week. Reference current dates, recent events, and timely context. Be specific with names, places, numbers. Each article should feel like it belongs in a premium news app.`,
       messages: [{ role: 'user', content: `Generate exactly ${articleCount} news articles as a JSON array.\n\n${topicInstruction}${regionInstruction}\n\n${NEWS_SCHEMA}` }],

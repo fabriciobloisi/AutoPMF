@@ -756,6 +756,32 @@ function openArticle(item) {
   $('ask-response').className = 'ask-response';
   $('ask-response').textContent = '';
 
+  // Related articles (same category, different article)
+  const relatedEl = $('related-articles');
+  const relatedItems = state.filteredItems
+    .filter(a => a.id !== item.id && a.category === item.category)
+    .slice(0, 3);
+  if (relatedItems.length > 0) {
+    relatedEl.innerHTML = `
+      <div class="related-label">Related Stories</div>
+      ${relatedItems.map((a, i) => `
+        <div class="related-card" data-idx="${i}">
+          <div class="related-thumb">${imgHtml(a)}</div>
+          <div class="related-info">
+            <div class="related-headline">${esc(a.headline)}</div>
+            <div class="related-meta">${esc(a.source)} · ${esc(a.timeAgo)}</div>
+          </div>
+        </div>
+      `).join('')}
+    `;
+    relatedEl.querySelectorAll('.related-card').forEach(card => {
+      const idx = Number(card.dataset.idx);
+      card.addEventListener('click', () => openArticle(relatedItems[idx]));
+    });
+  } else {
+    relatedEl.innerHTML = '';
+  }
+
   articleModal.classList.add('open');
   $('article-body').scrollTop = 0;
 }
@@ -822,11 +848,9 @@ async function askClaude() {
     responseEl.innerHTML = data.text.split('\n').filter(p => p.trim()).map(p => `<p>${fmtAsk(p)}</p>`).join('');
     responseEl.style.display = 'block';
     $('ask-input').value = '';
-    // Scroll article-body container so the response is visible
+    // Scroll response into view within the article body
     setTimeout(() => {
-      const container = $('article-body');
-      const top = responseEl.offsetTop - container.offsetTop;
-      container.scrollTo({ top, behavior: 'smooth' });
+      responseEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
   } catch (err) {
     responseEl.className = 'ask-response';
