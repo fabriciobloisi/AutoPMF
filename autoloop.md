@@ -150,6 +150,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 87 | 2026-04-10 | 7.0 | No-op — more results request addressed by existing Generate fresh news button | 9.0 |
 | 88 | 2026-04-10 | 6.0 | No-op — personalized AI interest learning and community features require architecture changes | 9.0 |
 | 89 | 2026-04-10 | 4.0 | No-op — article comments feature requires user identity, database, and moderation architecture | 9.0 |
+| 90 | 2026-04-14 | 6.1 | Article image scrolls with content; related articles in detail view; Haiku for dynamic news | 9.0 |
 
 ---
 
