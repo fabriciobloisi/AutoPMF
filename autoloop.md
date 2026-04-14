@@ -158,6 +158,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 95 | 2026-04-14 | 7.0 | Text labels on Save and Share card buttons for accessibility | 9.0 |
 | 96 | 2026-04-14 | 5.4 | All drawer actions close article first; fix Share button clipping in card footer | 9.0 |
 | 97 | 2026-04-14 | 8.0 | Strip HTML from username toast; character counter in Ask the news | 9.0 |
+| 98 | 2026-04-14 | 5.0 | Close article when drawer opens; character counter always visible in Ask the news | 9.0 |
 
 ---
 

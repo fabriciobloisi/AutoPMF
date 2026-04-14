@@ -87,3 +87,4 @@ cycle	date	nps	status	description
 95	2026-04-15	7.0	keep	Text labels on Save and Share card buttons for accessibility
 96	2026-04-15	5.4	keep	All drawer actions close article first; fix Share button clipping in card footer
 97	2026-04-15	8.0	keep	Strip HTML from username toast; character counter in Ask the news
+98	2026-04-15	5.0	keep	Close article when drawer opens; character counter always visible in Ask the news
