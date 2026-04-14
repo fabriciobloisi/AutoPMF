@@ -135,7 +135,7 @@ function showScreen(name) {
 }
 
 // ── Drawer ────────────────────────────────────────────────────────────────────
-function openDrawer()  { drawer.classList.add('open'); drawerBackdrop.classList.add('visible'); }
+function openDrawer()  { closeArticle(); drawer.classList.add('open'); drawerBackdrop.classList.add('visible'); }
 function closeDrawer() { drawer.classList.remove('open'); drawerBackdrop.classList.remove('visible'); }
 $('menu-btn').addEventListener('click', openDrawer);
 drawerBackdrop.addEventListener('click', closeDrawer);
@@ -851,20 +851,22 @@ $('ask-send-btn').addEventListener('click', askClaude);
 $('ask-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') { e.preventDefault(); askClaude(); }
 });
-// Character counter for Ask the news input
-$('ask-input').addEventListener('input', () => {
-  const len = $('ask-input').value.length;
-  let counter = $('ask-char-count');
-  if (!counter) {
-    counter = document.createElement('span');
-    counter.id = 'ask-char-count';
-    counter.className = 'ask-char-count';
-    $('ask-input').parentNode.appendChild(counter);
-  }
-  const remaining = 300 - len;
-  counter.textContent = remaining < 60 ? `${remaining}` : '';
-  counter.classList.toggle('warn', remaining < 30);
-});
+// Character counter for Ask the news input — always visible, warns when near limit
+(function initAskCounter() {
+  const input = $('ask-input');
+  if (!input) return;
+  const counter = document.createElement('span');
+  counter.id = 'ask-char-count';
+  counter.className = 'ask-char-count';
+  counter.textContent = '300';
+  input.parentNode.insertBefore(counter, input.nextSibling);
+  input.addEventListener('input', () => {
+    const remaining = 300 - input.value.length;
+    counter.textContent = String(remaining);
+    counter.classList.toggle('warn', remaining < 30);
+    counter.classList.toggle('near', remaining < 60 && remaining >= 30);
+  });
+})();
 
 async function askClaude() {
   const question = $('ask-input').value.trim();
