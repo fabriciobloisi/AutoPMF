@@ -48,6 +48,21 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+// Brief toast notification (auto-dismisses after 2.5s)
+let _toastTimer = null;
+function showToast(msg) {
+  let el = $('app-toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'app-toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('visible');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('visible'), 2500);
+}
+
 // Session ID: persists per browser so we can detect repeat feedback from the same user
 const SESSION_KEY = 'autopmf_session_id';
 function getSessionId() {
@@ -1077,7 +1092,7 @@ $('drawer-saved-btn')?.addEventListener('click', () => {
 });
 
 // ── Customize Screen ──────────────────────────────────────────────────────────
-$('drawer-customize-btn').addEventListener('click', () => { closeDrawer(); showScreen('customize'); openCustomize(); });
+$('drawer-customize-btn').addEventListener('click', () => { closeDrawer(); closeArticle(); showScreen('customize'); openCustomize(); });
 $('customize-back').addEventListener('click', () => showScreen('feed'));
 $('customize-save').addEventListener('click', () => { saveCustomize(); showScreen('feed'); });
 
@@ -1326,6 +1341,11 @@ function finishOnboarding() {
   overlay.style.display = 'none';
   updateCategoryBar();
   loadNews();
+  // Welcome toast with user's name so the name field feels purposeful
+  const userName = localStorage.getItem('autopmf_user_name');
+  if (userName) {
+    setTimeout(() => showToast(`Welcome, ${userName}! Your feed is ready.`), 400);
+  }
   // Show feedback spotlight after a short delay
   if (!localStorage.getItem('autopmf_spotlight_seen')) {
     setTimeout(showFeedbackSpotlight, 1500);

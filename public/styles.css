@@ -301,6 +301,19 @@ input:focus, textarea:focus, button:focus { outline: none; }
 .back-btn { color: #0062CC; }
 
 /* ── Category Bar ── */
+.category-bar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.category-bar-wrap::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 36px;
+  background: linear-gradient(to right, transparent, #fff);
+  pointer-events: none;
+  z-index: 1;
+}
 .category-bar {
   display: flex;
   gap: 8px;
@@ -308,7 +321,6 @@ input:focus, textarea:focus, button:focus { outline: none; }
   overflow-x: auto;
   background: #fff;
   border-bottom: 0.5px solid #e5e5e7;
-  flex-shrink: 0;
   -webkit-overflow-scrolling: touch;
 }
 .category-bar::-webkit-scrollbar { display: none; }
@@ -2142,3 +2154,31 @@ html.dark .onboarding-chip { background: #2c2c2e; color: #aeaeb2; }
 html.dark .onboarding-chip.active { background: #0a84ff; color: #fff; border-color: #0a84ff; }
 html.dark .onboarding-go-btn { background: #0a84ff; }
 html.dark .onboarding-skip { color: #636366; }
+
+/* ── Toast notification ──────────────────────────────────────────────────────── */
+#app-toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(0,0,0,0.82);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 9999;
+}
+#app-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+html.dark #app-toast { background: rgba(255,255,255,0.18); }
+
+/* Dark mode — category bar wrap */
+html.dark .category-bar-wrap::after { background: linear-gradient(to right, transparent, #000); }
+.app.dark-mode .category-bar-wrap::after { background: linear-gradient(to right, transparent, #1c1c1e); }
