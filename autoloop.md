@@ -153,6 +153,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 90 | 2026-04-14 | 6.1 | Article image scrolls with content; related articles in detail view; Haiku for dynamic news | 9.0 |
 | 91 | 2026-04-14 | 5.8 | Fresh article on refresh via background Haiku call; staggered card entrance animations | 9.0 |
 | 92 | 2026-04-14 | 6.0 | Disable refresh button during load; prevent duplicate feedback submissions | 9.0 |
+| 93 | 2026-04-14 | 5.8 | Welcome toast after onboarding; close article before Customize; category overflow fade | 9.0 |
 
 ---
 

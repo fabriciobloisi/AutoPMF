@@ -82,3 +82,4 @@ cycle	date	nps	status	description
 90	2026-04-14	6.1	keep	Article image scrolls with content; related articles in detail view; Haiku for dynamic news
 91	2026-04-14	5.8	keep	Fresh article on refresh via background Haiku call; staggered card entrance animations
 92	2026-04-15	6.0	keep	Disable refresh button during load; prevent duplicate feedback submissions
+93	2026-04-15	5.8	keep	Welcome toast after onboarding; close article before Customize; category overflow fade
