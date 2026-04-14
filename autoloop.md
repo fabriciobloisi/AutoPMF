@@ -152,6 +152,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 89 | 2026-04-10 | 4.0 | No-op — article comments feature requires user identity, database, and moderation architecture | 9.0 |
 | 90 | 2026-04-14 | 6.1 | Article image scrolls with content; related articles in detail view; Haiku for dynamic news | 9.0 |
 | 91 | 2026-04-14 | 5.8 | Fresh article on refresh via background Haiku call; staggered card entrance animations | 9.0 |
+| 92 | 2026-04-14 | 6.0 | Disable refresh button during load; prevent duplicate feedback submissions | 9.0 |
 
 ---
 
