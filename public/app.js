@@ -946,7 +946,7 @@ submitFbBtn?.addEventListener('click', async () => {
 });
 
 // ── Stats Screen ─────────────────────────────────────────────────────────────
-$('drawer-stats-btn').addEventListener('click', () => { closeDrawer(); showScreen('stats'); });
+$('drawer-stats-btn').addEventListener('click', () => { closeDrawer(); closeArticle(); showScreen('stats'); });
 $('stats-back').addEventListener('click', () => showScreen('feed'));
 
 let statsCache = null;
@@ -981,7 +981,7 @@ async function loadStats() {
 }
 
 // ── Progress Screen ──────────────────────────────────────────────────────────
-$('drawer-progress-btn').addEventListener('click', () => { closeDrawer(); showScreen('progress'); });
+$('drawer-progress-btn').addEventListener('click', () => { closeDrawer(); closeArticle(); showScreen('progress'); });
 $('progress-back').addEventListener('click', () => showScreen('feed'));
 
 async function loadProgress() {
@@ -1086,6 +1086,7 @@ function drawNpsChart(grades) {
 // ── Saved Articles ───────────────────────────────────────────────────────────
 $('drawer-saved-btn')?.addEventListener('click', () => {
   closeDrawer();
+  closeArticle();
   showScreen('feed');
   state.showingSaved = true;
   state.filteredItems = [...state.savedArticles];
@@ -1224,7 +1225,7 @@ $('cust-apply-btn').addEventListener('click', () => {
 function openSettings()  { settingsModal.classList.add('open'); }
 function closeSettings() { settingsModal.classList.remove('open'); }
 
-$('settings-btn').addEventListener('click', () => { closeDrawer(); openSettings(); });
+$('settings-btn').addEventListener('click', () => { closeDrawer(); closeArticle(); openSettings(); });
 settingsModal.querySelectorAll('[data-close-modal]').forEach(el =>
   el.addEventListener('click', closeSettings)
 );
