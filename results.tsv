@@ -90,3 +90,4 @@ cycle	date	nps	status	description
 98	2026-04-15	5.0	keep	Close article when drawer opens; character counter always visible in Ask the news
 99	2026-04-15	7.0	keep	Stricter username sanitization — letters/spaces/hyphens only, suppress greeting if no letters
 100	2026-04-15	9.0	keep	Fix article text hidden by related-thumb images missing position:relative
+100	2026-04-15	0	keep	Restore @anthropic-ai/sdk dep — missing from package.json caused 500 on /api/news and /api/ask
