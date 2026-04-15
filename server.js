@@ -10,7 +10,7 @@ import { put, get } from '@vercel/blob';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3200;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-const FEEDBACK_BLOB = 'feedback/news/feedback.jsonl';
+const FEEDBACK_BLOB = 'feedback/weather/feedback.jsonl';
 
 const app = express();
 app.set('trust proxy', 1);
@@ -20,6 +20,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      'script-src': ["'self'", 'cdn.jsdelivr.net'],
       'img-src': ["'self'", 'data:', 'https:'],
     },
   },
@@ -414,6 +415,178 @@ app.post('/api/feedback/mark-processed', getFeedbackLimiter, requireFeedbackSecr
     console.error('Mark processed error:', err.message);
     return res.status(500).json({ error: 'Failed to mark feedback as processed' });
   }
+});
+
+// ── Weather Mock API (field names match weather.js WU-style expectations) ─────
+
+const WEATHER_CURRENT = {
+  stationName: 'Amsterdam Schiphol',
+  obsTimeLocal: '2026-04-15T23:04:00+02:00',
+  temperature: 13, temperatureMax24Hour: 19, temperatureMin24Hour: 8,
+  feelsLike: 11, dewPoint: 8,
+  humidity: 74,
+  precip1Hour: 0.0, precip6Hour: 0.0, precip24Hour: 0.0, snow24Hour: 0,
+  windSpeed: 10, windDirectionCardinal: 'S', windDirection: 180, windGust: 18,
+  pressureMeanSeaLevel: 1017.9, pressureTendencyTrend: 'Steady', pressureTendencyCode: 0,
+  visibility: 10,
+  uvIndex: 0, uvDescription: 'Low',
+  cloudCover: 40, cloudCoverPhrase: 'Partly Cloudy',
+  iconCode: 29, wxPhraseLong: 'Partly Cloudy',
+  sunriseTimeLocal: '2026-04-15T06:26:00+02:00', sunsetTimeLocal: '2026-04-15T20:35:00+02:00',
+  shortRangeForecast: 'Partly cloudy skies, mild temperatures near 13°C with southerly breeze.',
+  temperatureChange24Hour: 2,
+};
+
+const WEATHER_FORECAST = [
+  { dow: 'Wed', narrative: 'Partly cloudy with a pleasant 19°C high. Light south winds.', iconCode: 34, high: 19, low: 8, precipChance: 10, windDir: 'S', windSpeed: 10, moonPhase: 'Waxing Crescent' },
+  { dow: 'Thu', narrative: 'Rain likely with heavy periods. High near 16°C.', iconCode: 12, high: 16, low: 9, precipChance: 80, windDir: 'SW', windSpeed: 20, moonPhase: 'First Quarter' },
+  { dow: 'Fri', narrative: 'Mostly sunny skies return. High 19°C.', iconCode: 34, high: 19, low: 8, precipChance: 15, windDir: 'NW', windSpeed: 12, moonPhase: 'Waxing Gibbous' },
+  { dow: 'Sat', narrative: 'Showers likely especially morning. High 15°C.', iconCode: 11, high: 15, low: 7, precipChance: 60, windDir: 'W', windSpeed: 16, moonPhase: 'Waxing Gibbous' },
+  { dow: 'Sun', narrative: 'Partly cloudy, chance of afternoon showers. High 14°C.', iconCode: 28, high: 14, low: 6, precipChance: 30, windDir: 'SW', windSpeed: 11, moonPhase: 'Waxing Gibbous' },
+  { dow: 'Mon', narrative: 'Heavy rain expected. Windy with gusts to 45 km/h. High 12°C.', iconCode: 1, high: 12, low: 6, precipChance: 90, windDir: 'SW', windSpeed: 28, moonPhase: 'Full Moon' },
+  { dow: 'Tue', narrative: 'Clearing skies after overnight rain. High 13°C.', iconCode: 30, high: 13, low: 4, precipChance: 20, windDir: 'N', windSpeed: 9, moonPhase: 'Waning Gibbous' },
+];
+
+const WEATHER_HOURLY = (() => {
+  const hrs = [];
+  const temps =  [10,9,9,9,8,8,9,10,11,12,13,15,17,18,19,19,18,17,16,15,14,13,13,13];
+  const feels =  [ 8,7,7,7,6,6,7, 8, 9,10,11,13,15,16,17,17,16,15,14,13,12,11,11,11];
+  const icons =  [29,29,29,33,33,33,34,34,34,30,30,28,28,28,34,34,30,30,28,28,28,29,29,29];
+  const precip = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5,10,10,10, 5, 5, 5, 5,10,10,10, 5, 5, 5];
+  const wind =   [ 6, 6, 5, 5, 5, 4, 5, 6, 7, 8, 9,10,11,11,10,10, 9, 9, 8, 8, 7, 7, 7, 6];
+  const hum =    [78,79,80,80,81,81,80,79,78,77,76,74,72,70,68,67,68,70,72,74,75,76,77,78];
+  for (let h = 0; h < 24; h++) {
+    hrs.push({ hour: h, iconCode: icons[h],
+      temp: temps[h], feelsLike: feels[h], humidity: hum[h],
+      windSpeed: wind[h], precipChance: precip[h],
+    });
+  }
+  return hrs;
+})();
+
+const WEATHER_AQI = {
+  airQualityIndex: 45, primaryPollutant: 'O₃',
+  pollutants: {
+    'PM2.5': { index: 12, amount: 8.2,  unit: 'µg/m³' },
+    'PM10':  { index: 18, amount: 18.4, unit: 'µg/m³' },
+    'O₃':    { index: 45, amount: 62.1, unit: 'ppb'    },
+    'NO₂':   { index: 22, amount: 22.3, unit: 'ppb'    },
+    'SO₂':   { index: 3,  amount: 1.2,  unit: 'ppb'    },
+    'CO':    { index: 4,  amount: 0.4,  unit: 'ppm'    },
+  },
+};
+
+const WEATHER_POLLEN = [
+  { period: 'Today',     tree: 3, treeLabel: 'High',   grass: 1, grassLabel: 'Low',   ragweed: 0, ragweedLabel: 'None' },
+  { period: 'Tomorrow',  tree: 3, treeLabel: 'High',   grass: 1, grassLabel: 'Low',   ragweed: 0, ragweedLabel: 'None' },
+  { period: 'Fri',       tree: 2, treeLabel: 'Medium', grass: 2, grassLabel: 'Medium',ragweed: 0, ragweedLabel: 'None' },
+  { period: 'Sat',       tree: 1, treeLabel: 'Low',    grass: 1, grassLabel: 'Low',   ragweed: 0, ragweedLabel: 'None' },
+  { period: 'Sun',       tree: 2, treeLabel: 'Medium', grass: 1, grassLabel: 'Low',   ragweed: 0, ragweedLabel: 'None' },
+];
+
+const APRIL_2026 = (() => {
+  const days = [];
+  const his = [15,14,13,16,17,18,19,20,18,16,15,14,13,12,13,16,17,18,19,18,17,16,15,14,13,12,13,14,15,16];
+  const los = [ 7, 6, 5, 6, 7, 8, 9,10, 9, 7, 6, 5, 5, 5, 6, 8, 9, 9,10, 9, 8, 7, 6, 5, 4, 4, 4, 5, 6, 7];
+  const pp  = [ 0, 5,20,10, 0, 0, 0, 0,10,30,25,15,20,80,60,10, 0, 0, 0, 5,10,15,20,10,90,70,30,15, 5, 0];
+  const ic  = [34,30,11,28,34,34,34,34,28,11,11,11,11, 1,11,28,34,34,34,30,28,28,11,28, 1, 1,11,28,30,34];
+  const cond= ['Sunny','Partly Cloudy','Showers','Partly Cloudy','Sunny','Sunny','Sunny','Sunny','Partly Cloudy','Rain',
+               'Rain','Showers','Showers','Heavy Rain','Showers','Partly Cloudy','Sunny','Sunny','Sunny','Partly Cloudy',
+               'Partly Cloudy','Partly Cloudy','Showers','Partly Cloudy','Heavy Rain','Heavy Rain','Showers','Partly Cloudy','Partly Cloudy','Sunny'];
+  for (let d = 1; d <= 30; d++) {
+    days.push({ day: d, iconCode: ic[d-1], high: his[d-1], low: los[d-1], precip: pp[d-1], condition: cond[d-1] });
+  }
+  return days;
+})();
+
+const ALMANAC_APRIL = (() => {
+  const days = [];
+  for (let d = 1; d <= 30; d++) {
+    days.push({ day: d, avgHigh: 13 + Math.round(d/5), avgLow: 5 + Math.round(d/7), avgPrecip: 2.1 });
+  }
+  return days;
+})();
+
+const HISTORY_DATA = (() => {
+  const days = [];
+  const start = new Date('2026-03-16');
+  const precipArr = [0,0,3,15,0,0,8,22,0,0,0,5,12,0,0,0,20,8,0,0,3,0,18,0,0,10,5,0,0,7,0];
+  for (let i = 0; i < 31; i++) {
+    const d = new Date(start); d.setDate(d.getDate() + i);
+    const hi  = 10 + Math.round(Math.sin(i/4)*5) + (i%3);
+    const lo  = hi - 7 - (i%3);
+    const avg = Math.round((hi+lo)/2);
+    const pp  = precipArr[i];
+    days.push({
+      date: d.toISOString().slice(0,10),
+      maxTemp: hi, minTemp: lo, avgTemp: avg,
+      precip: pp, humidity: 68 + (i%12), windMax: 15 + (i%10),
+      iconCode: pp > 10 ? 1 : pp > 0 ? 11 : 34,
+    });
+  }
+  return days;
+})();
+
+const SEARCH_DB = {
+  amsterdam:  [{ displayName:'Amsterdam',  address:'North Holland, Netherlands', type:'City',    flag:'🇳🇱', countryCode:'NL', lat:52.3676, lon:4.9041,  locId:'EHAM', alt:2  }],
+  london:     [{ displayName:'London',     address:'England, United Kingdom',    type:'City',    flag:'🇬🇧', countryCode:'UK', lat:51.5074, lon:-0.1278, locId:'EGLL', alt:11 }],
+  paris:      [{ displayName:'Paris',      address:'Île-de-France, France',      type:'City',    flag:'🇫🇷', countryCode:'FR', lat:48.8566, lon:2.3522,  locId:'LFPG', alt:35 }],
+  berlin:     [{ displayName:'Berlin',     address:'Berlin, Germany',            type:'City',    flag:'🇩🇪', countryCode:'DE', lat:52.5200, lon:13.4050, locId:'EDDB', alt:37 }],
+  rotterdam:  [{ displayName:'Rotterdam',  address:'South Holland, Netherlands', type:'City',    flag:'🇳🇱', countryCode:'NL', lat:51.9244, lon:4.4777,  locId:'EHRD', alt:0  }],
+  rome:       [{ displayName:'Rome',       address:'Lazio, Italy',               type:'City',    flag:'🇮🇹', countryCode:'IT', lat:41.9028, lon:12.4964, locId:'LIRF', alt:14 }],
+  madrid:     [{ displayName:'Madrid',     address:'Community of Madrid, Spain', type:'City',    flag:'🇪🇸', countryCode:'ES', lat:40.4168, lon:-3.7038, locId:'LEMD', alt:582}],
+  barcelona:  [{ displayName:'Barcelona',  address:'Catalonia, Spain',           type:'City',    flag:'🇪🇸', countryCode:'ES', lat:41.3851, lon:2.1734,  locId:'LEBL', alt:4  }],
+  vienna:     [{ displayName:'Vienna',     address:'Austria',                    type:'City',    flag:'🇦🇹', countryCode:'AT', lat:48.2082, lon:16.3738, locId:'LOWW', alt:183}],
+  prague:     [{ displayName:'Prague',     address:'Bohemia, Czech Republic',    type:'City',    flag:'🇨🇿', countryCode:'CZ', lat:50.0755, lon:14.4378, locId:'LKPR', alt:381}],
+  'new york': [{ displayName:'New York',   address:'New York, USA',              type:'City',    flag:'🇺🇸', countryCode:'US', lat:40.7128, lon:-74.006, locId:'KJFK', alt:3  }],
+  tokyo:      [{ displayName:'Tokyo',      address:'Kanto, Japan',               type:'City',    flag:'🇯🇵', countryCode:'JP', lat:35.6762, lon:139.6503,locId:'RJTT', alt:6  }],
+};
+
+app.get('/api/weather/current', (req, res) => {
+  const { lat, lon } = req.query;
+  // For mock purposes return Amsterdam data for any coordinates
+  res.json(WEATHER_CURRENT);
+});
+
+app.get('/api/weather/forecast', (req, res) => {
+  res.json(WEATHER_FORECAST);
+});
+
+app.get('/api/weather/hourly', (req, res) => {
+  res.json(WEATHER_HOURLY);
+});
+
+app.get('/api/weather/aqi', (req, res) => {
+  res.json(WEATHER_AQI);
+});
+
+app.get('/api/weather/pollen', (req, res) => {
+  res.json(WEATHER_POLLEN);
+});
+
+app.get('/api/weather/calendar', (req, res) => {
+  const { month = 4, year = 2026 } = req.query;
+  res.json(APRIL_2026);
+});
+
+app.get('/api/weather/almanac', (req, res) => {
+  res.json(ALMANAC_APRIL);
+});
+
+app.get('/api/weather/history', (req, res) => {
+  res.json(HISTORY_DATA);
+});
+
+app.get('/api/weather/search', (req, res) => {
+  const q = (req.query.q || '').toLowerCase().trim();
+  if (!q) return res.json([]);
+  const results = [];
+  for (const [key, entries] of Object.entries(SEARCH_DB)) {
+    if (key.includes(q) || entries.some(e => e.displayName.toLowerCase().includes(q))) {
+      results.push(...entries);
+    }
+  }
+  res.json(results.slice(0, 8));
 });
 
 app.listen(PORT, () => {

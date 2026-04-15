@@ -8,6 +8,7 @@
   <title>AutoPMF</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="weather.css">
 </head>
 <body>
 
@@ -49,6 +50,12 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </span>
           <span>About AutoPMF</span>
+        </button>
+        <button class="nav-item" id="drawer-weather-btn">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </span>
+          <span>Weather</span>
         </button>
         <div class="drawer-divider"></div>
         <button class="nav-item" id="drawer-stats-btn">
@@ -407,6 +414,53 @@
       </div>
     </section>
 
+    <!-- ── Weather Screen ── -->
+    <section class="screen weather-screen" id="weather-screen">
+      <!-- Sub-bar -->
+      <div class="sub-bar wx-sub-bar">
+        <button class="icon-btn back-btn" id="weather-back" aria-label="Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <span class="sub-bar-title" id="wx-location-title">Amsterdam, NL</span>
+        <button class="icon-btn" id="wx-search-btn" aria-label="Search location">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+
+      <!-- Scrollable content area -->
+      <div id="wx-content">
+        <div id="wx-tab-today" class="wx-tab-panel"></div>
+        <div id="wx-tab-forecast" class="wx-tab-panel" style="display:none"></div>
+        <div id="wx-tab-calendar" class="wx-tab-panel" style="display:none"></div>
+        <div id="wx-tab-history" class="wx-tab-panel" style="display:none"></div>
+        <div id="wx-tab-search" class="wx-tab-panel" style="display:none"></div>
+      </div>
+
+      <!-- Bottom tab bar -->
+      <div class="wx-tab-bar">
+        <button class="wx-tab active" data-tab="today">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>
+          <span>Today</span>
+        </button>
+        <button class="wx-tab" data-tab="forecast">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <span>Forecast</span>
+        </button>
+        <button class="wx-tab" data-tab="calendar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Calendar</span>
+        </button>
+        <button class="wx-tab" data-tab="history">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>History</span>
+        </button>
+        <button class="wx-tab" data-tab="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search</span>
+        </button>
+      </div>
+    </section>
+
     <!-- ── Article Detail (Full Screen) ── -->
     <div class="article-modal" id="article-modal">
       <!-- Nav bar: always visible, overlays scrollable content -->
@@ -586,6 +640,8 @@
   </div><!-- /app -->
 </div><!-- /phone -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="app.js"></script>
+<script src="weather.js"></script>
 </body>
 </html>

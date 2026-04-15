@@ -4,11 +4,11 @@ set -euo pipefail
 # ─────────────────────────────────────────────────────────
 # autoloop-cycle.sh — Orchestrator for AutoLoop mechanics
 #
-# The branch name autoloop/cycle-<N> is the source of truth
+# The branch name notes/cycle-<N> is the source of truth
 # for the current cycle number. All subcommands read it.
 #
 # Subcommands:
-#   prepare   — Create autoloop/cycle-<N+1> branch, print cycle number
+#   prepare   — Create notes/cycle-<N+1> branch, print cycle number
 #   poll      — Fetch feedback; exit with JSON when new feedback arrives
 #   ship      — Commit, push, deploy
 #   log       — Append row to results.tsv
@@ -37,11 +37,11 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 now_iso() { date -u +"%Y-%m-%dT%H:%M:%SZ"; }
 today() { date +"%Y-%m-%d"; }
 
-# Read cycle number from current branch name (autoloop/cycle-<N>)
+# Read cycle number from current branch name (notes/cycle-<N>)
 get_cycle() {
     local branch
     branch=$(git branch --show-current)
-    if [[ "$branch" =~ ^autoloop/cycle-([0-9]+)$ ]]; then
+    if [[ "$branch" =~ ^notes/cycle-([0-9]+)$ ]]; then
         echo "${BASH_REMATCH[1]}"
     else
         echo ""
@@ -99,7 +99,7 @@ else:
 }
 
 # ─── PREPARE ──────────────────────────────────────────────
-# Creates autoloop/cycle-<N+1> branch. Prints the cycle number.
+# Creates notes/cycle-<N+1> branch. Prints the cycle number.
 # This is the first step of every cycle — sets the cycle number
 # that all subsequent commands read from the branch name.
 
@@ -107,7 +107,7 @@ cmd_prepare() {
     local last_cycle
     last_cycle=$(get_last_cycle)
     local next_cycle=$((last_cycle + 1))
-    local branch="autoloop/cycle-${next_cycle}"
+    local branch="notes/cycle-${next_cycle}"
 
     if git rev-parse --verify "$branch" &>/dev/null; then
         echo "Branch $branch already exists, checking out..."
@@ -127,7 +127,7 @@ cmd_prepare() {
 cmd_poll() {
     local cycle
     cycle=$(get_cycle)
-    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch. Run 'prepare' first."
+    [[ -z "$cycle" ]] && die "Not on a notes/cycle-N branch. Run 'prepare' first."
 
     echo "AutoLoop poll started — cycle $cycle (interval: ${SLEEP_INTERVAL}s)"
     while true; do
@@ -214,9 +214,9 @@ cmd_ship() {
 
     local cycle
     cycle=$(get_cycle)
-    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch. Run 'prepare' first."
+    [[ -z "$cycle" ]] && die "Not on a notes/cycle-N branch. Run 'prepare' first."
 
-    local branch="autoloop/cycle-${cycle}"
+    local branch="notes/cycle-${cycle}"
     echo "Shipping cycle $cycle on branch $branch..."
 
     # Stage files — everything goes in git
@@ -277,7 +277,7 @@ cmd_log() {
 
     local cycle
     cycle=$(get_cycle)
-    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch. Run 'prepare' first."
+    [[ -z "$cycle" ]] && die "Not on a notes/cycle-N branch. Run 'prepare' first."
 
     local date_str
     date_str=$(today)
@@ -302,9 +302,9 @@ cmd_log() {
 cmd_push() {
     local cycle
     cycle=$(get_cycle)
-    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch. Run 'prepare' first."
+    [[ -z "$cycle" ]] && die "Not on a notes/cycle-N branch. Run 'prepare' first."
 
-    local branch="autoloop/cycle-${cycle}"
+    local branch="notes/cycle-${cycle}"
 
     # Stage and commit any remaining changes
     git add autoloop.md results.tsv local_feedback.jsonl Feedback.txt 2>/dev/null || true
@@ -323,7 +323,7 @@ cmd_push() {
 cmd_mark_processed() {
     local cycle
     cycle=$(get_cycle)
-    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch. Run 'prepare' first."
+    [[ -z "$cycle" ]] && die "Not on a notes/cycle-N branch. Run 'prepare' first."
 
     : "${FEEDBACK_SECRET:?FEEDBACK_SECRET is not set}"
     : "${DEPLOY_URL:?DEPLOY_URL is not set}"
@@ -413,7 +413,7 @@ cmd_status() {
         echo "Cycle:  $cycle"
     else
         local next=$(($(get_last_cycle) + 1))
-        echo "Cycle:  not on autoloop branch (next would be $next)"
+        echo "Cycle:  not on notes branch (next would be $next)"
     fi
 
     # NPS trend from autoloop.md
@@ -453,7 +453,7 @@ case "${1:-help}" in
         echo "Usage: autoloop-cycle.sh <command> [args]"
         echo ""
         echo "Commands:"
-        echo "  prepare                       Create next cycle branch, print cycle number"
+        echo "  prepare                       Create next notes/cycle-N branch, print cycle number"
         echo "  poll                          Fetch feedback in loop; exit on new feedback (JSON)"
         echo "  ship <msg> [--dry-run]        Commit, push, deploy (reads cycle from branch)"
         echo "  log <nps> <status> <desc>     Append results.tsv row (reads cycle from branch)"

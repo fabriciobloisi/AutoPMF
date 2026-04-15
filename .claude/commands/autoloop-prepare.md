@@ -16,7 +16,7 @@ allowed-tools:
    ```bash
    bash scripts/autoloop-cycle.sh prepare
    ```
-   This reads the last cycle number from the autoloop.md iteration log, creates `autoloop/cycle-<N+1>` branch, and checks it out. The branch name is the source of truth for cycle tracking.
+   This reads the last cycle number from the autoloop.md iteration log, creates `notes/cycle-<N+1>` branch, and checks it out. The branch name is the source of truth for cycle tracking.
 
 2. **Read all in-scope files** — Read and understand the current state of:
    - `product.md` — the product definition

@@ -98,6 +98,7 @@ const customizeScreen= $('customize-screen');
 const feedbackScreen = $('feedback-screen');
 const statsScreen    = $('stats-screen');
 const progressScreen = $('progress-screen');
+const weatherScreen  = $('weather-screen');
 const drawer         = $('drawer');
 const drawerBackdrop = $('drawer-backdrop');
 const tiktokNav      = $('tiktok-nav');
@@ -127,10 +128,12 @@ function showScreen(name) {
   feedbackScreen.classList.toggle('active', name === 'feedback');
   statsScreen.classList.toggle('active', name === 'stats');
   progressScreen.classList.toggle('active', name === 'progress');
-  $('feedback-fab').style.display = (name === 'feedback' || name === 'stats' || name === 'progress') ? 'none' : '';
+  weatherScreen.classList.toggle('active', name === 'weather');
+  $('feedback-fab').style.display = (name === 'feedback' || name === 'stats' || name === 'progress' || name === 'weather') ? 'none' : '';
   $('refresh-btn').style.display = name === 'feed' ? '' : 'none';
   if (name === 'stats') loadStats();
   if (name === 'progress') loadProgress();
+  if (name === 'weather' && typeof WX !== 'undefined') WX.loadAll();
   closeDrawer();
 }
 
@@ -960,6 +963,11 @@ submitFbBtn?.addEventListener('click', async () => {
     submitFbBtn.disabled = false; // Only re-enable on error so user can retry
   }
 });
+
+// ── Weather Screen ────────────────────────────────────────────────────────────
+$('drawer-weather-btn').addEventListener('click', () => { closeDrawer(); closeArticle(); showScreen('weather'); });
+$('weather-back').addEventListener('click', () => showScreen('feed'));
+$('wx-search-btn').addEventListener('click', () => { if (typeof WX !== 'undefined') WX.switchTab('search'); });
 
 // ── Stats Screen ─────────────────────────────────────────────────────────────
 $('drawer-stats-btn').addEventListener('click', () => { closeDrawer(); closeArticle(); showScreen('stats'); });

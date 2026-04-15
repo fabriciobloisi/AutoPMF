@@ -50,4 +50,4 @@ EOF
 echo "AutoLoop initialized."
 echo "  Max iterations: ${MAX_ITERATIONS} (0 = unlimited)"
 echo "  State file: ${STATE_FILE}"
-echo "  Cycle tracking: via git branch name (autoloop/cycle-N)"
+echo "  Cycle tracking: via git branch name (notes/cycle-N)"

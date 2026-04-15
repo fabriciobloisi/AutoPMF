@@ -12,10 +12,10 @@ fi
 : "${FEEDBACK_SECRET:?FEEDBACK_SECRET is not set}"
 : "${DEPLOY_URL:?DEPLOY_URL is not set}"
 
-# Read cycle number from branch name (autoloop/cycle-<N>)
+# Read cycle number from branch name (notes/cycle-<N>)
 cycle=""
 branch=$(git branch --show-current 2>/dev/null) || branch=""
-if [[ "$branch" =~ ^autoloop/cycle-([0-9]+)$ ]]; then
+if [[ "$branch" =~ ^notes/cycle-([0-9]+)$ ]]; then
   cycle="${BASH_REMATCH[1]}"
 fi
 
