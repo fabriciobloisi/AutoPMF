@@ -73,6 +73,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 8 | 2026-04-16 | 6.7 | Refresh toast, search input retention, labeled Remove button in recent searches | 9.0 |
 | 9 | 2026-04-16 | 8.0 | Animated loading dots, larger spinner, refresh always acknowledges rapid taps | 9.0 |
 | 10 | 2026-04-16 | 7.6 | City-switch header animation, font/spacing boost, empty search validation | 9.0 |
+| 11 | 2026-04-16 | 7.6 | No code changes — duplicate feedback entries from cycle 10 returned by server (timing race on mark-processed) | 9.0 |
 
 ---
 
