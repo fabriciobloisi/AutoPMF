@@ -103,3 +103,4 @@ cycle	date	nps	status	description
 12	2026-04-16	8.0	keep	Persistent Updated-ago in hero, longer toast duration
 13	2026-04-16	7.3	keep	Fix city-switch race condition (generation counter), active tab border indicator
 14	2026-04-16	7.0	keep	First-visit onboarding hint banner for new users
+15	2026-04-16	7.4	keep	Expanded onboarding card, stronger active tab, typography/spacing boost

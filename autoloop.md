@@ -77,6 +77,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 12 | 2026-04-16 | 8.0 | "Updated X ago" in hero, longer toast duration (2.5→3.5s) | 9.0 |
 | 13 | 2026-04-16 | 7.3 | Fix city-switch race condition (generation counter), active tab border indicator | 9.0 |
 | 14 | 2026-04-16 | 7.0 | First-visit onboarding hint banner (dismissable, localStorage-gated) | 9.0 |
+| 15 | 2026-04-16 | 7.4 | Expanded onboarding card, stronger active tab, typography/spacing boost | 9.0 |
 
 ---
 
