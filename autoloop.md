@@ -63,6 +63,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | # | Date | NPS | Key Change | Target |
 |---|------|-----|-----------|--------|
 | 0 | 2026-04-15 | — | Baseline: fresh start with weather app | 9.0 |
+| 1 | 2026-04-16 | 5.0 | Real weather data via Open-Meteo API (current, forecast, hourly) | 9.0 |
 
 ---
 
