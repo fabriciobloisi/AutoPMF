@@ -466,11 +466,16 @@ function dateToDow(dateStr) {
 
 const wxCache = new Map();
 const WX_TTL = 5 * 60 * 1000;
+const WX_BLOB_TTL = 30 * 60 * 1000; // 30-minute persistent blob cache
 
 async function fetchOMWeather(lat, lon) {
   const key = `wx_${(+lat).toFixed(2)}_${(+lon).toFixed(2)}`;
+
+  // 1. In-memory cache (fastest, per-instance)
   const hit = wxCache.get(key);
   if (hit && Date.now() - hit.ts < WX_TTL) return hit.data;
+
+  // 2. Try live Open-Meteo fetch
   const p = new URLSearchParams({
     latitude: lat, longitude: lon, timezone: 'auto', past_days: 1, forecast_days: 8,
     current: 'temperature_2m,relativehumidity_2m,apparent_temperature,is_day,precipitation,weathercode,cloudcover,windspeed_10m,winddirection_10m,windgusts_10m,pressure_msl,visibility,dewpoint_2m,uv_index',
@@ -478,11 +483,30 @@ async function fetchOMWeather(lat, lon) {
     daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant,sunrise,sunset,moonphase',
     wind_speed_unit: 'kmh',
   });
-  const r = await fetch(`https://api.open-meteo.com/v1/forecast?${p}`);
-  if (!r.ok) throw new Error(`Open-Meteo ${r.status}`);
-  const data = await r.json();
-  wxCache.set(key, { ts: Date.now(), data });
-  return data;
+  try {
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?${p}`);
+    if (!r.ok) throw new Error(`Open-Meteo ${r.status}`);
+    const data = await r.json();
+    wxCache.set(key, { ts: Date.now(), data });
+    // Persist to Vercel Blob (fire-and-forget) so cold starts can serve cached data
+    put(`weather/cache/${key}.json`, JSON.stringify({ ts: Date.now(), data }), {
+      access: 'private', addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 0,
+    }).catch(() => {});
+    return data;
+  } catch (liveErr) {
+    // 3. Fall back to Vercel Blob persistent cache
+    try {
+      const result = await get(`weather/cache/${key}.json`, { access: 'private' });
+      if (result) {
+        const cached = JSON.parse(await new Response(result.stream).text());
+        if (cached?.data && Date.now() - cached.ts < WX_BLOB_TTL) {
+          wxCache.set(key, { ts: cached.ts, data: cached.data });
+          return cached.data;
+        }
+      }
+    } catch {}
+    throw liveErr;
+  }
 }
 
 const wxLimiter = rateLimit({ windowMs: 60_000, max: 30, message: { error: 'Too many requests' } });
