@@ -65,7 +65,7 @@ $('refresh-btn').addEventListener('click', () => {
   if (typeof WX !== 'undefined' && !WX.busy) {
     WX.loadAll().finally(() => svg.classList.remove('spinning'));
   } else {
-    setTimeout(() => svg.classList.remove('spinning'), 1200);
+    setTimeout(() => svg.classList.remove('spinning'), 700);
   }
 });
 
