@@ -82,6 +82,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 17 | 2026-04-16 | 8.0 | Refresh button persistent loading state — dims and spins for full load duration | 9.0 |
 | 18 | 2026-04-16 | 7.7 | City name + flag in weather hero, bolder active tab (font-weight 700 + stronger tint) | 9.0 |
 | 19 | 2026-04-16 | 7.0 | "Updated just now" 13px/80% + green flash after refresh | 9.0 |
+| 20 | 2026-04-16 | 7.6 | Drawer discoverability in onboarding, press feedback on cities/recent, typography bumps | 9.0 |
 
 ---
 
