@@ -111,3 +111,4 @@ cycle	date	nps	status	description
 20	2026-04-16	7.6	keep	Drawer discoverability in onboarding, press feedback on cities/recent, typography bumps
 21	2026-04-16	8.0	revert	Revert green flash, add tab press scale animation
 22	2026-04-16	8.0	keep	Tab content fade-in animation + richer hero gradient
+23	2026-04-16	7.1	keep	Fix missing modal-in/sheet-up keyframes + search result selection highlight

@@ -85,6 +85,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 20 | 2026-04-16 | 7.6 | Drawer discoverability in onboarding, press feedback on cities/recent, typography bumps | 9.0 |
 | 21 | 2026-04-16 | 8.0 | Revert green flash (regression fix), add tab press scale animation | 9.0 |
 | 22 | 2026-04-16 | 8.0 | Tab content fade-in animation + richer hero gradient | 9.0 |
+| 23 | 2026-04-16 | 7.1 | Fix missing modal-in/sheet-up keyframes + search result selection highlight | 9.0 |
 
 ---
 
