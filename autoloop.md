@@ -67,6 +67,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 2 | 2026-04-16 | 5.4 | Error recovery UX: retry button, city-switch toast, font/spacing boost | 9.0 |
 | 3 | 2026-04-16 | 4.0 | Debounce concurrent loads + auto-retry 15s on error | 9.0 |
 | 4 | 2026-04-16 | 6.1 | Min 400ms loading display + city name in error state + larger tab targets | 9.0 |
+| 5 | 2026-04-16 | 4.0 | Vercel Blob weather cache — 30-min fallback survives cold starts | 9.0 |
 
 ---
 
