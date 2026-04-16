@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>AutoPMF</title>
+  <title>AutoPMF Weather</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="weather.css">
 </head>
 <body>
 
-<!-- iPhone frame (desktop) / full-screen (mobile) -->
 <div class="phone">
-  <!-- ── Main App Container ── -->
   <div class="app">
 
     <!-- Left Drawer -->
@@ -27,35 +25,11 @@
         <div class="app-tagline">AutoLoop to find Product Market Fit</div>
       </div>
       <nav class="drawer-nav">
-        <button class="nav-item" id="drawer-refresh-btn">
-          <span class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          </span>
-          <span>Refresh news</span>
-        </button>
-        <button class="nav-item" id="drawer-customize-btn">
-          <span class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M7.76 7.76a6 6 0 0 0 0 8.49M16.24 7.76a6 6 0 0 1 0 8.49"/></svg>
-          </span>
-          <span>Customize</span>
-        </button>
-        <button class="nav-item" id="drawer-saved-btn">
-          <span class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </span>
-          <span>Saved</span>
-        </button>
         <button class="nav-item" id="about-btn">
           <span class="nav-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </span>
           <span>About AutoPMF</span>
-        </button>
-        <button class="nav-item" id="drawer-weather-btn">
-          <span class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-          </span>
-          <span>Weather</span>
         </button>
         <div class="drawer-divider"></div>
         <button class="nav-item" id="drawer-stats-btn">
@@ -84,212 +58,55 @@
     </aside>
     <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
-    <!-- ── Persistent Feedback FAB (visible on all screens except feedback) ── -->
+    <!-- Feedback FAB -->
     <button class="feedback-fab" id="feedback-fab" aria-label="Give feedback">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </button>
 
-    <!-- ── Persistent Global Nav Bar ── -->
+    <!-- Global Nav Bar -->
     <header class="nav-bar" id="global-nav">
       <button class="icon-btn" id="menu-btn" aria-label="Menu">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <h1 class="nav-title">AutoPMF</h1>
+      <h1 class="nav-title">Weather</h1>
       <div class="nav-right">
-        <button class="icon-btn" id="refresh-btn" aria-label="Refresh">
+        <button class="icon-btn" id="refresh-btn" aria-label="Refresh weather">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
         </button>
       </div>
     </header>
 
-    <!-- ── Feed Screen ── -->
-    <section class="screen feed-screen active" id="feed-screen">
-
-      <!-- Category filter bar -->
-      <div class="category-bar-wrap">
-      <div class="category-bar" id="category-bar">
-        <button class="cat-btn active" data-cat="all">All</button>
-        <button class="cat-btn" data-cat="Technology">Tech</button>
-        <button class="cat-btn" data-cat="AI">AI</button>
-        <button class="cat-btn" data-cat="World">World</button>
-        <button class="cat-btn" data-cat="Business">Business</button>
-        <button class="cat-btn" data-cat="Science">Science</button>
-        <button class="cat-btn" data-cat="Climate">Climate</button>
-        <button class="cat-btn" data-cat="Health">Health</button>
-        <button class="cat-btn" data-cat="Culture">Culture</button>
-        <button class="cat-btn" data-cat="Sports">Sports</button>
-        <button class="cat-btn" data-cat="Politics">Politics</button>
-        <button class="cat-btn" data-cat="Entertainment">Entertainment</button>
-        <button class="cat-btn" data-cat="Finance">Finance</button>
-        <button class="cat-btn" data-cat="Space">Space</button>
-        <button class="cat-btn" data-cat="Education">Education</button>
-        <button class="cat-btn" data-cat="Travel">Travel</button>
-        <button class="cat-btn" data-cat="Food">Food</button>
-        <button class="cat-btn" data-cat="Opinion">Opinion</button>
-      </div>
-      </div><!-- /category-bar-wrap -->
-
-      <!-- Search Bar -->
-      <div class="search-bar" id="search-bar">
-        <div class="search-input-wrap">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="search" id="search-input" class="search-input" placeholder="Search news…" autocomplete="off" autocorrect="off" spellcheck="false">
-          <button class="search-clear" id="search-clear" aria-label="Clear search" style="display:none">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- News Feed -->
-      <div class="feed" id="feed">
-        <div class="feed-loading" id="feed-loading">
-          <div class="spinner"></div>
-          <p>Loading your news…</p>
-        </div>
-        <div class="feed-empty" id="feed-empty" style="display:none">
-          <span class="feed-empty-icon" id="feed-empty-icon">📰</span>
-          <p id="feed-empty-text">No articles in this category yet.<br>Try refreshing or adjusting your preferences.</p>
-        </div>
-      </div>
-
-
-      <!-- TikTok Navigation Overlay -->
-      <div class="tiktok-nav" id="tiktok-nav" style="display:none">
-        <div class="tiktok-dots" id="tiktok-dots"></div>
-        <button class="tiktok-arrow up" id="tiktok-up" aria-label="Previous">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
-        </button>
-        <button class="tiktok-arrow down" id="tiktok-down" aria-label="Next">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+    <!-- ── Weather Screen (default) ── -->
+    <section class="screen weather-screen active" id="weather-screen">
+      <div class="sub-bar wx-sub-bar">
+        <div style="width:40px"></div>
+        <span class="sub-bar-title" id="wx-location-title">Amsterdam, NL</span>
+        <button class="icon-btn" id="wx-search-btn" aria-label="Search location">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
       </div>
-
-    </section>
-
-    <!-- ── Customize Screen ── -->
-    <section class="screen customize-screen" id="customize-screen">
-      <div class="sub-bar">
-        <button class="icon-btn back-btn" id="customize-back" aria-label="Back">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <div id="wx-content"></div>
+      <div class="wx-tab-bar">
+        <button class="wx-tab active" data-tab="today">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>
+          <span>Today</span>
         </button>
-        <span class="sub-bar-title">Customize</span>
-        <button class="icon-btn text-btn" id="customize-save">Done</button>
-      </div>
-
-      <div class="customize-body">
-
-        <div class="cust-section">
-          <div class="cust-label">Display Mode</div>
-          <div class="mode-grid" id="cust-mode-grid">
-            <button class="mode-card active" data-mode="text">
-              <div class="mode-card-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/></svg>
-              </div>
-              <span>Text</span>
-            </button>
-            <button class="mode-card" data-mode="instagram">
-              <div class="mode-card-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-              </div>
-              <span>Instagram</span>
-            </button>
-            <button class="mode-card" data-mode="tiktok">
-              <div class="mode-card-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-              </div>
-              <span>TikTok</span>
-            </button>
-            <button class="mode-card" data-mode="cnn">
-              <div class="mode-card-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              </div>
-              <span>CNN</span>
-            </button>
-            <button class="mode-card" data-mode="video">
-              <div class="mode-card-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/></svg>
-              </div>
-              <span>Widescreen</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="cust-section">
-          <div class="cust-label">Topics</div>
-          <div class="topics-grid" id="cust-topics">
-            <button class="topic-chip" data-topic="Technology">Technology</button>
-            <button class="topic-chip" data-topic="AI">AI</button>
-            <button class="topic-chip" data-topic="Business">Business</button>
-            <button class="topic-chip" data-topic="World">World</button>
-            <button class="topic-chip" data-topic="Politics">Politics</button>
-            <button class="topic-chip" data-topic="Science">Science</button>
-            <button class="topic-chip" data-topic="Climate">Climate</button>
-            <button class="topic-chip" data-topic="Health">Health</button>
-            <button class="topic-chip" data-topic="Sports">Sports</button>
-            <button class="topic-chip" data-topic="Culture">Culture</button>
-            <button class="topic-chip" data-topic="Entertainment">Entertainment</button>
-            <button class="topic-chip" data-topic="Finance">Finance</button>
-            <button class="topic-chip" data-topic="Space">Space</button>
-            <button class="topic-chip" data-topic="Education">Education</button>
-            <button class="topic-chip" data-topic="Travel">Travel</button>
-            <button class="topic-chip" data-topic="Food">Food</button>
-            <button class="topic-chip" data-topic="Opinion">Opinion</button>
-          </div>
-          <p class="cust-hint">Select topics to focus on. Leave all unselected for a balanced mix.</p>
-        </div>
-
-        <div class="cust-section">
-          <div class="cust-label">Region</div>
-          <div class="region-grid" id="cust-regions">
-            <button class="region-btn active" data-region="Global">🌍 Global</button>
-            <button class="region-btn" data-region="North America">🇺🇸 Americas</button>
-            <button class="region-btn" data-region="Europe">🇪🇺 Europe</button>
-            <button class="region-btn" data-region="Asia">🌏 Asia</button>
-            <button class="region-btn" data-region="Latin America">🌎 LatAm</button>
-            <button class="region-btn" data-region="Middle East">🌙 Mid East</button>
-            <button class="region-btn" data-region="Africa">🌍 Africa</button>
-          </div>
-        </div>
-
-        <div class="cust-section">
-          <div class="cust-label">News Sources <button class="select-all-btn" id="sources-select-all">Select All</button></div>
-          <div class="sources-grid" id="cust-sources">
-            <button class="source-chip" data-source="Reuters">Reuters</button>
-            <button class="source-chip" data-source="AP News">AP News</button>
-            <button class="source-chip" data-source="BBC">BBC</button>
-            <button class="source-chip" data-source="Bloomberg">Bloomberg</button>
-            <button class="source-chip" data-source="The Guardian">The Guardian</button>
-            <button class="source-chip" data-source="Financial Times">Financial Times</button>
-            <button class="source-chip" data-source="The Economist">The Economist</button>
-            <button class="source-chip" data-source="Wired">Wired</button>
-            <button class="source-chip" data-source="Ars Technica">Ars Technica</button>
-            <button class="source-chip" data-source="MIT Technology Review">MIT Tech Review</button>
-            <button class="source-chip" data-source="Nature">Nature</button>
-            <button class="source-chip" data-source="New Scientist">New Scientist</button>
-            <button class="source-chip" data-source="Al Jazeera">Al Jazeera</button>
-            <button class="source-chip" data-source="Deutsche Welle">Deutsche Welle</button>
-            <button class="source-chip" data-source="NHK World">NHK World</button>
-            <button class="source-chip" data-source="South China Morning Post">SCMP</button>
-            <button class="source-chip" data-source="The Washington Post">Washington Post</button>
-            <button class="source-chip" data-source="Rest of World">Rest of World</button>
-            <button class="source-chip" data-source="ESPN">ESPN</button>
-            <button class="source-chip" data-source="WHO">WHO</button>
-          </div>
-          <p class="cust-hint">Select sources to include. Use "Select All" then deselect to block specific publishers.</p>
-        </div>
-
-        <div class="cust-section">
-          <div class="cust-label">Article Count</div>
-          <div class="count-row">
-            <button class="count-btn active" data-count="5">Short<br><small>5 total</small></button>
-            <button class="count-btn" data-count="8">Standard<br><small>8 total</small></button>
-            <button class="count-btn" data-count="15">Long<br><small>15 total</small></button>
-          </div>
-          <p class="cust-hint">Total articles in your feed — spread across your selected topics.</p>
-        </div>
-
-        <button class="apply-btn" id="cust-apply-btn">Apply &amp; Refresh News</button>
-
+        <button class="wx-tab" data-tab="forecast">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <span>Forecast</span>
+        </button>
+        <button class="wx-tab" data-tab="calendar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Calendar</span>
+        </button>
+        <button class="wx-tab" data-tab="history">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>History</span>
+        </button>
+        <button class="wx-tab" data-tab="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search</span>
+        </button>
       </div>
     </section>
 
@@ -302,7 +119,6 @@
         <span class="sub-bar-title">Feedback</span>
         <div style="width:40px"></div>
       </div>
-
       <div class="feedback-body">
         <div class="feedback-card">
           <h3>How do you grade this experience?</h3>
@@ -315,12 +131,10 @@
             </div>
           </div>
         </div>
-
         <div class="feedback-card">
           <h3>Comments</h3>
           <textarea id="comments" placeholder="Tell us what you thought…" rows="4"></textarea>
         </div>
-
         <button class="submit-btn" id="submit-feedback">Submit feedback</button>
         <div class="feedback-msg" id="feedback-msg"></div>
       </div>
@@ -414,97 +228,6 @@
       </div>
     </section>
 
-    <!-- ── Weather Screen ── -->
-    <section class="screen weather-screen" id="weather-screen">
-      <!-- Sub-bar -->
-      <div class="sub-bar wx-sub-bar">
-        <button class="icon-btn back-btn" id="weather-back" aria-label="Back">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-        </button>
-        <span class="sub-bar-title" id="wx-location-title">Amsterdam, NL</span>
-        <button class="icon-btn" id="wx-search-btn" aria-label="Search location">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-      </div>
-
-      <!-- Scrollable content area -->
-      <div id="wx-content">
-        <div id="wx-tab-today" class="wx-tab-panel"></div>
-        <div id="wx-tab-forecast" class="wx-tab-panel" style="display:none"></div>
-        <div id="wx-tab-calendar" class="wx-tab-panel" style="display:none"></div>
-        <div id="wx-tab-history" class="wx-tab-panel" style="display:none"></div>
-        <div id="wx-tab-search" class="wx-tab-panel" style="display:none"></div>
-      </div>
-
-      <!-- Bottom tab bar -->
-      <div class="wx-tab-bar">
-        <button class="wx-tab active" data-tab="today">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="5"/></svg>
-          <span>Today</span>
-        </button>
-        <button class="wx-tab" data-tab="forecast">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-          <span>Forecast</span>
-        </button>
-        <button class="wx-tab" data-tab="calendar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span>Calendar</span>
-        </button>
-        <button class="wx-tab" data-tab="history">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <span>History</span>
-        </button>
-        <button class="wx-tab" data-tab="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <span>Search</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ── Article Detail (Full Screen) ── -->
-    <div class="article-modal" id="article-modal">
-      <!-- Nav bar: always visible, overlays scrollable content -->
-      <div class="article-nav-bar">
-        <button class="article-close-btn" id="article-close-btn" aria-label="Back to feed">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          Back
-        </button>
-        <button class="article-share-btn" id="article-share-btn" aria-label="Share">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        </button>
-      </div>
-      <!-- Scrollable body: hero image + text content scroll together -->
-      <div class="article-body" id="article-body">
-        <div class="article-hero" id="article-hero">
-          <div class="article-hero-overlay"></div>
-          <div class="article-hero-badge">
-            <span class="article-cat-badge" id="article-cat"></span>
-            <span class="article-trending-badge" id="article-trending" style="display:none">TRENDING</span>
-          </div>
-        </div>
-        <div class="article-content">
-          <h2 class="article-headline" id="article-headline"></h2>
-          <div class="article-meta-row">
-            <span class="article-source-lbl" id="article-source-time"></span>
-          </div>
-          <p class="article-summary" id="article-summary"></p>
-          <div class="article-divider"></div>
-          <p class="article-detail" id="article-detail"></p>
-          <div class="ask-response" id="ask-response" style="display:none"></div>
-          <div id="related-articles"></div>
-        </div>
-      </div>
-      <div class="article-ask-footer">
-        <div class="ask-label">Ask the news</div>
-        <div class="article-ask-row">
-          <input type="text" id="ask-input" placeholder="Ask a follow-up question…" maxlength="300">
-          <button class="ask-send-btn" id="ask-send-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- ── About Modal ── -->
     <div class="modal" id="about-modal">
       <div class="modal-backdrop" data-close-about></div>
@@ -513,19 +236,19 @@
         <div class="about-logo-row">
           <img src="prosus-logo.png" alt="Prosus" class="about-logo">
           <div>
-            <div class="about-title">AutoPMF</div>
+            <div class="about-title">AutoPMF Weather</div>
             <div class="about-subtitle">AutoLoop · Product Market Fit</div>
           </div>
         </div>
         <div class="about-body">
           <div class="about-section">
             <h4 class="about-section-title">How to give feedback</h4>
-            <p>Tap the red chat bubble button in the top-right corner — it's always visible, no matter which screen you're on. Your feedback is used by AutoLoop to automatically improve the product.</p>
+            <p>Tap the red chat bubble button — it's always visible on the weather screen. Your feedback helps AutoLoop improve the product automatically.</p>
           </div>
           <div class="about-divider"></div>
           <p><strong>AutoPMF</strong> is a structure that enables you to publish an AI service and control the AI service behaviour through a single Markdown file (<em>product.md</em>).</p>
           <p>After a test user tries the product, they send feedback — including an NPS score. The <strong>AutoLoop</strong> reads that feedback, generates an improved version of the control file, and publishes the update automatically.</p>
-          <p>The loop repeats every <strong>10 minutes</strong> or every <strong>10 reviews</strong> (customisable), continuously optimising the product until the best possible Product Market Fit is achieved for the prototype.</p>
+          <p>The loop repeats every <strong>10 minutes</strong> or every <strong>10 reviews</strong> (customisable), continuously optimising the product until the best possible Product Market Fit is achieved.</p>
           <div class="about-loop-diagram">
             <div class="loop-step">🚀 Publish</div>
             <div class="loop-arrow">↓</div>
@@ -540,66 +263,6 @@
           </div>
         </div>
         <button class="btn-primary" style="width:100%;margin-top:4px" data-close-about>Got it</button>
-      </div>
-    </div>
-
-    <!-- ── Onboarding Overlay (first-run) ── -->
-    <div class="onboarding-overlay" id="onboarding-overlay" style="display:none">
-      <div class="onboarding-card">
-        <h2 class="onboarding-title">Welcome to AutoPMF</h2>
-        <p class="onboarding-subtitle">Let's make it yours!</p>
-
-        <div class="onboarding-section">
-          <label class="onboarding-label">Your name</label>
-          <input type="text" id="onboarding-name" class="onboarding-input" placeholder="e.g. Alex" autocomplete="given-name">
-        </div>
-
-        <div class="onboarding-section">
-          <label class="onboarding-label">Topics you care about</label>
-          <div class="onboarding-chips" id="onboarding-topics">
-            <button class="onboarding-chip" data-topic="Technology">Technology</button>
-            <button class="onboarding-chip" data-topic="AI">AI</button>
-            <button class="onboarding-chip" data-topic="Business">Business</button>
-            <button class="onboarding-chip" data-topic="World">World</button>
-            <button class="onboarding-chip" data-topic="Politics">Politics</button>
-            <button class="onboarding-chip" data-topic="Science">Science</button>
-            <button class="onboarding-chip" data-topic="Climate">Climate</button>
-            <button class="onboarding-chip" data-topic="Health">Health</button>
-            <button class="onboarding-chip" data-topic="Sports">Sports</button>
-            <button class="onboarding-chip" data-topic="Culture">Culture</button>
-            <button class="onboarding-chip" data-topic="Entertainment">Entertainment</button>
-            <button class="onboarding-chip" data-topic="Finance">Finance</button>
-            <button class="onboarding-chip" data-topic="Space">Space</button>
-            <button class="onboarding-chip" data-topic="Education">Education</button>
-            <button class="onboarding-chip" data-topic="Travel">Travel</button>
-            <button class="onboarding-chip" data-topic="Food">Food</button>
-            <button class="onboarding-chip" data-topic="Opinion">Opinion</button>
-          </div>
-        </div>
-
-        <div class="onboarding-section">
-          <label class="onboarding-label">Region</label>
-          <div class="onboarding-chips" id="onboarding-regions">
-            <button class="onboarding-chip active" data-region="Global">Global</button>
-            <button class="onboarding-chip" data-region="North America">Americas</button>
-            <button class="onboarding-chip" data-region="Europe">Europe</button>
-            <button class="onboarding-chip" data-region="Asia">Asia</button>
-            <button class="onboarding-chip" data-region="Latin America">LatAm</button>
-            <button class="onboarding-chip" data-region="Middle East">Mid East</button>
-            <button class="onboarding-chip" data-region="Africa">Africa</button>
-          </div>
-        </div>
-
-        <button class="onboarding-go-btn" id="onboarding-go">Get my news</button>
-        <button class="onboarding-skip" id="onboarding-skip">Skip — show everything</button>
-      </div>
-    </div>
-
-    <!-- ── Feedback Spotlight (first-run coach mark) ── -->
-    <div class="spotlight-overlay" id="spotlight-overlay" style="display:none">
-      <div class="spotlight-tooltip">
-        <p>Explore the app and give feedback by pressing this button</p>
-        <button class="spotlight-dismiss" id="spotlight-dismiss">Got it</button>
       </div>
     </div>
 
@@ -630,7 +293,6 @@
             <span class="toggle-slider"></span>
           </label>
         </div>
-        <p class="hint">API key is configured server-side.</p>
         <div class="modal-actions">
           <button class="btn-primary" data-close-modal>Close</button>
         </div>

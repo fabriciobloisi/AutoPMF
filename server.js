@@ -417,52 +417,75 @@ app.post('/api/feedback/mark-processed', getFeedbackLimiter, requireFeedbackSecr
   }
 });
 
-// ── Weather Mock API (field names match weather.js WU-style expectations) ─────
+// ── Open-Meteo real weather integration ────────────────────────────────────
 
-const WEATHER_CURRENT = {
-  stationName: 'Amsterdam Schiphol',
-  obsTimeLocal: '2026-04-15T23:04:00+02:00',
-  temperature: 13, temperatureMax24Hour: 19, temperatureMin24Hour: 8,
-  feelsLike: 11, dewPoint: 8,
-  humidity: 74,
-  precip1Hour: 0.0, precip6Hour: 0.0, precip24Hour: 0.0, snow24Hour: 0,
-  windSpeed: 10, windDirectionCardinal: 'S', windDirection: 180, windGust: 18,
-  pressureMeanSeaLevel: 1017.9, pressureTendencyTrend: 'Steady', pressureTendencyCode: 0,
-  visibility: 10,
-  uvIndex: 0, uvDescription: 'Low',
-  cloudCover: 40, cloudCoverPhrase: 'Partly Cloudy',
-  iconCode: 29, wxPhraseLong: 'Partly Cloudy',
-  sunriseTimeLocal: '2026-04-15T06:26:00+02:00', sunsetTimeLocal: '2026-04-15T20:35:00+02:00',
-  shortRangeForecast: 'Partly cloudy skies, mild temperatures near 13°C with southerly breeze.',
-  temperatureChange24Hour: 2,
+const WMO_PHRASES = {
+  0:'Clear Sky',1:'Mainly Clear',2:'Partly Cloudy',3:'Overcast',
+  45:'Fog',48:'Icy Fog',
+  51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',
+  56:'Freezing Drizzle',57:'Heavy Freezing Drizzle',
+  61:'Light Rain',63:'Moderate Rain',65:'Heavy Rain',
+  66:'Freezing Rain',67:'Heavy Freezing Rain',
+  71:'Light Snow',73:'Moderate Snow',75:'Heavy Snow',77:'Snow Grains',
+  80:'Light Showers',81:'Showers',82:'Heavy Showers',
+  85:'Snow Showers',86:'Heavy Snow Showers',
+  95:'Thunderstorm',96:'Thunderstorm & Hail',99:'Heavy Thunderstorm',
 };
 
-const WEATHER_FORECAST = [
-  { dow: 'Wed', narrative: 'Partly cloudy with a pleasant 19°C high. Light south winds.', iconCode: 34, high: 19, low: 8, precipChance: 10, windDir: 'S', windSpeed: 10, moonPhase: 'Waxing Crescent' },
-  { dow: 'Thu', narrative: 'Rain likely with heavy periods. High near 16°C.', iconCode: 12, high: 16, low: 9, precipChance: 80, windDir: 'SW', windSpeed: 20, moonPhase: 'First Quarter' },
-  { dow: 'Fri', narrative: 'Mostly sunny skies return. High 19°C.', iconCode: 34, high: 19, low: 8, precipChance: 15, windDir: 'NW', windSpeed: 12, moonPhase: 'Waxing Gibbous' },
-  { dow: 'Sat', narrative: 'Showers likely especially morning. High 15°C.', iconCode: 11, high: 15, low: 7, precipChance: 60, windDir: 'W', windSpeed: 16, moonPhase: 'Waxing Gibbous' },
-  { dow: 'Sun', narrative: 'Partly cloudy, chance of afternoon showers. High 14°C.', iconCode: 28, high: 14, low: 6, precipChance: 30, windDir: 'SW', windSpeed: 11, moonPhase: 'Waxing Gibbous' },
-  { dow: 'Mon', narrative: 'Heavy rain expected. Windy with gusts to 45 km/h. High 12°C.', iconCode: 1, high: 12, low: 6, precipChance: 90, windDir: 'SW', windSpeed: 28, moonPhase: 'Full Moon' },
-  { dow: 'Tue', narrative: 'Clearing skies after overnight rain. High 13°C.', iconCode: 30, high: 13, low: 4, precipChance: 20, windDir: 'N', windSpeed: 9, moonPhase: 'Waning Gibbous' },
-];
+function wmoIcon(code, isDay = true) {
+  if (code === 0)  return isDay ? 32 : 33;
+  if (code === 1)  return isDay ? 34 : 33;
+  if (code === 2)  return isDay ? 28 : 27;
+  if (code === 3)  return 26;
+  if (code === 45 || code === 48) return 20;
+  if (code >= 51 && code <= 57)   return 11;
+  if (code >= 61 && code <= 67)   return 12;
+  if (code >= 71 && code <= 77)   return 16;
+  if (code >= 80 && code <= 82)   return 11;
+  if (code === 85 || code === 86) return 16;
+  if (code >= 95)  return 4;
+  return 28;
+}
 
-const WEATHER_HOURLY = (() => {
-  const hrs = [];
-  const temps =  [10,9,9,9,8,8,9,10,11,12,13,15,17,18,19,19,18,17,16,15,14,13,13,13];
-  const feels =  [ 8,7,7,7,6,6,7, 8, 9,10,11,13,15,16,17,17,16,15,14,13,12,11,11,11];
-  const icons =  [29,29,29,33,33,33,34,34,34,30,30,28,28,28,34,34,30,30,28,28,28,29,29,29];
-  const precip = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5,10,10,10, 5, 5, 5, 5,10,10,10, 5, 5, 5];
-  const wind =   [ 6, 6, 5, 5, 5, 4, 5, 6, 7, 8, 9,10,11,11,10,10, 9, 9, 8, 8, 7, 7, 7, 6];
-  const hum =    [78,79,80,80,81,81,80,79,78,77,76,74,72,70,68,67,68,70,72,74,75,76,77,78];
-  for (let h = 0; h < 24; h++) {
-    hrs.push({ hour: h, iconCode: icons[h],
-      temp: temps[h], feelsLike: feels[h], humidity: hum[h],
-      windSpeed: wind[h], precipChance: precip[h],
-    });
-  }
-  return hrs;
-})();
+function degCard(deg) {
+  return ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'][Math.round(((deg % 360) / 22.5)) % 16];
+}
+function uvLabel(v)  { return v<=2?'Low':v<=5?'Moderate':v<=7?'High':v<=10?'Very High':'Extreme'; }
+function ccLabel(p)  { return p<=10?'Clear':p<=30?'Mostly Clear':p<=60?'Partly Cloudy':p<=85?'Mostly Cloudy':'Cloudy'; }
+function moonName(v) {
+  if (v<0.03||v>0.97) return 'New Moon';
+  if (v<0.22) return 'Waxing Crescent'; if (v<0.28) return 'First Quarter';
+  if (v<0.47) return 'Waxing Gibbous';  if (v<0.53) return 'Full Moon';
+  if (v<0.72) return 'Waning Gibbous';  if (v<0.78) return 'Last Quarter';
+  return 'Waning Crescent';
+}
+function dateToDow(dateStr) {
+  const [y,m,d] = dateStr.split('-').map(Number);
+  return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(Date.UTC(y, m-1, d, 12)).getUTCDay()];
+}
+
+const wxCache = new Map();
+const WX_TTL = 5 * 60 * 1000;
+
+async function fetchOMWeather(lat, lon) {
+  const key = `wx_${(+lat).toFixed(2)}_${(+lon).toFixed(2)}`;
+  const hit = wxCache.get(key);
+  if (hit && Date.now() - hit.ts < WX_TTL) return hit.data;
+  const p = new URLSearchParams({
+    latitude: lat, longitude: lon, timezone: 'auto', past_days: 1, forecast_days: 8,
+    current: 'temperature_2m,relativehumidity_2m,apparent_temperature,is_day,precipitation,weathercode,cloudcover,windspeed_10m,winddirection_10m,windgusts_10m,pressure_msl,visibility,dewpoint_2m,uv_index',
+    hourly: 'temperature_2m,apparent_temperature,relativehumidity_2m,weathercode,windspeed_10m,precipitation_probability',
+    daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant,sunrise,sunset,moonphase',
+    wind_speed_unit: 'kmh',
+  });
+  const r = await fetch(`https://api.open-meteo.com/v1/forecast?${p}`);
+  if (!r.ok) throw new Error(`Open-Meteo ${r.status}`);
+  const data = await r.json();
+  wxCache.set(key, { ts: Date.now(), data });
+  return data;
+}
+
+const wxLimiter = rateLimit({ windowMs: 60_000, max: 30, message: { error: 'Too many requests' } });
 
 const WEATHER_AQI = {
   airQualityIndex: 45, primaryPollutant: 'O₃',
@@ -542,18 +565,121 @@ const SEARCH_DB = {
   tokyo:      [{ displayName:'Tokyo',      address:'Kanto, Japan',               type:'City',    flag:'🇯🇵', countryCode:'JP', lat:35.6762, lon:139.6503,locId:'RJTT', alt:6  }],
 };
 
-app.get('/api/weather/current', (req, res) => {
-  const { lat, lon } = req.query;
-  // For mock purposes return Amsterdam data for any coordinates
-  res.json(WEATHER_CURRENT);
+app.get('/api/weather/current', wxLimiter, async (req, res) => {
+  try {
+    const lat = parseFloat(req.query.lat) || 52.3676;
+    const lon = parseFloat(req.query.lon) || 4.9041;
+    const station = String(req.query.station || '').slice(0, 60) || `${lat.toFixed(2)}°N`;
+    const d = await fetchOMWeather(lat, lon);
+    const c = d.current, dl = d.daily;
+    const today = new Date().toISOString().slice(0, 10);
+    const ti = dl.time.findIndex(t => t === today);
+    const tidx = ti >= 0 ? ti : 1;
+    const isDay = c.is_day === 1;
+    const pressCode = c.pressure_msl >= 1013 ? 1 : c.pressure_msl <= 1005 ? -1 : 0;
+    res.json({
+      stationName: station,
+      obsTimeLocal: c.time + ':00',
+      temperature: Math.round(c.temperature_2m),
+      feelsLike: Math.round(c.apparent_temperature),
+      humidity: c.relativehumidity_2m,
+      dewPoint: Math.round(c.dewpoint_2m),
+      windSpeed: Math.round(c.windspeed_10m),
+      windDirectionCardinal: degCard(c.winddirection_10m),
+      windDirection: c.winddirection_10m,
+      windGust: Math.round(c.windgusts_10m),
+      pressureMeanSeaLevel: Math.round(c.pressure_msl * 10) / 10,
+      pressureTendencyTrend: pressCode > 0 ? 'Rising' : pressCode < 0 ? 'Falling' : 'Steady',
+      pressureTendencyCode: pressCode,
+      visibility: Math.round(c.visibility / 1000 * 10) / 10,
+      uvIndex: Math.round(c.uv_index),
+      uvDescription: uvLabel(c.uv_index),
+      cloudCover: c.cloudcover,
+      cloudCoverPhrase: ccLabel(c.cloudcover),
+      iconCode: wmoIcon(c.weathercode, isDay),
+      wxPhraseLong: WMO_PHRASES[c.weathercode] || 'Unknown',
+      precip1Hour: Math.round((c.precipitation || 0) * 10) / 10,
+      precip6Hour: 0,
+      precip24Hour: Math.round((dl.precipitation_sum?.[tidx] || 0) * 10) / 10,
+      snow24Hour: 0,
+      sunriseTimeLocal: dl.sunrise?.[tidx] || '',
+      sunsetTimeLocal: dl.sunset?.[tidx] || '',
+      temperatureMax24Hour: Math.round(dl.temperature_2m_max?.[tidx] || 0),
+      temperatureMin24Hour: Math.round(dl.temperature_2m_min?.[tidx] || 0),
+      temperatureChange24Hour: tidx > 0
+        ? Math.round((dl.temperature_2m_max[tidx] - dl.temperature_2m_max[tidx - 1]) * 10) / 10
+        : 0,
+      shortRangeForecast: `${WMO_PHRASES[c.weathercode] || 'Unknown'}. High ${Math.round(dl.temperature_2m_max?.[tidx] || 0)}°C today.`,
+    });
+  } catch (err) {
+    console.error('Weather current error:', err.message);
+    res.status(500).json({ error: 'Weather data unavailable' });
+  }
 });
 
-app.get('/api/weather/forecast', (req, res) => {
-  res.json(WEATHER_FORECAST);
+app.get('/api/weather/forecast', wxLimiter, async (req, res) => {
+  try {
+    const lat = parseFloat(req.query.lat) || 52.3676;
+    const lon = parseFloat(req.query.lon) || 4.9041;
+    const d = await fetchOMWeather(lat, lon);
+    const dl = d.daily;
+    const today = new Date().toISOString().slice(0, 10);
+    const si = Math.max(0, dl.time.findIndex(t => t === today));
+    const result = [];
+    for (let i = 0; i < 7 && (si + i) < dl.time.length; i++) {
+      const idx = si + i;
+      const high = Math.round(dl.temperature_2m_max[idx]);
+      const low  = Math.round(dl.temperature_2m_min[idx]);
+      const precipChance = dl.precipitation_probability_max[idx] || 0;
+      const windSpeed = Math.round(dl.windspeed_10m_max[idx]);
+      const windDir = degCard(dl.winddirection_10m_dominant[idx] || 0);
+      const code = dl.weathercode[idx];
+      const phrase = WMO_PHRASES[code] || 'Unknown';
+      let narrative = `${phrase}. High ${high}°C, low ${low}°C`;
+      if (precipChance > 50) narrative += `. ${precipChance}% rain chance`;
+      if (windSpeed > 25) narrative += `. Windy at ${windSpeed} km/h`;
+      result.push({
+        dow: dateToDow(dl.time[idx]),
+        narrative,
+        iconCode: wmoIcon(code, true),
+        high, low, precipChance, windDir, windSpeed,
+        moonPhase: moonName(dl.moonphase?.[idx] ?? 0),
+      });
+    }
+    res.json(result);
+  } catch (err) {
+    console.error('Weather forecast error:', err.message);
+    res.status(500).json({ error: 'Forecast unavailable' });
+  }
 });
 
-app.get('/api/weather/hourly', (req, res) => {
-  res.json(WEATHER_HOURLY);
+app.get('/api/weather/hourly', wxLimiter, async (req, res) => {
+  try {
+    const lat = parseFloat(req.query.lat) || 52.3676;
+    const lon = parseFloat(req.query.lon) || 4.9041;
+    const d = await fetchOMWeather(lat, lon);
+    const h = d.hourly;
+    const today = new Date().toISOString().slice(0, 10);
+    const si = h.time.findIndex(t => t.startsWith(today));
+    const startIdx = si >= 0 ? si : 24;
+    const result = [];
+    for (let i = 0; i < 24 && (startIdx + i) < h.time.length; i++) {
+      const idx = startIdx + i;
+      result.push({
+        hour: i,
+        iconCode: wmoIcon(h.weathercode[idx], i >= 6 && i <= 20),
+        temp: Math.round(h.temperature_2m[idx]),
+        feelsLike: Math.round(h.apparent_temperature[idx]),
+        humidity: h.relativehumidity_2m[idx],
+        windSpeed: Math.round(h.windspeed_10m[idx]),
+        precipChance: h.precipitation_probability[idx] || 0,
+      });
+    }
+    res.json(result);
+  } catch (err) {
+    console.error('Weather hourly error:', err.message);
+    res.status(500).json({ error: 'Hourly data unavailable' });
+  }
 });
 
 app.get('/api/weather/aqi', (req, res) => {
