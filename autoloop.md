@@ -74,6 +74,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 9 | 2026-04-16 | 8.0 | Animated loading dots, larger spinner, refresh always acknowledges rapid taps | 9.0 |
 | 10 | 2026-04-16 | 7.6 | City-switch header animation, font/spacing boost, empty search validation | 9.0 |
 | 11 | 2026-04-16 | 7.6 | No code changes — duplicate feedback entries from cycle 10 returned by server (timing race on mark-processed) | 9.0 |
+| 12 | 2026-04-16 | 8.0 | "Updated X ago" in hero, longer toast duration (2.5→3.5s) | 9.0 |
 
 ---
 

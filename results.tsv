@@ -100,3 +100,4 @@ cycle	date	nps	status	description
 9	2026-04-16	8.0	keep	Animated loading dots, larger spinner, refresh always acknowledges rapid taps
 10	2026-04-16	7.6	keep	City-switch header animation, font/spacing boost, empty search validation
 11	2026-04-16	7.6	keep	No code changes — duplicate feedback from cycle 10 (timing race on mark-processed)
+12	2026-04-16	8.0	keep	Persistent Updated-ago in hero, longer toast duration
