@@ -69,6 +69,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 4 | 2026-04-16 | 6.1 | Min 400ms loading display + city name in error state + larger tab targets | 9.0 |
 | 5 | 2026-04-16 | 4.0 | Vercel Blob weather cache — 30-min fallback survives cold starts | 9.0 |
 | 6 | 2026-04-16 | 5.6 | Fix 400: remove deprecated moonphase from Open-Meteo + city flag in loading/error | 9.0 |
+| 7 | 2026-04-16 | 2.0 | Actionable error recovery: "Try a different city" button, Retry feedback, refresh spinner tied to load | 9.0 |
 
 ---
 
