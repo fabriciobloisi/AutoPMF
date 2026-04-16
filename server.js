@@ -459,6 +459,11 @@ function moonName(v) {
   if (v<0.72) return 'Waning Gibbous';  if (v<0.78) return 'Last Quarter';
   return 'Waning Crescent';
 }
+function moonPhaseForDate(dateStr) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const jd = Date.UTC(y, m - 1, d) / 86400000 + 2440587.5;
+  return ((jd - 2451550.1) % 29.530589 + 29.530589) % 29.530589 / 29.530589;
+}
 function dateToDow(dateStr) {
   const [y,m,d] = dateStr.split('-').map(Number);
   return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(Date.UTC(y, m-1, d, 12)).getUTCDay()];
@@ -480,7 +485,7 @@ async function fetchOMWeather(lat, lon) {
     latitude: lat, longitude: lon, timezone: 'auto', past_days: 1, forecast_days: 8,
     current: 'temperature_2m,relativehumidity_2m,apparent_temperature,is_day,precipitation,weathercode,cloudcover,windspeed_10m,winddirection_10m,windgusts_10m,pressure_msl,visibility,dewpoint_2m,uv_index',
     hourly: 'temperature_2m,apparent_temperature,relativehumidity_2m,weathercode,windspeed_10m,precipitation_probability',
-    daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant,sunrise,sunset,moonphase',
+    daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,windspeed_10m_max,winddirection_10m_dominant,sunrise,sunset',
     wind_speed_unit: 'kmh',
   });
   try {
@@ -667,7 +672,7 @@ app.get('/api/weather/forecast', wxLimiter, async (req, res) => {
         narrative,
         iconCode: wmoIcon(code, true),
         high, low, precipChance, windDir, windSpeed,
-        moonPhase: moonName(dl.moonphase?.[idx] ?? 0),
+        moonPhase: moonName(moonPhaseForDate(dl.time[idx])),
       });
     }
     res.json(result);
