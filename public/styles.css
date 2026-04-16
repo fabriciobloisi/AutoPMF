@@ -256,7 +256,14 @@ input:focus, textarea:focus, button:focus { outline: none; }
 }
 .sub-bar-title {
   font-size: 15px; font-weight: 600; color: #000; letter-spacing: -0.2px;
+  display: inline-block;
 }
+@keyframes wx-city-pulse {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.wx-city-changed { animation: wx-city-pulse 0.45s ease-out; }
 
 /* ── Nav Bar ── */
 .nav-bar {
