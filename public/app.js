@@ -60,7 +60,7 @@ drawerBackdrop.addEventListener('click', closeDrawer);
 
 // ── Refresh button → reload weather ──────────────────────────────────────────
 $('refresh-btn').addEventListener('click', () => {
-  if (typeof WX !== 'undefined') { WX.loadAll(); }
+  if (typeof WX !== 'undefined' && !WX.busy) { WX.loadAll(); }
   const svg = $('refresh-btn').querySelector('svg');
   svg.classList.add('spinning');
   setTimeout(() => svg.classList.remove('spinning'), 1200);
