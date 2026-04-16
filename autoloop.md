@@ -71,6 +71,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 6 | 2026-04-16 | 5.6 | Fix 400: remove deprecated moonphase from Open-Meteo + city flag in loading/error | 9.0 |
 | 7 | 2026-04-16 | 2.0 | Actionable error recovery: "Try a different city" button, Retry feedback, refresh spinner tied to load | 9.0 |
 | 8 | 2026-04-16 | 6.7 | Refresh toast, search input retention, labeled Remove button in recent searches | 9.0 |
+| 9 | 2026-04-16 | 8.0 | Animated loading dots, larger spinner, refresh always acknowledges rapid taps | 9.0 |
 
 ---
 
