@@ -101,3 +101,4 @@ cycle	date	nps	status	description
 10	2026-04-16	7.6	keep	City-switch header animation, font/spacing boost, empty search validation
 11	2026-04-16	7.6	keep	No code changes — duplicate feedback from cycle 10 (timing race on mark-processed)
 12	2026-04-16	8.0	keep	Persistent Updated-ago in hero, longer toast duration
+13	2026-04-16	7.3	keep	Fix city-switch race condition (generation counter), active tab border indicator

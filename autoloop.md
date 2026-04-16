@@ -75,6 +75,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 10 | 2026-04-16 | 7.6 | City-switch header animation, font/spacing boost, empty search validation | 9.0 |
 | 11 | 2026-04-16 | 7.6 | No code changes — duplicate feedback entries from cycle 10 returned by server (timing race on mark-processed) | 9.0 |
 | 12 | 2026-04-16 | 8.0 | "Updated X ago" in hero, longer toast duration (2.5→3.5s) | 9.0 |
+| 13 | 2026-04-16 | 7.3 | Fix city-switch race condition (generation counter), active tab border indicator | 9.0 |
 
 ---
 
