@@ -60,12 +60,19 @@ drawerBackdrop.addEventListener('click', closeDrawer);
 
 // ── Refresh button → reload weather ──────────────────────────────────────────
 $('refresh-btn').addEventListener('click', () => {
-  const svg = $('refresh-btn').querySelector('svg');
+  const btn = $('refresh-btn');
+  const svg = btn.querySelector('svg');
+  if (typeof WX !== 'undefined' && WX.busy) {
+    btn.classList.add('wx-refresh-busy');
+    setTimeout(() => btn.classList.remove('wx-refresh-busy'), 400);
+    return;
+  }
+  btn.classList.add('wx-refreshing');
   svg.classList.add('spinning');
-  if (typeof WX !== 'undefined' && !WX.busy) {
-    WX.loadAll().finally(() => svg.classList.remove('spinning'));
+  if (typeof WX !== 'undefined') {
+    WX.loadAll().finally(() => { svg.classList.remove('spinning'); btn.classList.remove('wx-refreshing'); });
   } else {
-    setTimeout(() => svg.classList.remove('spinning'), 700);
+    setTimeout(() => { svg.classList.remove('spinning'); btn.classList.remove('wx-refreshing'); }, 700);
   }
 });
 
