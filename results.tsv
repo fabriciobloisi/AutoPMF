@@ -107,3 +107,4 @@ cycle	date	nps	status	description
 16	2026-04-16	7.4	keep	Search UX: guided tip, example placeholder, same-city feedback, bigger popular cities
 17	2026-04-16	8.0	keep	Refresh button persistent loading state — dims and spins for full load duration
 18	2026-04-16	7.7	keep	City name in hero, bolder active tab indicator
+19	2026-04-16	7.0	keep	Updated-just-now more visible + green flash on refresh
