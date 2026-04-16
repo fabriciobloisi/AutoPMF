@@ -18,7 +18,7 @@ function showToast(msg) {
   el.textContent = msg;
   el.classList.add('visible');
   clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.classList.remove('visible'), 2500);
+  _toastTimer = setTimeout(() => el.classList.remove('visible'), 3500);
 }
 
 const SESSION_KEY = 'autopmf_session_id';
