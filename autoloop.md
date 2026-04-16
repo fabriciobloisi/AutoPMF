@@ -65,6 +65,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 0 | 2026-04-15 | — | Baseline: fresh start with weather app | 9.0 |
 | 1 | 2026-04-16 | 5.0 | Real weather data via Open-Meteo API (current, forecast, hourly) | 9.0 |
 | 2 | 2026-04-16 | 5.4 | Error recovery UX: retry button, city-switch toast, font/spacing boost | 9.0 |
+| 3 | 2026-04-16 | 4.0 | Debounce concurrent loads + auto-retry 15s on error | 9.0 |
 
 ---
 
