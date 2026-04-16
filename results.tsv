@@ -109,3 +109,4 @@ cycle	date	nps	status	description
 18	2026-04-16	7.7	keep	City name in hero, bolder active tab indicator
 19	2026-04-16	7.0	keep	Updated-just-now more visible + green flash on refresh
 20	2026-04-16	7.6	keep	Drawer discoverability in onboarding, press feedback on cities/recent, typography bumps
+21	2026-04-16	8.0	revert	Revert green flash, add tab press scale animation
