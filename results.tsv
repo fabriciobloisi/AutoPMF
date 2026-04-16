@@ -92,3 +92,4 @@ cycle	date	nps	status	description
 1	2026-04-16	5.0	keep	Real weather data via Open-Meteo API — live current conditions 7-day forecast hourly data
 2	2026-04-16	5.4	keep	Error recovery UX: retry button, city-switch toast, font/spacing boost
 3	2026-04-16	4.0	keep	Debounce concurrent loads + auto-retry 15s on error
+4	2026-04-16	6.1	keep	Min 400ms loading display + city name in error state + larger tab targets
