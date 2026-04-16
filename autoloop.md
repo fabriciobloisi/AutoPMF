@@ -79,6 +79,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 14 | 2026-04-16 | 7.0 | First-visit onboarding hint banner (dismissable, localStorage-gated) | 9.0 |
 | 15 | 2026-04-16 | 7.4 | Expanded onboarding card, stronger active tab, typography/spacing boost | 9.0 |
 | 16 | 2026-04-16 | 7.4 | Search UX: guided tip, example placeholder, same-city feedback, bigger popular cities | 9.0 |
+| 17 | 2026-04-16 | 8.0 | Refresh button persistent loading state — dims and spins for full load duration | 9.0 |
 
 ---
 

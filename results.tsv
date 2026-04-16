@@ -105,3 +105,4 @@ cycle	date	nps	status	description
 14	2026-04-16	7.0	keep	First-visit onboarding hint banner for new users
 15	2026-04-16	7.4	keep	Expanded onboarding card, stronger active tab, typography/spacing boost
 16	2026-04-16	7.4	keep	Search UX: guided tip, example placeholder, same-city feedback, bigger popular cities
+17	2026-04-16	8.0	keep	Refresh button persistent loading state — dims and spins for full load duration
