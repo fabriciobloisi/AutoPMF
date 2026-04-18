@@ -89,6 +89,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 24 | 2026-04-16 | 8.0 | Refresh busy-tap spring-bounce animation | 9.0 |
 | 25 | 2026-04-19 | 6.4 | Settings gear in header + stronger modal open animation + toast | 9.0 |
 | 26 | 2026-04-19 | 7.0 | Generic 404 handler hides Express routing detail | 9.0 |
+| 27 | 2026-04-19 | 6.6 | Fix About modal overflow (max-height 85vh + scroll) + toast confirm | 9.0 |
 
 ---
 
