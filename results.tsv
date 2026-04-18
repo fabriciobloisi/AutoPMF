@@ -120,3 +120,4 @@ cycle	date	nps	status	description
 29	2026-04-19	7.1	keep	Escape user strings in search + recent searches (XSS defense)
 30	2026-04-19	7.0	keep	Per-tab intro helper text on Forecast/Calendar/History + fix ship script
 31	2026-04-19	7.2	keep	Forecast scroll-fade affordance + tighter strip + bolder day labels
+32	2026-04-19	7.0	keep	Title tooltips on every icon button
