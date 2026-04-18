@@ -114,3 +114,4 @@ cycle	date	nps	status	description
 23	2026-04-16	7.1	keep	Fix missing modal-in/sheet-up keyframes + search result selection highlight
 24	2026-04-16	8.0	keep	Refresh busy-tap spring-bounce animation
 25	2026-04-19	6.4	keep	Settings gear in header + stronger modal open animation + toast
+26	2026-04-19	7.0	keep	Generic 404 handler hides Express routing detail

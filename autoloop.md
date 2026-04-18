@@ -88,6 +88,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 23 | 2026-04-16 | 7.1 | Fix missing modal-in/sheet-up keyframes + search result selection highlight | 9.0 |
 | 24 | 2026-04-16 | 8.0 | Refresh busy-tap spring-bounce animation | 9.0 |
 | 25 | 2026-04-19 | 6.4 | Settings gear in header + stronger modal open animation + toast | 9.0 |
+| 26 | 2026-04-19 | 7.0 | Generic 404 handler hides Express routing detail | 9.0 |
 
 ---
 
