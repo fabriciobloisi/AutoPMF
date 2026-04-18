@@ -117,3 +117,4 @@ cycle	date	nps	status	description
 26	2026-04-19	7.0	keep	Generic 404 handler hides Express routing detail
 27	2026-04-19	6.6	keep	Fix About modal overflow + toast confirm
 28	2026-04-19	7.0	keep	Larger 44px header icon tap targets + stronger press state
+29	2026-04-19	7.1	keep	Escape user strings in search + recent searches (XSS defense)
