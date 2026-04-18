@@ -744,6 +744,17 @@ app.get('/api/weather/search', (req, res) => {
   res.json(results.slice(0, 8));
 });
 
+// ── Generic 404 handler ─────────────────────────────────────────────────────
+// Avoid Express's default "Cannot GET /path" response, which echoes the
+// requested route back to the client and hints at the underlying framework.
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    res.status(404).json({ error: 'Not found' });
+  } else {
+    res.status(404).type('html').send('<!doctype html><meta charset="utf-8"><title>Not found</title><style>body{font:16px system-ui;margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:#0f2847;color:#fff;text-align:center}</style><div><h1 style="font-size:22px;margin:0 0 8px">Page not found</h1><p style="opacity:.7;margin:0">The page you requested is not available.</p></div>');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`AutoPMF running at http://localhost:${PORT}`);
 });
