@@ -272,8 +272,19 @@ purpleToggle.addEventListener('change', () => applyPurpleTheme(purpleToggle.chec
 
 // ── About Modal ───────────────────────────────────────────────────────────────
 const aboutModal = $('about-modal');
-function openAbout()  { closeDrawer(); aboutModal.classList.add('open'); }
-function closeAbout() { aboutModal.classList.remove('open'); }
+function openAbout()  {
+  closeDrawer();
+  aboutModal.classList.add('open');
+  document.body.classList.add('modal-open');
+  aboutModal.scrollTop = 0;
+  const sheet = aboutModal.querySelector('.modal-sheet');
+  if (sheet) sheet.scrollTop = 0;
+  if (typeof showToast === 'function') showToast('About');
+}
+function closeAbout() {
+  aboutModal.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
 $('about-btn').addEventListener('click', openAbout);
 aboutModal.querySelectorAll('[data-close-about]').forEach(el => el.addEventListener('click', closeAbout));
 
