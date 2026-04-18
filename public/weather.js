@@ -13,6 +13,12 @@ let histStart = '2026-04-01', histEnd = '2026-04-15', histData = null;
 let histSortCol = 'date', histSortDir = 1;
 let searchTO = null;
 let charts = {};
+let loadBusy = false;
+let loadGeneration = 0;
+let hadError = false;
+let isFirstLoad = true;
+let suppressRefreshToast = false;
+let lastUpdated = null;
 let recentSearches = JSON.parse(localStorage.getItem('wx_recent') || '["Amsterdam, NL","London, UK","Paris, FR"]');
 
 // ── DOM helpers ───────────────────────────────────────────────────────────────
@@ -21,6 +27,9 @@ const qsa = s => document.querySelectorAll(s);
 function setContent(html) {
   const el = $('wx-content');
   if (el) { el.scrollTop = 0; el.innerHTML = html; }
+}
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 // ── Icons / Colors ────────────────────────────────────────────────────────────
@@ -38,6 +47,7 @@ const aqiLbl = a => a<=50?'Good':a<=100?'Moderate':a<=150?'Unhealthy (Sensitive)
 const polCol = n => n<=1?'#22c55e':n<=2?'#84cc16':n<=3?'#eab308':n<=4?'#f97316':'#ef4444';
 const piCol  = mm => mm<=0?'rgba(37,99,235,0.1)':mm<=2?'rgba(37,99,235,0.35)':mm<=5?'rgba(37,99,235,0.55)':mm<=10?'rgba(37,99,235,0.75)':'rgba(37,99,235,0.9)';
 const wArrow = d => '↓↙←↖↑↗→↘'[Math.round(((d%360)/45))%8];
+function updatedAgo() { if(!lastUpdated) return ''; const s=Math.round((Date.now()-lastUpdated)/1000); if(s<60) return 'Updated just now'; if(s<3600) return `Updated ${Math.floor(s/60)}m ago`; return `Updated ${Math.floor(s/3600)}h ago`; }
 const moonEm = p => ({'New Moon':'🌑','Waxing Crescent':'🌒','First Quarter':'🌓','Waxing Gibbous':'🌔','Full Moon':'🌕','Waning Gibbous':'🌖','Last Quarter':'🌗','Waning Crescent':'🌘'})[p]||'🌙';
 function hexRgba(hex, a) {
   const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
@@ -52,16 +62,63 @@ async function api(path) {
 }
 
 async function loadAll() {
-  setContent('<div class="wx-loading"><div class="wx-spinner"></div><p>Loading weather for ' + loc.name + '…</p></div>');
+  if (loadBusy) return;
+  loadBusy = true;
+  const myGen = loadGeneration;
+  const minMs = 400;
+  const t0 = Date.now();
+  const wait = () => { const rem = minMs - (Date.now() - t0); return rem > 0 ? new Promise(r => setTimeout(r, rem)) : Promise.resolve(); };
+  setContent(`<div class="wx-loading">
+    <div class="wx-load-city-flag">${loc.flag||'🌤️'}</div>
+    <p class="wx-load-city-name">${loc.name}</p>
+    <div class="wx-spinner"></div>
+    <p>Loading weather<span class="wx-dot wx-d1">.</span><span class="wx-dot wx-d2">.</span><span class="wx-dot wx-d3">.</span></p>
+  </div>`);
   try {
     const [current, forecast, hourly, aqi, pollen] = await Promise.all([
-      api('/api/weather/current'), api('/api/weather/forecast'),
-      api('/api/weather/hourly'), api('/api/weather/aqi'), api('/api/weather/pollen')
+      api(`/api/weather/current?lat=${loc.lat}&lon=${loc.lon}&station=${encodeURIComponent(loc.name + (loc.country ? ', ' + loc.country : ''))}`),
+      api(`/api/weather/forecast?lat=${loc.lat}&lon=${loc.lon}`),
+      api(`/api/weather/hourly?lat=${loc.lat}&lon=${loc.lon}`),
+      api('/api/weather/aqi'),
+      api('/api/weather/pollen'),
     ]);
+    await wait();
+    if (myGen !== loadGeneration) { loadBusy = false; loadAll(); return; }
+    const recovering = hadError;
+    const wasFirst = isFirstLoad;
+    const suppressed = suppressRefreshToast;
+    hadError = false;
+    isFirstLoad = false;
+    suppressRefreshToast = false;
+    lastUpdated = new Date();
     cache = { current, forecast, hourly, aqi, pollen };
+    loadBusy = false;
     renderTab(tab);
+    if (recovering) {
+      if (typeof showToast === 'function') showToast('Weather loaded ✓');
+    } else if (!wasFirst && !suppressed && typeof showToast === 'function') {
+      showToast('Refreshed ✓');
+    }
   } catch(e) {
-    setContent(`<div class="wx-error">⚠️ Could not load weather data.<br><small>${e.message}</small></div>`);
+    await wait();
+    if (myGen !== loadGeneration) { loadBusy = false; loadAll(); return; }
+    hadError = true;
+    loadBusy = false;
+    setContent(`<div class="wx-error">
+      <div class="wx-load-city-flag">${loc.flag||'⚠️'}</div>
+      <p class="wx-load-city-name" style="color:#1c1c1e">${loc.name}</p>
+      <p class="wx-err-title">Weather data unavailable</p>
+      <p class="wx-err-body">Can't reach the weather service. Tap Retry, or switch to a different city.</p>
+      <button class="wx-retry-btn" id="wx-retry">Retry</button>
+      <button class="wx-switch-city-btn" id="wx-switch-city">Try a different city</button>
+    </div>`);
+    document.getElementById('wx-retry')?.addEventListener('click', () => {
+      const btn = document.getElementById('wx-retry');
+      if (btn) { btn.textContent = 'Retrying…'; btn.disabled = true; }
+      loadAll();
+    });
+    document.getElementById('wx-switch-city')?.addEventListener('click', () => switchTab('search'));
+    setTimeout(() => { if (!cache.current) loadAll(); }, 15000);
   }
 }
 
@@ -87,13 +144,21 @@ function renderTab(t) {
 function renderToday() {
   const c = cache.current, a = cache.aqi, p = cache.pollen;
   const today = (p||[]).find(d => d.period === 'Today') || (p||[])[0] || {};
+  const showHint = !localStorage.getItem('wx_welcomed');
   setContent(`<div class="wx-today">
+    ${showHint ? `<div class="wx-onboard-hint" id="wx-onboard">
+      <div class="wx-onboard-header"><span class="wx-onboard-title">👋 Welcome to your weather dashboard</span><button class="wx-onboard-close" id="wx-onboard-close" aria-label="Dismiss">Dismiss</button></div>
+      <div class="wx-onboard-tabs"><span class="wx-onboard-tab">☀️ Today — conditions</span><span class="wx-onboard-tab">📅 Forecast — 7-day</span><span class="wx-onboard-tab">🗓 Calendar — monthly</span><span class="wx-onboard-tab">📊 History — records</span><span class="wx-onboard-tab">🔍 Search — switch city</span></div>
+      <div class="wx-onboard-body">Tap any tab below to explore · Use Search to change your city · Tap <strong>☰</strong> top-left for Stats, Progress &amp; Settings</div>
+    </div>` : ''}
     <div class="wx-hero">
+      <div class="wx-hero-city">${loc.flag} ${loc.name}</div>
       <div class="wx-hero-icon">${wi(c.iconCode)}</div>
       <div class="wx-hero-temp">${c.temperature}°<span class="wx-hero-unit">C</span></div>
       <div class="wx-hero-phrase">${c.wxPhraseLong}</div>
       <div class="wx-hero-sub">Feels like ${c.feelsLike}° &nbsp;·&nbsp; H:${c.temperatureMax24Hour}° L:${c.temperatureMin24Hour}°</div>
       <div class="wx-hero-station">📍 ${c.stationName} · ${c.obsTimeLocal.slice(11,16)} CEST</div>
+      <div class="wx-hero-updated">${updatedAgo()}</div>
     </div>
     <div class="wx-qs-row">
       ${[['💧',`${c.humidity}%`,'Humidity'],['💨',`${c.windDirectionCardinal} ${c.windSpeed}`,'km/h'],
@@ -142,6 +207,10 @@ function renderToday() {
     </div>
     <div style="height:16px"></div>
   </div>`);
+  document.getElementById('wx-onboard-close')?.addEventListener('click', () => {
+    localStorage.setItem('wx_welcomed', '1');
+    document.getElementById('wx-onboard')?.remove();
+  });
 }
 
 function renderSunArc(riseStr, setStr) {
@@ -432,14 +501,15 @@ function renderSearchView() {
     <div class="wx-sbox-wrap">
       <div class="wx-sbox">
         <span class="wx-sbox-ic">🔍</span>
-        <input type="search" id="wx-si" class="wx-sinput" placeholder="Search city, airport, postal code…" autocomplete="off" spellcheck="false">
+        <input type="search" id="wx-si" class="wx-sinput" placeholder="e.g. London, Tokyo, New York…" autocomplete="off" spellcheck="false">
         <button class="wx-sclr" id="wx-sc" style="display:none">✕</button>
       </div>
+      <div class="wx-search-tip">Type a city name, then tap a result to switch location</div>
     </div>
     <div id="wx-sr">
       <div class="wx-section-lbl">Recent</div>
       <div class="wx-recent">
-        ${recentSearches.length?recentSearches.map(r=>`<div class="wx-rec-item" data-q="${r.split(',')[0].trim().toLowerCase()}"><span>🕒</span><span class="wx-rec-txt">${r}</span><button class="wx-rec-del" data-r="${r}">✕</button></div>`).join(''):'<div class="wx-empty-hint">No recent searches</div>'}
+        ${recentSearches.length?recentSearches.map(r=>`<div class="wx-rec-item" data-q="${esc(r.split(',')[0].trim().toLowerCase())}"><span>🕒</span><span class="wx-rec-txt">${esc(r)}</span><button class="wx-rec-del" data-r="${esc(r)}" aria-label="Remove ${esc(r)}">Remove</button></div>`).join(''):'<div class="wx-empty-hint">No recent searches</div>'}
       </div>
       <div class="wx-section-lbl">Popular Cities</div>
       <div class="wx-popular">
@@ -458,14 +528,28 @@ function renderSearchView() {
   qsa('.wx-pop').forEach(btn=>btn.addEventListener('click',()=>{ if(input){input.value=btn.dataset.q;clr.style.display='';} doSearch(btn.dataset.q); }));
 }
 
-function showDefaults() { renderSearchView(); }
+function showDefaults() {
+  const sr = document.getElementById('wx-sr');
+  if (!sr) { renderSearchView(); return; }
+  const recHtml = recentSearches.length
+    ? recentSearches.map(r=>`<div class="wx-rec-item" data-q="${esc(r.split(',')[0].trim().toLowerCase())}"><span>🕒</span><span class="wx-rec-txt">${esc(r)}</span><button class="wx-rec-del" data-r="${esc(r)}" aria-label="Remove ${esc(r)}">Remove</button></div>`).join('')
+    : '<div class="wx-empty-hint">No recent searches</div>';
+  sr.innerHTML = `<div class="wx-section-lbl">Recent</div><div class="wx-recent">${recHtml}</div>
+    <div class="wx-section-lbl">Popular Cities</div>
+    <div class="wx-popular">${[['amsterdam','🇳🇱','Amsterdam'],['rotterdam','🇳🇱','Rotterdam'],['london','🇬🇧','London'],['paris','🇫🇷','Paris'],['berlin','🇩🇪','Berlin'],['rome','🇮🇹','Rome']].map(([q,f,n])=>`<button class="wx-pop" data-q="${q}">${f} ${n}</button>`).join('')}</div>`;
+  const input = document.getElementById('wx-si'), clr = document.getElementById('wx-sc');
+  sr.querySelectorAll('.wx-rec-del').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();recentSearches=recentSearches.filter(r=>r!==btn.dataset.r);localStorage.setItem('wx_recent',JSON.stringify(recentSearches));showDefaults();}));
+  sr.querySelectorAll('.wx-rec-item').forEach(item=>item.addEventListener('click',()=>{if(input){input.value=item.dataset.q;if(clr)clr.style.display='';}doSearch(item.dataset.q);}));
+  sr.querySelectorAll('.wx-pop').forEach(btn=>btn.addEventListener('click',()=>{if(input){input.value=btn.dataset.q;if(clr)clr.style.display='';}doSearch(btn.dataset.q);}));
+}
 
 async function doSearch(q) {
   const el=$('wx-sr'); if(!el)return;
+  if(!/[a-zA-Z\u00C0-\u024F]/.test(q)){ el.innerHTML='<div class="wx-empty-hint">Try a city name like <strong>London</strong> or <strong>Berlin</strong></div>'; return; }
   el.innerHTML='<div class="wx-search-loading">🔍 Searching…</div>';
   try {
     const results=await api(`/api/weather/search?q=${encodeURIComponent(q)}`);
-    if(!results.length){ el.innerHTML=`<div class="wx-empty-hint">No results for "${q}"</div>`; return; }
+    if(!results.length){ el.innerHTML=`<div class="wx-empty-hint">No results for "${esc(q)}"</div>`; return; }
     el.innerHTML=`<div class="wx-section-lbl">Results</div><div class="wx-results">${results.map(r=>`
       <div class="wx-result" data-r='${JSON.stringify(r).replace(/'/g,"&#39;")}'>
         <div class="wx-res-flag">${r.flag}</div>
@@ -475,27 +559,42 @@ async function doSearch(q) {
           <div class="wx-res-meta"><span class="wx-type-badge">${r.type}</span><span>${r.lat.toFixed(2)}°N · ${r.lon.toFixed(2)}°E</span></div>
         </div>
       </div>`).join('')}</div>`;
-    qsa('.wx-result').forEach(item=>item.addEventListener('click',()=>{ try{ selectLoc(JSON.parse(item.dataset.r)); }catch(e){} }));
+    qsa('.wx-result').forEach(item=>item.addEventListener('click',()=>{
+      try {
+        item.style.background = 'rgba(0,122,255,0.12)';
+        setTimeout(() => selectLoc(JSON.parse(item.dataset.r)), 180);
+      } catch(e) {}
+    }));
   } catch(e) { el.innerHTML=`<div class="wx-empty-hint">Search failed</div>`; }
 }
 
 function selectLoc(r) {
+  const isSameCity = r.displayName === loc.name && r.countryCode === loc.country;
+  if (isSameCity) {
+    if (typeof showToast === 'function') showToast(`Already showing ${loc.name}`);
+    return;
+  }
   loc={name:r.displayName,country:r.countryCode,flag:r.flag,lat:r.lat,lon:r.lon,station:r.locId||r.icaoCode||'',tz:r.timezone,alt:r.alt||10};
   const entry=`${r.displayName}, ${r.countryCode}`;
   recentSearches=[entry,...recentSearches.filter(x=>x!==entry)].slice(0,5);
   localStorage.setItem('wx_recent',JSON.stringify(recentSearches));
-  const ttl=document.querySelector('#weather-screen .sub-bar-title');
-  if(ttl) ttl.textContent=`🌤️ ${loc.name}`;
+  const ttl=document.getElementById('wx-location-title')||document.querySelector('#weather-screen .sub-bar-title');
+  if(ttl) { ttl.textContent=`${loc.flag||'🌤️'} ${loc.name}`; ttl.classList.remove('wx-city-changed'); void ttl.offsetWidth; ttl.classList.add('wx-city-changed'); }
+  if(typeof showToast==='function') showToast(`Switched to ${loc.name}`);
   cache={}; histData=null; calData=null;
+  loadGeneration++;
+  loadBusy = false;
+  suppressRefreshToast = true;
   loadAll(); switchTab('today');
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 function init() {
   qsa('.wx-tab').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+  loadAll();
 }
 
-return { init, loadAll, switchTab };
+return { init, loadAll, switchTab, get busy() { return loadBusy; } };
 })();
 
 // Auto-initialise tab click handlers once DOM is ready
