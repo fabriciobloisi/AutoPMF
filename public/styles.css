@@ -289,15 +289,15 @@ input:focus, textarea:focus, button:focus { outline: none; }
   height: 20px; width: auto;
 }
 .nav-title { font-size: 17px; font-weight: 700; color: #000; letter-spacing: -0.3px; }
-.nav-right { display: flex; align-items: center; }
+.nav-right { display: flex; align-items: center; gap: 2px; }
 .icon-btn {
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   color: #0062CC;
-  border-radius: 10px;
-  transition: background 0.15s;
+  border-radius: 11px;
+  transition: background 0.15s, transform 0.1s;
 }
-.icon-btn:active { background: rgba(0,98,204,0.1); }
+.icon-btn:active { background: rgba(0,98,204,0.18); transform: scale(0.94); }
 .icon-btn.danger { color: #ff3b30; }
 .icon-btn.danger:active { background: rgba(255,59,48,0.1); }
 .icon-btn.text-btn {
