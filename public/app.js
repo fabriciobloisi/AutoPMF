@@ -225,9 +225,18 @@ function drawNpsChart(grades) {
 }
 
 // ── Settings Modal ────────────────────────────────────────────────────────────
-function openSettings()  { settingsModal.classList.add('open'); }
-function closeSettings() { settingsModal.classList.remove('open'); }
+function openSettings()  {
+  settingsModal.classList.add('open');
+  document.body.classList.add('modal-open');
+  if (typeof showToast === 'function') showToast('Settings');
+}
+function closeSettings() {
+  settingsModal.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
 $('settings-btn').addEventListener('click', () => { closeDrawer(); openSettings(); });
+const headerSettingsBtn = $('header-settings-btn');
+if (headerSettingsBtn) headerSettingsBtn.addEventListener('click', openSettings);
 settingsModal.querySelectorAll('[data-close-modal]').forEach(el => el.addEventListener('click', closeSettings));
 
 // ── Dark Mode ─────────────────────────────────────────────────────────────────

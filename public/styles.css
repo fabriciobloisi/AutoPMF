@@ -1717,16 +1717,26 @@ mark {
   justify-content: center;
 }
 @keyframes modal-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes sheet-up { from { transform: translateY(100%); opacity: 0.6; } to { transform: translateY(0); opacity: 1; } }
+@keyframes sheet-up {
+  0%   { transform: translateY(100%) scale(0.98); opacity: 0.4; }
+  60%  { transform: translateY(-6px) scale(1.01); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes backdrop-fade { from { background: rgba(0,0,0,0); } to { background: rgba(0,0,0,0.55); } }
 .modal.open { display: flex; animation: modal-in 0.22s ease-out; }
-.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+.modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.55);
+  animation: backdrop-fade 0.22s ease-out;
+}
 .modal-sheet {
   position: relative;
   width: 100%;
   background: #fff;
   border-radius: 14px 14px 0 0;
   padding: 14px 20px 28px;
-  animation: sheet-up 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  animation: sheet-up 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: 0 -14px 40px rgba(0,0,0,0.22);
 }
 .modal-handle {
   width: 36px; height: 5px; background: #d1d1d6; border-radius: 3px;
