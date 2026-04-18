@@ -118,3 +118,4 @@ cycle	date	nps	status	description
 27	2026-04-19	6.6	keep	Fix About modal overflow + toast confirm
 28	2026-04-19	7.0	keep	Larger 44px header icon tap targets + stronger press state
 29	2026-04-19	7.1	keep	Escape user strings in search + recent searches (XSS defense)
+30	2026-04-19	7.0	keep	Per-tab intro helper text on Forecast/Calendar/History + fix ship script

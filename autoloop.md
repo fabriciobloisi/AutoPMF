@@ -92,6 +92,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 27 | 2026-04-19 | 6.6 | Fix About modal overflow (max-height 85vh + scroll) + toast confirm | 9.0 |
 | 28 | 2026-04-19 | 7.0 | Larger 44px header icon tap targets + stronger press state | 9.0 |
 | 29 | 2026-04-19 | 7.1 | Escape user strings in search "No results" + recent searches (XSS defense) | 9.0 |
+| 30 | 2026-04-19 | 7.0 | Per-tab intro helper text on Forecast/Calendar/History + fix ship script | 9.0 |
 
 ---
 
