@@ -241,9 +241,9 @@ function renderSunArc(riseStr, setStr) {
 function renderForecast() {
   const f = cache.forecast, h = cache.hourly;
   setContent(`<div class="wx-forecast">
-    <div class="wx-tab-intro">Look ahead 7 days and hour-by-hour · charts show trends at a glance</div>
+    <div class="wx-tab-intro">Look ahead 7 days and hour-by-hour · swipe the strip · charts show trends</div>
     <div class="wx-section-lbl">7-Day Forecast</div>
-    <div class="wx-fc-cards">
+    <div class="wx-fc-scroller"><div class="wx-fc-cards">
       ${f.map((d,i)=>`<div class="wx-fc-card${i===0?' wx-fc-today':''}">
         <div class="wx-fc-day">${i===0?'Today':d.dow}</div>
         <div class="wx-fc-ic">${wi(d.iconCode)}</div>
@@ -251,7 +251,7 @@ function renderForecast() {
         <div class="wx-fc-rain"><div class="wx-fc-rb"><div class="wx-fc-rf" style="height:${d.precipChance}%"></div></div><small>${d.precipChance}%</small></div>
         <div class="wx-fc-wind"><small>${d.windDir} ${d.windSpeed}</small></div>
       </div>`).join('')}
-    </div>
+    </div></div>
     <div class="wx-narrative">"${f[0].narrative}"</div>
     <div class="wx-section-lbl">Today's Temperature (°C)</div>
     <div class="wx-chart-wrap"><canvas id="wx-tc" height="130"></canvas></div>

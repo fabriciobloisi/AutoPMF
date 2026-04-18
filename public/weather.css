@@ -279,23 +279,35 @@
 
 /* ── FORECAST ───────────────────────────────────────────────────────────────── */
 .wx-forecast { padding-bottom: 8px; }
+.wx-fc-scroller {
+  position: relative;
+}
+.wx-fc-scroller::after {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 8px;
+  width: 24px; pointer-events: none;
+  background: linear-gradient(to right, rgba(242,242,247,0), rgba(242,242,247,0.95));
+}
+.app.dark-mode .wx-fc-scroller::after {
+  background: linear-gradient(to right, rgba(28,28,30,0), rgba(28,28,30,0.95));
+}
 .wx-fc-cards {
   display: flex; gap: 0;
   overflow-x: auto; -webkit-overflow-scrolling: touch;
   padding: 0 12px 8px; scroll-snap-type: x mandatory;
+  scroll-padding-left: 12px;
 }
 .wx-fc-cards::-webkit-scrollbar { display: none; }
 .wx-fc-card {
   display: flex; flex-direction: column; align-items: center;
   background: #fff; border-radius: 12px;
   padding: 10px 8px; gap: 4px;
-  min-width: 72px; flex-shrink: 0;
-  margin-right: 8px; scroll-snap-align: start;
+  min-width: 68px; flex-shrink: 0;
+  margin-right: 6px; scroll-snap-align: start;
 }
 .app.dark-mode .wx-fc-card { background: #2c2c2e; }
 .wx-fc-today { background: #dbeafe; border: 1.5px solid #3b82f6; }
 .app.dark-mode .wx-fc-today { background: #1e3a5f; border-color: #2563eb; }
-.wx-fc-day { font-size: 12px; font-weight: 600; color: #666; }
+.wx-fc-day { font-size: 12px; font-weight: 700; color: #3a3a3c; }
 .app.dark-mode .wx-fc-day { color: #9a9a9e; }
 .wx-fc-ic { font-size: 24px; }
 .wx-fc-temps { display: flex; gap: 6px; align-items: center; }
