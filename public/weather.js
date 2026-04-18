@@ -241,6 +241,7 @@ function renderSunArc(riseStr, setStr) {
 function renderForecast() {
   const f = cache.forecast, h = cache.hourly;
   setContent(`<div class="wx-forecast">
+    <div class="wx-tab-intro">Look ahead 7 days and hour-by-hour · charts show trends at a glance</div>
     <div class="wx-section-lbl">7-Day Forecast</div>
     <div class="wx-fc-cards">
       ${f.map((d,i)=>`<div class="wx-fc-card${i===0?' wx-fc-today':''}">
@@ -340,6 +341,7 @@ function drawCalendar() {
   const wettest = all.length?all.reduce((a,b)=>a.precip>b.precip?a:b):null;
 
   setContent(`<div class="wx-calendar">
+    <div class="wx-tab-intro">Monthly overview · tap any day for details · toggle historical averages</div>
     <div class="wx-cal-nav-row">
       <button class="wx-cal-nav-btn" id="wx-cprev">‹</button>
       <span class="wx-cal-title">${mName} ${calYear}</span>
@@ -413,6 +415,7 @@ function drawHistory() {
     return typeof av==='string'?histSortDir*av.localeCompare(bv):histSortDir*(av-bv);
   });
   setContent(`<div class="wx-history">
+    <div class="wx-tab-intro">Pick a date range to see past weather · tap columns to sort · export to CSV</div>
     <div class="wx-hist-ctrl">
       <div class="wx-hist-field"><label>From</label><input type="date" id="wx-hs" value="${histStart}" max="2026-04-15" min="2025-01-01"></div>
       <div class="wx-hist-field"><label>To</label><input type="date" id="wx-he" value="${histEnd}" max="2026-04-15" min="2025-01-01"></div>

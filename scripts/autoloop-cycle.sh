@@ -221,7 +221,7 @@ cmd_ship() {
 
     # Stage files — everything goes in git
     local files_to_add=(product.md autoloop.md)
-    for f in server.js public/app.js public/styles.css public/index.html local_feedback.jsonl results.tsv Feedback.txt; do
+    for f in server.js public/app.js public/styles.css public/index.html public/weather.js public/weather.css local_feedback.jsonl results.tsv Feedback.txt; do
         if [[ -f "$f" ]] && { git diff --name-only | grep -q "^${f}$" || git diff --cached --name-only | grep -q "^${f}$" || ! git ls-files --error-unmatch "$f" &>/dev/null; }; then
             files_to_add+=("$f")
         fi
