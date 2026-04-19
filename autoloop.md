@@ -95,6 +95,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 30 | 2026-04-19 | 7.0 | Per-tab intro helper text on Forecast/Calendar/History + fix ship script | 9.0 |
 | 31 | 2026-04-19 | 7.2 | Forecast scroll-fade affordance + tighter strip + bolder day labels | 9.0 |
 | 32 | 2026-04-19 | 7.0 | Title tooltips on every icon button | 9.0 |
+| 33 | 2026-04-19 | 6.9 | Contextual cross-links at bottom of Today tab | 9.0 |
 
 ---
 
