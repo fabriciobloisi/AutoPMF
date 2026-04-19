@@ -537,7 +537,20 @@ function renderSearchView() {
   </div>`);
 
   const input=$('wx-si'), clr=$('wx-sc');
-  input?.addEventListener('input',e=>{ const q=e.target.value.trim(); clr.style.display=q?'':'none'; clearTimeout(searchTO); if(q.length>=2) searchTO=setTimeout(()=>doSearch(q),300); else showDefaults(); });
+  input?.addEventListener('input',e=>{
+    const raw = e.target.value;
+    const q = raw.trim();
+    clr.style.display = q ? '' : 'none';
+    clearTimeout(searchTO);
+    if (q.length >= 2) {
+      searchTO = setTimeout(() => doSearch(q), 300);
+    } else if (q.length === 1) {
+      const el = $('wx-sr');
+      if (el) el.innerHTML = `<div class="wx-empty-hint">Keep typing — at least 2 letters to search for "${esc(q)}"</div>`;
+    } else {
+      showDefaults();
+    }
+  });
   clr?.addEventListener('click',()=>{ input.value=''; clr.style.display='none'; showDefaults(); });
   qsa('.wx-rec-del').forEach(btn=>btn.addEventListener('click',e=>{ e.stopPropagation(); recentSearches=recentSearches.filter(r=>r!==btn.dataset.r); localStorage.setItem('wx_recent',JSON.stringify(recentSearches)); renderSearchView(); }));
   qsa('.wx-rec-item').forEach(item=>item.addEventListener('click',()=>{ if(input){input.value=item.dataset.q;clr.style.display='';} doSearch(item.dataset.q); }));
