@@ -122,3 +122,4 @@ cycle	date	nps	status	description
 31	2026-04-19	7.2	keep	Forecast scroll-fade affordance + tighter strip + bolder day labels
 32	2026-04-19	7.0	keep	Title tooltips on every icon button
 33	2026-04-19	6.9	keep	Contextual cross-links at bottom of Today tab
+34	2026-04-19	8.0	keep	One-line descriptions under each drawer nav item
