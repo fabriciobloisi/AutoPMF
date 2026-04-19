@@ -258,7 +258,10 @@ function applyLargeText(on) {
   largeTextToggle.checked = on;
 }
 applyLargeText(localStorage.getItem('autopmf_largetext') === '1');
-largeTextToggle.addEventListener('change', () => applyLargeText(largeTextToggle.checked));
+largeTextToggle.addEventListener('change', () => {
+  applyLargeText(largeTextToggle.checked);
+  if (typeof showToast === 'function') showToast(largeTextToggle.checked ? 'Large Text on' : 'Large Text off');
+});
 
 // ── Purple Theme ──────────────────────────────────────────────────────────────
 const purpleToggle = $('purple-theme-toggle');

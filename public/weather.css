@@ -607,3 +607,23 @@
   background: #e5e5ea; border-radius: 4px; padding: 2px 6px; color: #555;
 }
 .app.dark-mode .wx-type-badge { background: #3a3a3c; color: #9a9a9e; }
+
+/* ── Large Text accessibility mode (applies to weather screens) ─────────── */
+.app.large-text .wx-hero-temp { font-size: 80px; }
+.app.large-text .wx-hero-phrase { font-size: 22px; }
+.app.large-text .wx-hero-city { font-size: 20px; }
+.app.large-text .wx-hero-feels { font-size: 17px; }
+.app.large-text .wx-section-lbl { font-size: 15px; }
+.app.large-text .wx-tab-intro { font-size: 14px; }
+.app.large-text .wx-fc-day { font-size: 14px; }
+.app.large-text .wx-fc-hi, .app.large-text .wx-fc-lo { font-size: 17px; }
+.app.large-text .wx-stat-v { font-size: 20px; }
+.app.large-text .wx-stat-l { font-size: 13px; }
+.app.large-text .wx-tab span { font-size: 13px; }
+.app.large-text .wx-obs-head, .app.large-text .wx-obs-row { font-size: 15px; padding: 14px 14px; }
+.app.large-text .wx-rec-item { font-size: 18px; padding: 18px 16px; }
+.app.large-text .wx-pop { font-size: 17px; padding: 16px 10px; }
+.app.large-text .wx-cal-cell { font-size: 13px; }
+.app.large-text .wx-ctx-link { font-size: 16px; padding: 14px 16px; }
+.app.large-text .wx-hist-field label { font-size: 13px; }
+.app.large-text .wx-hist-field input { font-size: 16px; }
