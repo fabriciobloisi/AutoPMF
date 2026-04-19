@@ -1044,6 +1044,10 @@ mark {
   transition: background 0.12s;
 }
 .nav-item:active { background: rgba(0,0,0,0.06); }
+.nav-main { display: flex; flex-direction: column; line-height: 1.2; }
+.nav-sub { font-size: 11px; font-weight: 400; color: #8e8e93; margin-top: 2px; }
+.nav-item.danger .nav-sub { color: rgba(255,59,48,0.7); }
+.app.dark-mode .nav-sub { color: #9a9a9e; }
 .nav-item.danger { color: #ff3b30; }
 .nav-item.danger:active { background: rgba(255,59,48,0.1); }
 .nav-item.mode-item.active { background: rgba(0,98,204,0.1); color: #0062CC; }
