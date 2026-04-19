@@ -124,3 +124,4 @@ cycle	date	nps	status	description
 33	2026-04-19	6.9	keep	Contextual cross-links at bottom of Today tab
 34	2026-04-19	8.0	keep	One-line descriptions under each drawer nav item
 35	2026-04-19	7.2	keep	Roomier History table + larger recent-remove button
+36	2026-04-19	8.0	keep	Persistent current-section breadcrumb in nav title
