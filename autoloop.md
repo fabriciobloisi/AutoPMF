@@ -97,6 +97,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 32 | 2026-04-19 | 7.0 | Title tooltips on every icon button | 9.0 |
 | 33 | 2026-04-19 | 6.9 | Contextual cross-links at bottom of Today tab | 9.0 |
 | 34 | 2026-04-19 | 8.0 | One-line descriptions under each drawer nav item | 9.0 |
+| 35 | 2026-04-19 | 7.2 | Roomier History table + larger recent-remove button | 9.0 |
 
 ---
 
