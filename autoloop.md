@@ -99,6 +99,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 34 | 2026-04-19 | 8.0 | One-line descriptions under each drawer nav item | 9.0 |
 | 35 | 2026-04-19 | 7.2 | Roomier History table + larger recent-remove button | 9.0 |
 | 36 | 2026-04-19 | 8.0 | Persistent current-section breadcrumb in nav title | 9.0 |
+| 37 | 2026-04-19 | 8.0 | Contextual cross-links at bottom of History tab | 9.0 |
 
 ---
 
