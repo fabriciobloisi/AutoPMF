@@ -205,12 +205,17 @@ function renderToday() {
         ${(p||[]).slice(1,5).map(d=>`<div class="wx-pfc-item"><div class="wx-pfc-day">${d.period.slice(0,3)}</div><div class="wx-pfc-icon">🌳</div><div class="wx-pfc-lbl" style="color:${polCol(d.tree)}">${d.treeLabel}</div></div>`).join('')}
       </div>
     </div>
+    <div class="wx-context-links">
+      <button class="wx-ctx-link" data-goto="forecast">See 7-day forecast <span>→</span></button>
+      <button class="wx-ctx-link" data-goto="calendar">Open monthly calendar <span>→</span></button>
+    </div>
     <div style="height:16px"></div>
   </div>`);
   document.getElementById('wx-onboard-close')?.addEventListener('click', () => {
     localStorage.setItem('wx_welcomed', '1');
     document.getElementById('wx-onboard')?.remove();
   });
+  qsa('.wx-ctx-link').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.goto)));
 }
 
 function renderSunArc(riseStr, setStr) {

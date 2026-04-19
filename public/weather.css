@@ -532,6 +532,18 @@
 .app.dark-mode .wx-search-tip { color: #636366; }
 .wx-tab-intro { font-size: 12px; color: #8e8e93; padding: 4px 2px 10px; line-height: 1.35; font-style: italic; }
 .app.dark-mode .wx-tab-intro { color: #9a9a9e; }
+.wx-context-links { display: flex; gap: 8px; padding: 0 12px; margin-top: 8px; flex-wrap: wrap; }
+.wx-ctx-link {
+  flex: 1; min-width: 140px;
+  background: #fff; border: 1px solid #e5e5ea; border-radius: 10px;
+  padding: 11px 14px; font-size: 14px; font-weight: 600; color: #0062CC;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.15s, transform 0.1s;
+}
+.wx-ctx-link span { font-size: 16px; font-weight: 400; }
+.wx-ctx-link:active { background: #e5f0fb; transform: scale(0.98); }
+.app.dark-mode .wx-ctx-link { background: #2c2c2e; border-color: #48484a; color: #64b5f6; }
+.app.dark-mode .wx-ctx-link:active { background: #3a3a3c; }
 .wx-sbox {
   display: flex; align-items: center; gap: 8px;
   background: #fff; border-radius: 12px; padding: 0 12px;
