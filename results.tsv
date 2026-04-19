@@ -128,3 +128,4 @@ cycle	date	nps	status	description
 37	2026-04-19	8.0	keep	Contextual cross-links at bottom of History tab
 38	2026-04-19	6.8	keep	Large-Text mode now styles the weather screen + toast confirmation
 39	2026-04-19	7.0	keep	Inline 'keep typing' hint for single-character searches
+40	2026-04-19	7.0	keep	Echo the typed query in 'no letters' search message
