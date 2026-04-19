@@ -101,6 +101,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 36 | 2026-04-19 | 8.0 | Persistent current-section breadcrumb in nav title | 9.0 |
 | 37 | 2026-04-19 | 8.0 | Contextual cross-links at bottom of History tab | 9.0 |
 | 38 | 2026-04-19 | 6.8 | Large-Text mode now styles the weather screen + toast confirmation | 9.0 |
+| 39 | 2026-04-19 | 7.0 | Inline 'keep typing' hint for single-character searches | 9.0 |
 
 ---
 
