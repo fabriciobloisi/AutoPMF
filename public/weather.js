@@ -574,7 +574,7 @@ function showDefaults() {
 
 async function doSearch(q) {
   const el=$('wx-sr'); if(!el)return;
-  if(!/[a-zA-Z\u00C0-\u024F]/.test(q)){ el.innerHTML='<div class="wx-empty-hint">Try a city name like <strong>London</strong> or <strong>Berlin</strong></div>'; return; }
+  if(!/[a-zA-Z\u00C0-\u024F]/.test(q)){ el.innerHTML=`<div class="wx-empty-hint">No letters found in "${esc(q)}" — try a city name like <strong>London</strong> or <strong>Berlin</strong></div>`; return; }
   el.innerHTML='<div class="wx-search-loading">🔍 Searching…</div>';
   try {
     const results=await api(`/api/weather/search?q=${encodeURIComponent(q)}`);
