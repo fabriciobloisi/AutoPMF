@@ -553,7 +553,11 @@ function renderSearchView() {
   const input=$('wx-si'), clr=$('wx-sc');
   input?.addEventListener('input',e=>{
     const raw = e.target.value;
-    const q = raw.trim();
+    // Strip control characters (U+0000-U+001F + U+007F) silently — then warn.
+    const cleaned = raw.replace(/[\u0000-\u001F\u007F]/g, '');
+    const hadControlChars = cleaned !== raw;
+    if (hadControlChars) e.target.value = cleaned;
+    const q = cleaned.trim();
     clr.style.display = q ? '' : 'none';
     clearTimeout(searchTO);
     if (q.length >= 2) {
@@ -564,6 +568,7 @@ function renderSearchView() {
     } else {
       showDefaults();
     }
+    if (hadControlChars && typeof showToast === 'function') showToast('Removed invisible characters');
   });
   clr?.addEventListener('click',()=>{ input.value=''; clr.style.display='none'; showDefaults(); });
   qsa('.wx-rec-del').forEach(btn=>btn.addEventListener('click',e=>{ e.stopPropagation(); recentSearches=recentSearches.filter(r=>r!==btn.dataset.r); localStorage.setItem('wx_recent',JSON.stringify(recentSearches)); renderSearchView(); }));
