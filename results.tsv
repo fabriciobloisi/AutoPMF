@@ -131,3 +131,4 @@ cycle	date	nps	status	description
 40	2026-04-19	7.0	keep	Echo the typed query in 'no letters' search message
 41	2026-04-19	7.2	keep	Idle-prefetch Calendar and History data after Today loads
 42	2026-04-19	8.0	keep	Visible notice when control characters are stripped from search
+43	2026-04-19	6.9	keep	Persistent Tab-City breadcrumb in nav title

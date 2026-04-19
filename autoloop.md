@@ -105,6 +105,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 40 | 2026-04-19 | 7.0 | Echo the typed query in 'no letters' search message | 9.0 |
 | 41 | 2026-04-19 | 7.2 | Idle-prefetch Calendar and History data after Today loads | 9.0 |
 | 42 | 2026-04-19 | 8.0 | Visible notice when control characters are stripped from search | 9.0 |
+| 43 | 2026-04-19 | 6.9 | Persistent Tab-City breadcrumb in nav title | 9.0 |
 
 ---
 
