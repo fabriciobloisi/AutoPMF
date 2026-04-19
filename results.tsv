@@ -132,3 +132,4 @@ cycle	date	nps	status	description
 41	2026-04-19	7.2	keep	Idle-prefetch Calendar and History data after Today loads
 42	2026-04-19	8.0	keep	Visible notice when control characters are stripped from search
 43	2026-04-19	6.9	keep	Persistent Tab-City breadcrumb in nav title
+44	2026-04-19	7.0	keep	Server-side validation + rate limiting for /search and /history
