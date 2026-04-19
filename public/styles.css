@@ -2227,6 +2227,15 @@ html.dark .onboarding-skip { color: #636366; }
   transform: translateX(-50%) translateY(0);
 }
 html.dark #app-toast { background: rgba(255,255,255,0.18); }
+#app-toast.toast-prominent {
+  background: #22c55e;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 24px;
+  box-shadow: 0 6px 24px rgba(34,197,94,0.35);
+}
+html.dark #app-toast.toast-prominent { background: #16a34a; }
 
 /* Dark mode — category bar wrap */
 html.dark .category-bar-wrap::after { background: linear-gradient(to right, transparent, #000); }

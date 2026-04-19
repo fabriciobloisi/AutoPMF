@@ -642,7 +642,7 @@ function selectLoc(r) {
   localStorage.setItem('wx_recent',JSON.stringify(recentSearches));
   const ttl=document.getElementById('wx-location-title')||document.querySelector('#weather-screen .sub-bar-title');
   if(ttl) { ttl.textContent=`${loc.flag||'🌤️'} ${loc.name}`; ttl.classList.remove('wx-city-changed'); void ttl.offsetWidth; ttl.classList.add('wx-city-changed'); }
-  if(typeof showToast==='function') showToast(`Switched to ${loc.name}`);
+  if(typeof showToast==='function') showToast(`✓ Switched to ${loc.flag||''} ${loc.name}`, { prominent: true, duration: 5000 });
   cache={}; histData=null; calData=null;
   loadGeneration++;
   loadBusy = false;

@@ -8,7 +8,7 @@ const state = {
 const $ = (id) => document.getElementById(id);
 
 let _toastTimer = null;
-function showToast(msg) {
+function showToast(msg, opts) {
   let el = $('app-toast');
   if (!el) {
     el = document.createElement('div');
@@ -16,9 +16,14 @@ function showToast(msg) {
     document.body.appendChild(el);
   }
   el.textContent = msg;
+  el.classList.toggle('toast-prominent', !!(opts && opts.prominent));
   el.classList.add('visible');
   clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.classList.remove('visible'), 3500);
+  const dur = (opts && opts.duration) || 3500;
+  _toastTimer = setTimeout(() => {
+    el.classList.remove('visible');
+    el.classList.remove('toast-prominent');
+  }, dur);
 }
 
 const SESSION_KEY = 'autopmf_session_id';
