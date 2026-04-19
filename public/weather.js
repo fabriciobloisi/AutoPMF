@@ -486,7 +486,15 @@ function drawHistory() {
 
   $('wx-hgo')?.addEventListener('click',async()=>{
     const s=$('wx-hs')?.value, e=$('wx-he')?.value;
-    if(s&&e&&s<=e){ histStart=s; histEnd=e; histData=null; renderHistoryView(); }
+    if(!s||!e){
+      if(typeof showToast==='function') showToast('Pick a start and end date');
+      return;
+    }
+    if(s>e){
+      if(typeof showToast==='function') showToast('Start date must be before end date');
+      return;
+    }
+    histStart=s; histEnd=e; histData=null; renderHistoryView();
   });
   $('wx-exp')?.addEventListener('click',()=>{
     const csv=['date,max,min,avg,precip,humidity,wind'].concat(days.map(d=>`${d.date},${d.maxTemp},${d.minTemp},${d.avgTemp},${d.precip},${d.humidity},${d.windMax}`)).join('\n');
