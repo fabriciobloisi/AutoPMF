@@ -128,6 +128,9 @@ function switchTab(t) {
   qsa('.wx-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
   Object.values(charts).forEach(c => { try { c.destroy(); } catch(e){} });
   charts = {};
+  const TAB_LABELS = { today:'Today', forecast:'Forecast', calendar:'Calendar', history:'History', search:'Search' };
+  const navTitle = document.querySelector('#global-nav .nav-title');
+  if (navTitle) navTitle.textContent = `Weather · ${TAB_LABELS[t] || ''}`.replace(/ · $/, '');
   renderTab(t);
 }
 
