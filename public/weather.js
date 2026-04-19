@@ -457,6 +457,10 @@ function drawHistory() {
       </div>`).join('')}
     </div></div>
     <div class="wx-hist-actions"><button class="wx-export-btn" id="wx-exp">⬇️ Export CSV</button></div>
+    <div class="wx-context-links">
+      <button class="wx-ctx-link" data-goto="calendar">Jump to calendar view <span>→</span></button>
+      <button class="wx-ctx-link" data-goto="forecast">Back to 7-day forecast <span>→</span></button>
+    </div>
     <div style="height:16px"></div>
   </div>`);
 
@@ -474,6 +478,7 @@ function drawHistory() {
     if(histSortCol===c) histSortDir*=-1; else { histSortCol=c; histSortDir=1; }
     drawHistory();
   }));
+  qsa('.wx-ctx-link').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.goto)));
   requestAnimationFrame(()=>{ drawHistTempChart(days); drawHistPrecipChart(days); });
 }
 
