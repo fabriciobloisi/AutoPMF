@@ -32,6 +32,8 @@ app.use(express.static(join(__dirname, 'public')));
 const askLimiter = rateLimit({ windowMs: 60_000, max: 10, message: { error: 'Too many requests, please try again later' } });
 const feedbackLimiter = rateLimit({ windowMs: 60_000, max: 5, message: { error: 'Too many requests, please try again later' } });
 const getFeedbackLimiter = rateLimit({ windowMs: 60_000, max: 10, message: { error: 'Too many requests, please try again later' } });
+const searchLimiter = rateLimit({ windowMs: 60_000, max: 60, message: { error: 'Too many search requests, please try again later' } });
+const historyLimiter = rateLimit({ windowMs: 60_000, max: 30, message: { error: 'Too many history requests, please try again later' } });
 
 // ── Blob helpers ────────────────────────────────────────────────────────────
 
@@ -728,13 +730,20 @@ app.get('/api/weather/almanac', (req, res) => {
   res.json(ALMANAC_APRIL);
 });
 
-app.get('/api/weather/history', (req, res) => {
+app.get('/api/weather/history', historyLimiter, (req, res) => {
+  const { start, end } = req.query;
+  const ISO = /^\d{4}-\d{2}-\d{2}$/;
+  if (start && !ISO.test(String(start))) return res.status(400).json({ error: 'Invalid start date' });
+  if (end && !ISO.test(String(end))) return res.status(400).json({ error: 'Invalid end date' });
+  if (start && end && start > end) return res.status(400).json({ error: 'Start date must be before end date' });
   res.json(HISTORY_DATA);
 });
 
-app.get('/api/weather/search', (req, res) => {
-  const q = (req.query.q || '').toLowerCase().trim();
+app.get('/api/weather/search', searchLimiter, (req, res) => {
+  const raw = String(req.query.q || '').slice(0, 64);
+  const q = raw.toLowerCase().trim();
   if (!q) return res.json([]);
+  if (!/[a-z\u00c0-\u024f]/i.test(q)) return res.json([]);
   const results = [];
   for (const [key, entries] of Object.entries(SEARCH_DB)) {
     if (key.includes(q) || entries.some(e => e.displayName.toLowerCase().includes(q))) {
