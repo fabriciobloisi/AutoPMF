@@ -561,10 +561,10 @@
 .wx-search-loading { padding: 20px 14px; color: #8e8e93; font-size: 13px; }
 .wx-empty-hint { padding: 20px 14px; color: #8e8e93; font-size: 13px; text-align: center; }
 
-.wx-recent { margin: 0; }
+.wx-recent { margin: 0 0 8px 0; padding: 4px 0; }
 .wx-rec-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 16px 14px; background: #fff;
+  display: flex; align-items: center; gap: 10px;
+  padding: 18px 16px; background: #fff;
   border-bottom: 0.5px solid #f5f5f5; cursor: pointer;
   font-size: 16px; color: #333;
   transition: background 0.1s;
@@ -576,10 +576,10 @@
 
 .wx-popular {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; padding: 0 12px 8px;
+  gap: 10px; padding: 8px 14px 16px;
 }
 .wx-pop {
-  background: #fff; border-radius: 10px; padding: 14px 8px;
+  background: #fff; border-radius: 10px; padding: 16px 8px;
   font-size: 15px; font-weight: 500; color: #333;
   text-align: center; border: 1px solid #e5e5ea;
   transition: background 0.1s;
