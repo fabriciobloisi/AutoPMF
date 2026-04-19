@@ -99,6 +99,20 @@ async function loadAll() {
     } else if (!wasFirst && !suppressed && typeof showToast === 'function') {
       showToast('Refreshed ✓');
     }
+    // Idle-prefetch Calendar and History so a tap into those tabs feels instant.
+    const idle = window.requestIdleCallback || (fn => setTimeout(fn, 800));
+    idle(() => {
+      if (!calData) {
+        Promise.all([
+          api(`/api/weather/calendar?year=${calYear}&month=${calMonth}`),
+          api(`/api/weather/almanac?month=${calMonth}`)
+        ]).then(([days, alm]) => { calData = { days, alm }; }).catch(()=>{});
+      }
+      if (!histData) {
+        api(`/api/weather/history?start=${histStart}&end=${histEnd}`)
+          .then(d => { histData = d; }).catch(()=>{});
+      }
+    });
   } catch(e) {
     await wait();
     if (myGen !== loadGeneration) { loadBusy = false; loadAll(); return; }
