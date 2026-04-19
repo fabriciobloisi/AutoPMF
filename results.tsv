@@ -135,3 +135,4 @@ cycle	date	nps	status	description
 44	2026-04-19	7.0	keep	Server-side validation + rate limiting for /search and /history
 45	2026-04-19	6.8	keep	Visible inline validation for History date-range
 46	2026-04-19	6.8	keep	More breathing room in Search recent/popular sections
+47	2026-04-19	7.0	keep	Prominent green toast variant for city-switch confirmation

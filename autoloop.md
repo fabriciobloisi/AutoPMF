@@ -109,6 +109,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 44 | 2026-04-19 | 7.0 | Server-side validation + rate limiting for /search and /history | 9.0 |
 | 45 | 2026-04-19 | 6.8 | Visible inline validation for History date-range | 9.0 |
 | 46 | 2026-04-19 | 6.8 | More breathing room in Search recent/popular sections | 9.0 |
+| 47 | 2026-04-19 | 7.0 | Prominent green toast variant for city-switch confirmation | 9.0 |
 
 ---
 
