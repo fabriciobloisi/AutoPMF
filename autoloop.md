@@ -103,6 +103,7 @@ All automation lives in `scripts/autoloop-cycle.sh`. **Never edit `getFeedback.s
 | 38 | 2026-04-19 | 6.8 | Large-Text mode now styles the weather screen + toast confirmation | 9.0 |
 | 39 | 2026-04-19 | 7.0 | Inline 'keep typing' hint for single-character searches | 9.0 |
 | 40 | 2026-04-19 | 7.0 | Echo the typed query in 'no letters' search message | 9.0 |
+| 41 | 2026-04-19 | 7.2 | Idle-prefetch Calendar and History data after Today loads | 9.0 |
 
 ---
 
