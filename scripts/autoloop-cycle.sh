@@ -531,6 +531,195 @@ cmd_status() {
     vercel ls --prod 2>&1 | head -3 || echo "  Could not check Vercel status"
 }
 
+
+# ─── LEARN ────────────────────────────────────────────────
+# Usage: autoloop-cycle.sh learn <cycle> <nps> <prev_nps> <description> [diff_summary]
+#
+# Appends a structured entry to learnings.md — the self-learning memory file.
+# Inspired by Hermes Agent's MEMORY.md pattern: each cycle writes what it
+# learned so the next cycle can build on it instead of starting blind.
+#
+# learnings.md is injected into autoloop-feedback.md as context for Claude,
+# giving it the equivalent of Hermes's "execution traces" to understand
+# WHY previous changes worked or failed before proposing new ones.
+
+cmd_learn() {
+    local cycle="${1:?Usage: learn <cycle> <nps> <prev_nps> <description>}"
+    local nps="${2:?Usage: learn <cycle> <nps> <prev_nps> <description>}"
+    local prev_nps="${3:?Usage: learn <cycle> <nps> <prev_nps> <description>}"
+    shift 3
+    local description="$*"
+    [[ -z "$description" ]] && die "Description required"
+
+    # LEARNINGS_FILE can be overridden for testing
+    local learnings_file="${LEARNINGS_FILE:-learnings.md}"
+
+    export AUTOLOOP_CYCLE="$cycle"
+    export AUTOLOOP_NPS="$nps"
+    export AUTOLOOP_PREV_NPS="$prev_nps"
+    export AUTOLOOP_DESCRIPTION="$description"
+    export AUTOLOOP_DIFF_SUMMARY="${AUTOLOOP_DIFF_SUMMARY:-}"
+    export LEARNINGS_FILE="$learnings_file"
+
+# LEARNINGS_UPDATE_START
+python3 << 'PYEOF_LEARN'
+import os
+from datetime import datetime
+from pathlib import Path
+
+cycle = int(os.environ['AUTOLOOP_CYCLE'])
+nps = float(os.environ['AUTOLOOP_NPS'])
+prev_nps = float(os.environ['AUTOLOOP_PREV_NPS'])
+description = os.environ['AUTOLOOP_DESCRIPTION']
+diff_summary = os.environ.get('AUTOLOOP_DIFF_SUMMARY', '').strip()
+learnings_file = Path(os.environ.get('LEARNINGS_FILE', 'learnings.md'))
+today = datetime.now().strftime('%Y-%m-%d')
+
+delta = round(nps - prev_nps, 1)
+sign = '+' if delta >= 0 else ''
+arrow = '\u2191' if delta > 0 else ('\u2193' if delta < 0 else '\u2192')
+if delta <= -1.5:
+    outcome = 'REGRESSION \u26a0\ufe0f'
+elif delta >= 1.5:
+    outcome = 'WIN \u2705'
+else:
+    outcome = 'neutral'
+
+lines = [
+    f'## Cycle {cycle} \u2014 {today}',
+    f'**Change:** {description}',
+    f'**NPS:** {prev_nps} \u2192 {nps} ({sign}{delta} {arrow}) \u2014 {outcome}',
+]
+if diff_summary:
+    lines.append(f'**What changed:** {diff_summary}')
+
+if delta <= -1.5:
+    lines.append('**Lesson:** Regression. Avoid this direction or revert if NPS does not recover.')
+elif delta >= 2.0:
+    lines.append('**Lesson:** High-impact. Build on this pattern in future cycles.')
+elif delta >= 0.5:
+    lines.append('**Lesson:** Positive. Continue iterating in this direction.')
+else:
+    lines.append('**Lesson:** Minimal impact. Try a different approach next cycle.')
+
+entry = '\n'.join(lines)
+
+if not learnings_file.exists():
+    header = '# AutoPMF Self-Learning Memory\n\n'
+    header += '_Execution traces for the AutoLoop self-learning loop._\n'
+    header += '_Inspired by Hermes Agent MEMORY.md: injected into every cycle so Claude builds on experience rather than starting blind._\n\n'
+    header += '---\n\n'
+    learnings_file.write_text(header + entry + '\n')
+else:
+    existing = learnings_file.read_text()
+    learnings_file.write_text(existing + '\n---\n\n' + entry + '\n')
+
+print(f'learnings.md updated: cycle {cycle}, NPS {prev_nps}->{nps} ({sign}{delta} {arrow})')
+PYEOF_LEARN
+# LEARNINGS_UPDATE_END
+    unset AUTOLOOP_CYCLE AUTOLOOP_NPS AUTOLOOP_PREV_NPS AUTOLOOP_DESCRIPTION AUTOLOOP_DIFF_SUMMARY
+}
+
+# ─── ANALYZE-FEEDBACK ─────────────────────────────────────────────────────
+# Usage: autoloop-cycle.sh analyze-feedback
+#
+# Reads local_feedback.jsonl and produces a pattern analysis:
+# - What NPS < 5 users say (pain points to fix)
+# - What NPS >= 8 users say (wins to amplify)
+# - Most common suggestions
+#
+# Outputs JSON injected into the Claude context in autoloop-feedback.md.
+# This is AutoPMF's mini-GEPA: understand WHY before deciding WHAT.
+
+cmd_analyze_feedback() {
+    local cycle
+    cycle=$(get_cycle)
+    [[ -z "$cycle" ]] && die "Not on an autoloop/cycle-N branch."
+
+    [[ ! -f local_feedback.jsonl ]] && echo "{}" && return 0
+
+# FEEDBACK_ANALYSIS_START
+python3 -c "
+import json, os, re
+from collections import Counter
+from pathlib import Path
+
+feedback_file = Path(os.environ.get('FEEDBACK_JSONL', 'local_feedback.jsonl'))
+if not feedback_file.exists():
+    print('{}')
+    exit(0)
+
+entries = []
+for line in feedback_file.read_text().splitlines():
+    line = line.strip()
+    if not line:
+        continue
+    try:
+        e = json.loads(line)
+        if e.get('grade') is not None:
+            try:
+                e['grade'] = float(e['grade'])
+                entries.append(e)
+            except (TypeError, ValueError):
+                pass
+    except Exception:
+        pass
+
+if not entries:
+    print('{}')
+    exit(0)
+
+high = [e for e in entries if e['grade'] >= 8]
+low  = [e for e in entries if e['grade'] <= 4]
+mid  = [e for e in entries if 4 < e['grade'] < 8]
+
+def extract_keywords(entry_list, max_words=10):
+    stopwords = {'the','a','an','and','or','but','in','on','at','to','for','of',
+                 'with','is','it','this','that','was','are','i','my','me','we',
+                 'its','be','have','had','has','do','did','not','no','so','as',
+                 'app','hermes','autopmf','news','article'}
+    words = Counter()
+    for e in entry_list:
+        text = ' '.join(filter(None, [
+            str(e.get('comments', '') or ''),
+            str(e.get('suggestion', '') or ''),
+        ])).lower()
+        for w in re.findall(r'[a-z]{3,}', text):
+            if w not in stopwords:
+                words[w] += 1
+    return [w for w, _ in words.most_common(max_words)]
+
+def avg_nps(lst):
+    return round(sum(e['grade'] for e in lst) / len(lst), 1) if lst else 0
+
+suggestions = Counter()
+for e in entries:
+    s = str(e.get('suggestion','') or '').strip()
+    if len(s) > 5:
+        suggestions[s] += 1
+
+analysis = {
+    'total_entries': len(entries),
+    'avg_nps': avg_nps(entries),
+    'high_nps': {
+        'count': len(high),
+        'avg': avg_nps(high),
+        'keywords': extract_keywords(high),
+        'label': 'What satisfied users (NPS >= 8) value'
+    },
+    'low_nps': {
+        'count': len(low),
+        'avg': avg_nps(low),
+        'keywords': extract_keywords(low),
+        'label': 'What dissatisfied users (NPS <= 4) complain about'
+    },
+    'top_suggestions': [s for s, _ in suggestions.most_common(5)],
+}
+print(json.dumps(analysis, indent=2))
+"
+# FEEDBACK_ANALYSIS_END
+}
+
 # ─── Main dispatch ─────────────────────────────────────────
 
 case "${1:-help}" in
@@ -541,6 +730,8 @@ case "${1:-help}" in
     push)            cmd_push ;;
     mark-processed)  cmd_mark_processed ;;
     rollback)        cmd_rollback ;;
+    learn)           shift; cmd_learn "$@" ;;
+    analyze-feedback) cmd_analyze_feedback ;;
     status)          cmd_status ;;
     help|*)
         echo "Usage: autoloop-cycle.sh <command> [args]"
@@ -555,6 +746,8 @@ case "${1:-help}" in
         echo "  push                          Final push to save all work"
         echo "  mark-processed                Mark this cycle's feedback as processed on server"
         echo "  rollback                      Revert cycle changes after NPS regression"
+        echo "  learn <c> <nps> <prev> <desc> Append entry to learnings.md (self-learning memory)"
+        echo "  analyze-feedback              Analyze feedback patterns (mini-GEPA: WHY before WHAT)"
         echo "  status                        Show branch, NPS trend, deploy health"
         ;;
 esac

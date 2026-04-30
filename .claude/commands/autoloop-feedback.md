@@ -42,6 +42,29 @@ This calls `getFeedback.sh` internally, fetches **unprocessed** entries from the
 
 **If `has_new_feedback` is true:** use the JSON output directly. Continue to Step 2.
 
+## Step 1.5 — READ LEARNINGS (Self-Learning Loop)
+
+Before planning, read `learnings.md` if it exists:
+
+```bash
+cat learnings.md 2>/dev/null || echo "(no learnings yet — this is the first cycle)"
+```
+
+This is the **execution trace memory** — a record of every past change, its NPS impact, and the lesson learned.
+Inspired by Hermes Agent's MEMORY.md pattern: treat it as the agent's accumulated experience.
+
+**Use it to:**
+- Avoid repeating changes that caused regressions
+- Amplify patterns that produced NPS gains
+- Understand WHY previous cycles succeeded or failed
+
+If `analyze-feedback` output is available (run from the poll JSON), use it to understand the current feedback patterns:
+- `high_nps.keywords`: what satisfied users value — **build on these**
+- `low_nps.keywords`: what dissatisfied users complain about — **fix these first**
+- `top_suggestions`: the most requested features
+
+---
+
 ## Step 2 — PLAN
 
 Read `product.md` end-to-end. Answer these three questions (internally):
